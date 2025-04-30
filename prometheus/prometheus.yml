@@ -1,0 +1,9 @@
+##ddev-generated
+global:
+  scrape_interval: 5s  # How often Prometheus scrapes data
+
+scrape_configs:
+  - job_name: 'web'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['web'] # Change to your app's hostname and port. Here, we use DDEV web container.
