@@ -1,0 +1,23 @@
+##ddev-generated
+services:
+    grafana:
+      image: grafana/grafana:latest
+      container_name: ddev-${DDEV_SITENAME}-grafana
+      volumes:
+        - ".:/mnt/ddev_config"
+        - "ddev-global-cache:/mnt/ddev-global-cache"
+        - './grafana/datasources:/etc/grafana/provisioning/datasources'
+      environment:
+        - VIRTUAL_HOST=$DDEV_HOSTNAME
+        - HTTPS_EXPOSE=${GRAFANA_HTTPS_PORT:-3000}:3000
+        # -------------------------
+        # Automatically login as an admin.
+        - GF_AUTH_ANONYMOUS_ENABLED=true
+        - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+        - GF_AUTH_DISABLE_LOGIN_FORM=true
+        # ---------------------------
+      labels:
+        com.ddev.site-name: ${DDEV_SITENAME}
+        com.ddev.approot: $DDEV_APPROOT
+      ports:
+        - ${GRAFANA_HTTPS_PORT:-3000}

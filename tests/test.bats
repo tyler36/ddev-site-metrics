@@ -40,11 +40,17 @@ setup() {
 
 health_checks() {
   prometheus_health_check
+  grafana_health_check
 }
 
 prometheus_health_check() {
   run curl -sf "https://${PROJNAME}.ddev.site:9090/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
+}
+
+grafana_health_check() {
+  run curl -sf "https://${PROJNAME}.ddev.site:3000"
+  assert_output --partial "<title>Grafana</title>"
 }
 
 teardown() {
@@ -81,6 +87,38 @@ teardown() {
 
   run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
+}
+
+@test "Grafana port is configurable" {
+  set -eu -o pipefail
+
+  export GRAFANA_HTTPS_PORT=3043
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  ddev dotenv set .ddev/.env --grafana-https-port="${GRAFANA_HTTPS_PORT}"
+  run ddev restart -y
+  assert_success
+
+  run curl -sf "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
+  assert_output --partial "Grafana"
+}
+
+@test "Grafana is pre-configured with Prometheus datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Grafana uses the HTTP endpoint, so check that the datasources contains the correct URL.
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/grafana-datasources.yml
+  assert_output --partial 'url: http://prometheus:9090'
 }
 
 # bats test_tags=release
