@@ -117,7 +117,7 @@ teardown() {
   assert_success
 
   # Grafana uses the HTTP endpoint, so check that the datasources contains the correct URL.
-  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/grafana-datasources.yml
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-prometheus.yml
   assert_output --partial 'url: http://prometheus:9090'
 }
 
