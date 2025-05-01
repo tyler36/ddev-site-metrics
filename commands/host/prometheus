@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Launch the prometheus website
+## Usage: prometheus
+## Example: "ddev prometheus"
+
+source .ddev/.env
+
+ddev launch :"${PROMETHEUS_HTTPS_PORT:-9090}"

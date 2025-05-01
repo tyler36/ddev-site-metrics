@@ -9,6 +9,7 @@
 - [Installation](#installation)
 - [Tools](#tools)
   - [Prometheus](#prometheus)
+    - [Customize Prometheus](#customize-prometheus)
 
 ## Overview
 
@@ -37,6 +38,10 @@ After installation, make sure to commit the .ddev directory to version control.
 
 Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
 
+To open Prometheus: `ddev prometheus` or `ddev launch :9090` (assuming the default port).
+
+#### Customize Prometheus
+
 Prometheus is configured via `./.ddev/prometheus/prometheus.yml`. This addon provides an example, but need to customize it for your use-case.
 
 To customize, take ownership by removing `#ddev-generated` and making the changes as required.
@@ -51,6 +56,12 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['web'] # Change to your app's hostname and port. Here, we use DDEV web container.
+```
+
+- To customize the default port, update `.ddev/.env`
+
+```config
+PROMETHEUS_HTTPS_PORT=9090
 ```
 
 **Contributed and maintained by [`@tyler36`](https://github.com/tyler36)**

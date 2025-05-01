@@ -66,6 +66,23 @@ teardown() {
   health_checks
 }
 
+@test "Prometheus port is configurable" {
+  set -eu -o pipefail
+
+  export PROMETHEUS_HTTPS_PORT=9043
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  ddev dotenv set .ddev/.env --prometheus-https-port="${PROMETHEUS_HTTPS_PORT}"
+  run ddev restart -y
+  assert_success
+
+  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/query"
+  assert_output --partial "Prometheus Time Series Collection and Processing Server"
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
