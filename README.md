@@ -10,6 +10,7 @@
 - [Tools](#tools)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
+- [Credits](#credits)
 
 ## Overview
 
@@ -63,5 +64,9 @@ scrape_configs:
 ```config
 PROMETHEUS_HTTPS_PORT=9090
 ```
+
+## Credits
+
+PRs for install steps for specific frameworks are welcome.
 
 **Contributed and maintained by [`@tyler36`](https://github.com/tyler36)**
