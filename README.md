@@ -10,6 +10,8 @@
 - [Tools](#tools)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
+  - [Grafana](#grafana)
+    - [Configure Datasources](#configure-datasources)
 - [Credits](#credits)
 
 ## Overview
@@ -19,6 +21,7 @@ This addon contains tools for using [OpenTelemetry](https://github.com/open-tele
 It contains the following packages:
 
 - [Prometheus](https://prometheus.io/docs/introduction/overview/): an open-source systems monitoring and alerting toolkit.
+- [Grafana](https://grafana.com/docs/grafana/latest/): Query, visualize, alert on, and explore your metrics, logs, and traces.
 
 ## Installation
 
@@ -64,6 +67,18 @@ scrape_configs:
 ```config
 PROMETHEUS_HTTPS_PORT=9090
 ```
+
+### Grafana
+
+[Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
+
+#### Configure Datasources
+
+This addon pre-configures Prometheus as a datasource.
+
+- To include customize, or include additional datasources, update `.ddev/grafana/datasources/grafana-datasources.yml`.
+
+See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#grafana-data-sources).
 
 ## Credits
 

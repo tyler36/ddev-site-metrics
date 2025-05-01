@@ -106,6 +106,21 @@ teardown() {
   assert_output --partial "Grafana"
 }
 
+@test "Grafana is pre-configured with Prometheus datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Grafana uses the HTTP endpoint, so check that the datasources contains the correct URL.
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/grafana-datasources.yml
+  assert_output --partial 'url: http://prometheus:9090'
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail

@@ -2,6 +2,7 @@ name: site-metrics
 
 project_files:
   - commands/host/prometheus
+  - grafana/datasources/grafana-datasources.yml
   - prometheus/prometheus.yml
   - commands/host/grafana
   - docker-compose.prometheus.yaml
