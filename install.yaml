@@ -3,6 +3,7 @@ name: site-metrics
 project_files:
   - commands/host/prometheus
   - grafana/datasources/ddev-mysql.yml
+  - grafana/datasources/ddev-postgres.yml
   - grafana/datasources/ddev-prometheus.yml
   - prometheus/prometheus.yml
   - commands/host/grafana

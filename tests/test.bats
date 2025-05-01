@@ -139,6 +139,23 @@ teardown() {
   assert_output --partial 'password: db'
 }
 
+@test "Grafana is pre-configured with DDEV Postgres datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Check Postgres settings
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-postgres.yml
+  assert_output --partial 'url: db:5432'
+  assert_output --partial 'database: db'
+  assert_output --partial 'user: db'
+  assert_output --partial 'password: db'
+}
 
 # bats test_tags=release
 @test "install from release" {

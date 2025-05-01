@@ -1,0 +1,15 @@
+#ddev-generated
+apiVersion: 1
+
+datasources:
+  - name: Postgres
+    type: postgres
+    access: proxy
+    url: db:5432
+    database: db
+    user: db
+    secureJsonData:
+      password: db
+    isDefault: false
+    jsonData:
+      sslmode: 'disable'
