@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#ddev-generated
+## Description: Launch the grafana website
+## Usage: grafana
+## Example: "ddev grafana"
+
+source .ddev/.env
+
+ddev launch :"${GRAFANA_HTTPS_PORT:-3000}"
