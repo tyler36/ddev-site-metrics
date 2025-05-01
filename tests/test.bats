@@ -117,8 +117,44 @@ teardown() {
   assert_success
 
   # Grafana uses the HTTP endpoint, so check that the datasources contains the correct URL.
-  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/grafana-datasources.yml
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-prometheus.yml
   assert_output --partial 'url: http://prometheus:9090'
+}
+
+@test "Grafana is pre-configured with DDEV MySQL datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Check MySQL settings
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-mysql.yml
+  assert_output --partial 'url: db:3306'
+  assert_output --partial 'database: db'
+  assert_output --partial 'user: db'
+  assert_output --partial 'password: db'
+}
+
+@test "Grafana is pre-configured with DDEV Postgres datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Check Postgres settings
+  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-postgres.yml
+  assert_output --partial 'url: db:5432'
+  assert_output --partial 'database: db'
+  assert_output --partial 'user: db'
+  assert_output --partial 'password: db'
 }
 
 # bats test_tags=release

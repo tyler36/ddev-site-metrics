@@ -1,0 +1,15 @@
+#ddev-generated
+apiVersion: 1
+
+datasources:
+  - name: MySQL
+    type: mysql
+    access: proxy
+    url: db:3306
+    database: db
+    user: db
+    secureJsonData:
+      password: db
+    isDefault: false
+    jsonData:
+      sslmode: 'disable'
