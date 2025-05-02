@@ -1,0 +1,10 @@
+##ddev-generated
+apiVersion: 1
+
+# This is a dashboard provisioning config. It determines where the pre-configured dashboards are located.
+providers:
+  - name: 'default'
+    folder: ''
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards
