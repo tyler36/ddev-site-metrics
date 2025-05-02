@@ -85,6 +85,7 @@ See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#
 
 This add-on pre-configures `.ddev/grafana/dashboards` as the provisioned dashboard folder.
 See [Dashboards](https://grafana.com/docs/grafana/latest/dashboards/).
+See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/).
 
 ## Credits
 
