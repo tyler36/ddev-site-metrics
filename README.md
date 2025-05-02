@@ -12,6 +12,7 @@
     - [Customize Prometheus](#customize-prometheus)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
+    - [Configure Dashboards](#configure-dashboards)
 - [Credits](#credits)
 
 ## Overview
@@ -79,6 +80,11 @@ This addon pre-configures Prometheus as a datasource.
 - To include customize, or include additional datasources, update `.ddev/grafana/datasources/grafana-datasources.yml`.
 
 See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#grafana-data-sources).
+
+#### Configure Dashboards
+
+This add-on pre-configures `.ddev/grafana/dashboards` as the provisioned dashboard folder.
+See [Dashboards](https://grafana.com/docs/grafana/latest/dashboards/).
 
 ## Credits
 
