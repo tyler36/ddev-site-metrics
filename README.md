@@ -13,6 +13,7 @@
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
+    - [Configure plugins](#configure-plugins)
 - [Credits](#credits)
 
 ## Overview
@@ -86,6 +87,28 @@ See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#
 This add-on pre-configures `.ddev/grafana/dashboards` as the provisioned dashboard folder.
 See [Dashboards](https://grafana.com/docs/grafana/latest/dashboards/).
 See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/).
+
+#### Configure plugins
+
+To install a plugin, create or update `.ddev/docker-compose.grafana_custom.yaml`.
+Replace `<plugin-id>` with the plugin ID.
+
+```
+services:
+  grafana:
+    environment:
+      - GF_PLUGINS_PREINSTALL=<plugin-id>
+```
+
+To find the plugin ID,
+  - visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
+  - search for the desired plugin.
+  - click the "Installation" tab.
+  - Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
+
+    ```shell
+    grafana-cli plugins install grafana-clock-panel
+    ```
 
 ## Credits
 
