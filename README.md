@@ -75,6 +75,10 @@ PROMETHEUS_HTTPS_PORT=9090
 
 [NGINX Prometheus exporter](https://hub.docker.com/r/nginx/nginx-prometheus-exporter) makes it possible to monitor NGINX or NGINX Plus using Prometheus.
 
+This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
+In additional, an example dashboard is available in Grafana.
+
+
 ### Grafana
 
 [Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
