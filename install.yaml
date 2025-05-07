@@ -10,6 +10,8 @@ project_files:
   - commands/host/grafana
   - docker-compose.prometheus.yaml
   - docker-compose.grafana.yaml
+  - docker-compose.nginx-prometheus-exporter.yaml
+  - nginx_full/stub_status.conf
 
 # Available with DDEV v1.23.4+, and works only for DDEV v1.23.4+ binaries
 ddev_version_constraint: '>= v1.24.3'

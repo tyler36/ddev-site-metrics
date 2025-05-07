@@ -1,0 +1,24 @@
+## ddev-generated
+services:
+  nginx-prometheus-exporter:
+    container_name: ddev-${DDEV_SITENAME}-nginx-prometheus-exporter
+    image: nginx/nginx-prometheus-exporter:1.4.2
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+    - ".:/mnt/ddev_config"
+    - "ddev-global-cache:/mnt/ddev-global-cache"
+    environment:
+      - HTTP_EXPOSE=9113:9113
+      - HTTPS_EXPOSE=9112:9113
+    command: --nginx.scrape-uri=http://web:8080/stub_status
+
+  web:
+    # Expose the port that we scrape above.
+    environment:
+      - HTTP_EXPOSE=8080:8080
+    # Create the scrape URI
+    volumes:
+      - ./nginx_full/stub_status.conf:/etc/nginx/conf.d/stub_status.conf
