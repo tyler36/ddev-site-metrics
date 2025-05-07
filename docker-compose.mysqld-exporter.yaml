@@ -1,6 +1,7 @@
 ##ddev-generated
 services:
   mysqld-exporter:
+    container_name: ddev-${DDEV_SITENAME}-mysqld-exporter
     image: prom/mysqld-exporter:latest
     # These labels ensure this service is discoverable by ddev.
     labels:
