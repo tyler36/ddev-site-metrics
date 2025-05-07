@@ -1,4 +1,4 @@
-## ddev-generated
+##ddev-generated
 services:
   nginx-prometheus-exporter:
     container_name: ddev-${DDEV_SITENAME}-nginx-prometheus-exporter
