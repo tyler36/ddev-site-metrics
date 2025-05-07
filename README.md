@@ -11,6 +11,7 @@
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
     - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
+    - [Addon: MySql Exporter](#addon-mysql-exporter)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
@@ -78,6 +79,22 @@ PROMETHEUS_HTTPS_PORT=9090
 This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
 In additional, an example dashboard is available in Grafana.
 
+
+#### Addon: MySql Exporter
+
+[MySql Exporter](https://hub.docker.com/r/prom/mysqld-exporter) exports MySQL server metrics into Prometheus.
+The metrics can be used in Grafana:
+
+- monitor the health of the container
+- detect slow queries
+- detect issue during stress tests
+
+Try importing one of the following dashboards to see view live statistics:
+
+- [MySQL/MariaDB Workload](https://grafana.com/grafana/dashboards/14621-mysql-mariadb-workload/)
+- [MySQL Dashboard](https://grafana.com/grafana/dashboards/14031-mysql-dashboard/)
+- [Mysql - Prometheus](https://grafana.com/grafana/dashboards/6239-mysql/)
+- [MySQL Exporter Quickstart and Dashboard](https://grafana.com/grafana/dashboards/14057-mysql/)
 
 ### Grafana
 
