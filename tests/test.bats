@@ -157,14 +157,12 @@ teardown() {
   assert_output --partial 'password: db'
 }
 
-
 @test "Nginx-prometheus-exporter exposes statistics" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
-
   run ddev restart -y
   assert_success
 
