@@ -157,6 +157,24 @@ teardown() {
   assert_output --partial 'password: db'
 }
 
+@test "Nginx-prometheus-exporter exposes statistics" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
+
+  # Check it exposes scraping URI
+  run ddev exec curl -vs http://web:8080/stub_status
+  assert_output --partial 'server accepts handled request'
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs nginx-prometheus-exporter:9113/metrics
+  assert_output --partial 'HELP nginx_connections_accepted Accepted client connections'
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail

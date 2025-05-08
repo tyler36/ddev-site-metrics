@@ -10,6 +10,7 @@
 - [Tools](#tools)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
+    - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
@@ -69,6 +70,14 @@ scrape_configs:
 ```config
 PROMETHEUS_HTTPS_PORT=9090
 ```
+
+#### Addon: nginx-prometheus-exporter
+
+[NGINX Prometheus exporter](https://hub.docker.com/r/nginx/nginx-prometheus-exporter) makes it possible to monitor NGINX or NGINX Plus using Prometheus.
+
+This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
+In additional, an example dashboard is available in Grafana.
+
 
 ### Grafana
 
