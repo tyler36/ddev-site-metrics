@@ -3266,7 +3266,9 @@
   "refresh": "1m",
   "schemaVersion": 41,
   "tags": [
-    "MySQL"
+    "mysql",
+    "db",
+    "prometheus"
   ],
   "templating": {
     "list": [
