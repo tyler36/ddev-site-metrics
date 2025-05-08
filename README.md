@@ -12,6 +12,7 @@
     - [Customize Prometheus](#customize-prometheus)
     - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
     - [Addon: MySql Exporter](#addon-mysql-exporter)
+    - [Addon: postgres-exporter](#addon-postgres-exporter)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
@@ -115,6 +116,19 @@ scrape_configs:
       - target_label: __address__
         # The mysqld_exporter host:port
         replacement: mysqld-exporter:9104
+```
+#### Addon: postgres-exporter
+
+[Postgres-exporter](https://github.com/prometheus-community/postgres_exporter) exposes PostgreSQL server metrics to Prometheus.
+
+To use, ensure the `.ddev/prometheus/prometheus.yml` file scrapes the endpoint:
+
+```yml
+scrape_configs:
+  ...
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
 ```
 
 ### Grafana
