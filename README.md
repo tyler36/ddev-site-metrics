@@ -89,12 +89,7 @@ The metrics can be used in Grafana:
 - detect slow queries
 - detect issue during stress tests
 
-Try importing one of the following dashboards to see view live statistics:
-
-- [MySQL/MariaDB Workload](https://grafana.com/grafana/dashboards/14621-mysql-mariadb-workload/)
-- [MySQL Dashboard](https://grafana.com/grafana/dashboards/14031-mysql-dashboard/)
-- [Mysql - Prometheus](https://grafana.com/grafana/dashboards/6239-mysql/)
-- [MySQL Exporter Quickstart and Dashboard](https://grafana.com/grafana/dashboards/14057-mysql/)
+This addon includes an example dashboard inspired by [MySQL Overview](https://grafana.com/grafana/dashboards/7362-mysql-overview/).
 
 ### Grafana
 
