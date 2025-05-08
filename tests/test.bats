@@ -175,7 +175,7 @@ teardown() {
   assert_output --partial 'HELP nginx_connections_accepted Accepted client connections'
 }
 
-@test "MySQL-exporter exposes statistics" {
+@test "MYSQLD-exporter exposes statistics" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
