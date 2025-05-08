@@ -240,6 +240,20 @@ teardown() {
   assert_file_exists .ddev/grafana/dashboards/postgres.json
 }
 
+@test "Node-exporter exposes statistics" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs node-exporter:9100/metrics
+  assert_output --partial 'HELP node_network_up Value is 1'
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
