@@ -1,9 +1,25 @@
-##ddev-generated
 global:
   scrape_interval: 5s  # How often Prometheus scrapes data
 
 scrape_configs:
   - job_name: 'nginx'
     metrics_path: '/metrics'
+  - job_name: mysql # To get metrics about the mysql exporter's targets
+    metrics_path: /probe
+    params:
+      # Not required. Will match value to child in config file. Default value is `client`.
+      auth_module: [client.servers]
     static_configs:
-      - targets: ['nginx-prometheus-exporter:9113'] # Change to your app's hostname and port. Here, we use DDEV web container.
+      - targets:
+        # All mysql hostnames or unix sockets to monitor.
+        - db:3306
+        # Uncomment to target unix sockets.
+        - unix:///run/mysqld/mysqld.sock
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        # The mysqld_exporter host:port
+        replacement: mysqld-exporter:9104

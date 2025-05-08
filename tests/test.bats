@@ -175,6 +175,21 @@ teardown() {
   assert_output --partial 'HELP nginx_connections_accepted Accepted client connections'
 }
 
+@test "MYSQLD-exporter exposes statistics" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -s mysqld-exporter:9104/metrics
+  assert_output --partial 'HELP mysql_up Whether the MySQL server is up.'
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail

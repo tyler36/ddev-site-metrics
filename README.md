@@ -11,6 +11,7 @@
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
     - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
+    - [Addon: MySql Exporter](#addon-mysql-exporter)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
@@ -78,6 +79,43 @@ PROMETHEUS_HTTPS_PORT=9090
 This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
 In additional, an example dashboard is available in Grafana.
 
+
+#### Addon: MySql Exporter
+
+[MySql Exporter](https://hub.docker.com/r/prom/mysqld-exporter) exports MySQL server metrics into Prometheus.
+The metrics can be used in Grafana:
+
+- monitor the health of the container
+- detect slow queries
+- detect issue during stress tests
+
+This addon includes an example dashboard inspired by [MySQL Overview](https://grafana.com/grafana/dashboards/7362-mysql-overview/).
+
+To use, ensure the `.ddev/prometheus/prometheus.yml` file scrapes the endpoint:
+
+```yml
+scrape_configs:
+  ...
+  - job_name: mysql # To get metrics about the mysql exporter's targets
+    metrics_path: /probe
+    params:
+      # Not required. Will match value to child in config file. Default value is `client`.
+      auth_module: [client.servers]
+    static_configs:
+      - targets:
+        # All mysql hostnames or unix sockets to monitor.
+        - db:3306
+        # Uncomment to target unix sockets.
+        - unix:///run/mysqld/mysqld.sock
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        # The mysqld_exporter host:port
+        replacement: mysqld-exporter:9104
+```
 
 ### Grafana
 
