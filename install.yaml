@@ -41,3 +41,4 @@ post_install_actions:
         grep -q '#ddev-generated' docker-compose.postgres-exporter.yaml && rm docker-compose.postgres-exporter.yaml
         grep -q '#ddev-generated' grafana/dashboards/postgres.json && rm grafana/dashboards/postgres.json
     fi
+  - ddev dotenv set .ddev/.env --node-exporter-http-port=9100 > /dev/null 2>&1

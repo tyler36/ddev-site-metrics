@@ -18,3 +18,4 @@ services:
       - '--path.sysfs=/host/sys'
       - '--path.rootfs=/rootfs'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($|/)'
+      - '--web.listen-address=:${NODE_EXPORTER_HTTP_PORT:-9100}'

@@ -147,6 +147,13 @@ scrape_configs:
       - targets: ['node-exporter:9100']
 ```
 
+By default, node-exporter is accessible via `node-exporter:9100` inside the docker container.
+To change the port,
+
+- update `NODE_EXPORTER_HTTP_PORT="9100"` in `.ddev/.env`.
+- update the scrape config in `.ddev/prometheus/prometheus.yml`.
+- restart DDEV to apply the changes.
+
 ### Grafana
 
 [Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
