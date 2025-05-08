@@ -166,6 +166,10 @@ teardown() {
   run ddev restart -y
   assert_success
 
+  # Check it exposes scraping URI
+  run ddev exec curl -vs http://web:8080/stub_status
+  assert_output --partial 'server accepts handled request'
+
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs nginx-prometheus-exporter:9113/metrics
   assert_output --partial 'HELP nginx_connections_accepted Accepted client connections'
