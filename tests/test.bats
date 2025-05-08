@@ -190,6 +190,25 @@ teardown() {
   assert_output --partial 'HELP mysql_up Whether the MySQL server is up.'
 }
 
+@test "Postgres-exporter exposes statistics" {
+  set -eu -o pipefail
+
+  echo "# Convert project to Postgres" >&3
+  ddev delete -Oy
+  ddev config --database=postgres:16
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs postgres-exporter:9187/metrics
+  assert_output --partial 'HELP pg_settings_track_activities Server Parameter: track_activities'
+  assert_output --partial 'pg_up 1'
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
