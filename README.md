@@ -91,6 +91,32 @@ The metrics can be used in Grafana:
 
 This addon includes an example dashboard inspired by [MySQL Overview](https://grafana.com/grafana/dashboards/7362-mysql-overview/).
 
+To use, ensure the `.ddev/prometheus/prometheus.yml` file scrapes the endpoint:
+
+```yml
+scrape_configs:
+  ...
+  - job_name: mysql # To get metrics about the mysql exporter's targets
+    metrics_path: /probe
+    params:
+      # Not required. Will match value to child in config file. Default value is `client`.
+      auth_module: [client.servers]
+    static_configs:
+      - targets:
+        # All mysql hostnames or unix sockets to monitor.
+        - db:3306
+        # Uncomment to target unix sockets.
+        - unix:///run/mysqld/mysqld.sock
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        # The mysqld_exporter host:port
+        replacement: mysqld-exporter:9104
+```
+
 ### Grafana
 
 [Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
