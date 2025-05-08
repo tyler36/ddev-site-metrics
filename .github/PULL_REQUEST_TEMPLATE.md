@@ -9,7 +9,7 @@
 ## Manual Testing Instructions
 
 ```bash
-ddev add-on get https://github.com/<user>/<repo>/tarball/<branch>
+ddev add-on get https://github.com/tyler36/ddev-site-metrics/tarball/<branch>
 ddev restart
 ```
 
