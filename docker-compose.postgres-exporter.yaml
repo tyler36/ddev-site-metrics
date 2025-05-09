@@ -1,0 +1,16 @@
+##ddev-generated
+services:
+  postgres-exporter:
+    container_name: ddev-${DDEV_SITENAME}-postgres-exporter
+    image: quay.io/prometheuscommunity/postgres-exporter
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+    - ".:/mnt/ddev_config"
+    - "ddev-global-cache:/mnt/ddev-global-cache"
+    environment:
+      - DATA_SOURCE_URI=db:5432/postgres?sslmode=disable
+      - DATA_SOURCE_USER=db
+      - DATA_SOURCE_PASS=db
