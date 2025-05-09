@@ -13,5 +13,5 @@ services:
     - "./mysqld_exporter/.my.cnf:/opt/mysqld_exporter/.my.cnf"
     command:
     - "--config.my-cnf=/opt/mysqld_exporter/.my.cnf"
-    ports:
-    - 9104:9104
+    environment:
+      - HTTP_EXPOSE=9104:9104
