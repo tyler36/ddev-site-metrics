@@ -154,6 +154,8 @@ To change the port,
 - update the scrape config in `.ddev/prometheus/prometheus.yml`.
 - restart DDEV to apply the changes.
 
+This addon includes an example node dashboard based on [Node Exporter Full (v40)](https://grafana.com/grafana/dashboards/1860-node-exporter-full/).
+
 ### Grafana
 
 [Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
