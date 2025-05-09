@@ -17,6 +17,7 @@ project_files:
   # The following files belong to the mysqld-exporter feature.
   - docker-compose.mysqld-exporter.yaml
   - mysqld_exporter
+  - grafana/dashboards/mysql.json
   # The following files belong to the postgres-exporter feature.
   - docker-compose.postgres-exporter.yaml
   - grafana/dashboards/postgres.json
@@ -27,3 +28,14 @@ ddev_version_constraint: '>= v1.24.3'
 post_install_actions:
   - ddev dotenv set .ddev/.env --prometheus-https-port=9090 > /dev/null 2>&1
   - ddev dotenv set .ddev/.env --grafana-https-port=3000 > /dev/null 2>&1
+  - |
+    #ddev-nodisplay
+    #ddev-description:Cleanup unused database exporters.
+    if [ "$DDEV_DATABASE_FAMILY" == "postgres" ]; then
+        grep -q '#ddev-generated' docker-compose.mysqld-exporter.yaml && rm docker-compose.mysqld-exporter.yaml
+        grep -q '#ddev-generated' grafana/dashboards/mysql.json && rm grafana/dashboards/mysql.json
+    fi
+    if [ "$DDEV_DATABASE_FAMILY" == "mysql" ]; then
+        grep -q '#ddev-generated' docker-compose.postgres-exporter.yaml && rm docker-compose.postgres-exporter.yaml
+        grep -q '#ddev-generated' grafana/dashboards/postgres.json && rm grafana/dashboards/postgres.json
+    fi

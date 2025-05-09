@@ -209,6 +209,37 @@ teardown() {
   assert_output --partial 'pg_up 1'
 }
 
+@test "It only installs one database type" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  # Assert 'mysqld-exporter' files exist.
+  assert_file_exists .ddev/docker-compose.mysqld-exporter.yaml
+  assert_file_exists .ddev/grafana/dashboards/mysql.json
+  # Assert 'postgres-exporter' files do NOT exist.
+  assert_file_not_exist .ddev/docker-compose.postgres-exporter.yaml
+  assert_file_not_exist .ddev/grafana/dashboards/postgres.json
+
+  echo "# Convert project to Postgres" >&3
+  ddev delete -Oy
+  ddev config --database=postgres:16
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  # Assert 'mysqld-exporter' files do NOT exist.
+  assert_file_not_exist .ddev/docker-compose.mysqld-exporter.yaml
+  assert_file_not_exist .ddev/grafana/dashboards/mysql.json
+
+  # Assert 'postgres-exporter' files exist.
+  assert_file_exists .ddev/docker-compose.postgres-exporter.yaml
+  assert_file_exists .ddev/grafana/dashboards/postgres.json
+}
+
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
