@@ -13,6 +13,7 @@
     - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
     - [Addon: MySql Exporter](#addon-mysql-exporter)
     - [Addon: postgres-exporter](#addon-postgres-exporter)
+    - [Addon: node-exporter](#addon-node-exporter)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
@@ -117,6 +118,7 @@ scrape_configs:
         # The mysqld_exporter host:port
         replacement: mysqld-exporter:9104
 ```
+
 #### Addon: postgres-exporter
 
 [Postgres-exporter](https://github.com/prometheus-community/postgres_exporter) exposes PostgreSQL server metrics to Prometheus.
@@ -130,6 +132,29 @@ scrape_configs:
     static_configs:
       - targets: ['postgres-exporter:9187']
 ```
+
+#### Addon: node-exporter
+
+[Node Exporter](https://github.com/prometheus/node_exporter) is a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go with pluggable metric collectors.
+
+To use, ensure the `.ddev/prometheus/prometheus.yml` file scrapes the endpoint:
+
+```yml
+scrape_configs:
+  ...
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+```
+
+By default, node-exporter is accessible via `node-exporter:9100` inside the docker container.
+To change the port,
+
+- update `NODE_EXPORTER_HTTP_PORT="9100"` in `.ddev/.env`.
+- update the scrape config in `.ddev/prometheus/prometheus.yml`.
+- restart DDEV to apply the changes.
+
+This addon includes an example node dashboard based on [Node Exporter Full (v40)](https://grafana.com/grafana/dashboards/1860-node-exporter-full/).
 
 ### Grafana
 

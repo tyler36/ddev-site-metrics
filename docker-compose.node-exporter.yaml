@@ -1,0 +1,21 @@
+##ddev-generated
+services:
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: ddev-${DDEV_SITENAME}-node-exporter
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($|/)'
+      - '--web.listen-address=:${NODE_EXPORTER_HTTP_PORT:-9100}'
