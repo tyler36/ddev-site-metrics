@@ -42,6 +42,7 @@ health_checks() {
   prometheus_health_check
   grafana_health_check
   loki_health_check
+  alloy_health_check
 }
 
 prometheus_health_check() {
@@ -57,6 +58,12 @@ grafana_health_check() {
 loki_health_check() {
   run ddev exec curl -sf "loki:3100/metrics"
   assert_output --partial "HELP loki_dns_lookups_total The number of DNS lookups resolutions attempts"
+}
+
+alloy_health_check() {
+  # Attempt to reload alloy configuration to prove the site is functioning.
+  run curl -X POST https://${PROJNAME}.ddev.site:12345/-/reload
+  assert_output --partial config reloaded
 }
 
 teardown() {

@@ -1,0 +1,6 @@
+##ddev-generated
+
+logging {
+  level  = "info"
+  format = "logfmt"
+}

@@ -1,0 +1,15 @@
+##ddev-generated
+services:
+  alloy:
+    container_name: ddev-${DDEV_SITENAME}-alloy
+    image: grafana/alloy:latest
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+      - '.:/mnt/ddev_config'
+      - 'ddev-global-cache:/mnt/ddev-global-cache'
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTPS_EXPOSE=${ALLOY_HTTPS_PORT:-12345}:12345
+    command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
