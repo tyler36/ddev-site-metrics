@@ -1,10 +1,28 @@
 #!/usr/bin/env bash
 
 #ddev-generated
-## Description: Launch the alloy website
+## Description: Helper function for Alloy
 ## Usage: alloy
-## Example: "ddev alloy"
+## Example: "ddev alloy", "ddev alloy --reload"
 
-source .ddev/.env
+# Open Alloy in preferred browser.
+launch () {
+  ddev launch :12345
+}
 
-ddev launch :12345
+# Send a request to reload configuration.
+reloadConfig() {
+  curl -X POST "${DDEV_PRIMARY_URL}:12345/-/reload"
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -r | --reload)
+    reloadConfig
+    exit 0;
+    ;;
+  esac
+  shift
+done
+
+launch

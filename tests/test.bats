@@ -62,7 +62,7 @@ loki_health_check() {
 
 alloy_health_check() {
   # Attempt to reload alloy configuration to prove the site is functioning.
-  run curl -X POST https://${PROJNAME}.ddev.site:12345/-/reload
+  run ddev alloy -r
   assert_output --partial config reloaded
 }
 
