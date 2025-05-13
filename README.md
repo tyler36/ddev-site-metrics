@@ -81,7 +81,6 @@ PROMETHEUS_HTTPS_PORT=9090
 This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
 In additional, an example dashboard is available in Grafana.
 
-
 #### Addon: MySql Exporter
 
 [MySql Exporter](https://hub.docker.com/r/prom/mysqld-exporter) exports MySQL server metrics into Prometheus.
@@ -179,18 +178,19 @@ See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/bu
 To install a plugin, create or update `.ddev/docker-compose.grafana_custom.yaml`.
 Replace `<plugin-id>` with the plugin ID.
 
-```
+```yaml
 services:
   grafana:
     environment:
       - GF_PLUGINS_PREINSTALL=<plugin-id>
 ```
 
-To find the plugin ID,
-  - visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
-  - search for the desired plugin.
-  - click the "Installation" tab.
-  - Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
+To find the plugin ID:
+
+- visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
+- search for the desired plugin.
+- click the "Installation" tab.
+- Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
 
     ```shell
     grafana-cli plugins install grafana-clock-panel
