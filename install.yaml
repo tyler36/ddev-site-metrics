@@ -13,6 +13,7 @@ project_files:
   # The following files belong to the loki/alloy feature
   - docker-compose.loki.yaml
   - grafana/datasources/ddev-loki.yml
+  - loki/local-config.yaml
   - docker-compose.alloy.yaml
   - alloy
   - commands/host/alloy

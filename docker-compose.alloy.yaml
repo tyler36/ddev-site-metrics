@@ -2,14 +2,16 @@
 services:
   alloy:
     container_name: ddev-${DDEV_SITENAME}-alloy
-    image: grafana/alloy:latest
+    image: grafana/alloy:v1.7.5
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: ${DDEV_APPROOT}
-    volumes:
-      - '.:/mnt/ddev_config'
-      - 'ddev-global-cache:/mnt/ddev-global-cache'
     environment:
       - VIRTUAL_HOST=$DDEV_HOSTNAME
-      - HTTPS_EXPOSE=${ALLOY_HTTPS_PORT:-12345}:12345
+      - HTTPS_EXPOSE=12345:12345
+    volumes:
+      - ./alloy/config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock
     command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+    depends_on:
+      - loki
