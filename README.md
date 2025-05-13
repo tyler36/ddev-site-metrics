@@ -18,6 +18,9 @@
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
     - [Configure plugins](#configure-plugins)
+    - [Grafana Alloy](#grafana-alloy)
+      - [Usage](#usage)
+    - [Grafana Loki](#grafana-loki)
 - [Credits](#credits)
 
 ## Overview
@@ -80,7 +83,6 @@ PROMETHEUS_HTTPS_PORT=9090
 
 This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
 In additional, an example dashboard is available in Grafana.
-
 
 #### Addon: MySql Exporter
 
@@ -179,22 +181,63 @@ See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/bu
 To install a plugin, create or update `.ddev/docker-compose.grafana_custom.yaml`.
 Replace `<plugin-id>` with the plugin ID.
 
-```
+```yaml
 services:
   grafana:
     environment:
       - GF_PLUGINS_PREINSTALL=<plugin-id>
 ```
 
-To find the plugin ID,
-  - visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
-  - search for the desired plugin.
-  - click the "Installation" tab.
-  - Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
+To find the plugin ID:
+
+- visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
+- search for the desired plugin.
+- click the "Installation" tab.
+- Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
 
     ```shell
     grafana-cli plugins install grafana-clock-panel
     ```
+
+#### Grafana Alloy
+
+[Grafana Alloy](https://grafana.com/docs/alloy/latest/) can collect, process, and export telemetry signals to scale and future-proof your observability approach.
+
+This addon configures Grafana Alloy to collect and process:
+
+- Docker logs (`alloy/docker.alloy`),
+- Alloy logs (`alloy/alloy-logs.alloy`)
+- Enable live debugging of Alloy pipelines, where supported
+- Adds a pipeline to a DDEV-supported Grafana Loki process
+
+To configure Alloy, add/update files in `.ddev/alloy`. By default, all files in this directory are loaded and processed.
+
+##### Usage
+
+Grafana Alloy runs within the process on its default port of `12345`.
+
+- To open the Grafana Alloy dashboard, run the following command:
+
+```shell
+ddev alloy
+```
+
+- To reload Alloy configuration, run the following command:
+
+```shell
+ddev alloy -r
+```
+
+#### Grafana Loki
+
+[Grafana Loki](https://grafana.com/docs/loki/latest/) is a set of open source components that can be composed into a fully featured logging stack.
+
+Grafana Loki listens on its default port of `3100`.
+To view processed logs, visit `Drilldown | Logs` in the Grafana dashboard.
+
+```shell
+ddev :3000/a/grafana-lokiexplore-app/explore
+```
 
 ## Credits
 
