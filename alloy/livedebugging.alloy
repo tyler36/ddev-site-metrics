@@ -1,0 +1,8 @@
+// ##ddev-generated
+/**
+ * Enables the ability to view logs in the Alloy UI in realtime.
+ * The server must be run with: "--server.http.listen-addr=0.0.0.0:12345"
+ */
+livedebugging {
+  enabled = true
+}

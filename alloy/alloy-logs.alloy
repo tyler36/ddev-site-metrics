@@ -1,0 +1,27 @@
+// ##ddev-generated
+
+/**
+ * 'logging' is an optional configuration block used to customize how Alloy produces log messages.
+ * @See https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/
+ */
+logging {
+  level  = "debug"
+  format = "logfmt"
+  write_to = [loki.process.alloy.receiver]
+}
+
+/**
+ * 'loki.process' receives log entries from other loki components, applies one or more processing stages,
+ * and forwards the results to the list of receivers in the component’s arguments.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/
+ *
+ * 'loki.write.default.receiver' is defined in `alloy/ddev-loki.alloy`
+ */
+loki.process "alloy" {
+  stage.labels {
+    values = {
+      service_name = "alloy",
+    }
+  }
+  forward_to = [loki.write.default.receiver]
+}

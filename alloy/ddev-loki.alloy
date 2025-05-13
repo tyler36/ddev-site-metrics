@@ -1,0 +1,11 @@
+// ##ddev-generated
+/**
+ * 'loki.write receives' log entries from other loki components and sends them over the network using the Loki logproto format.
+ * We have centralized it here so other components can reference it.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/
+ */
+loki.write "default" {
+  endpoint {
+    url  = "http://loki:3100/loki/api/v1/push"
+  }
+}
