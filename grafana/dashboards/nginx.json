@@ -513,7 +513,11 @@
   ],
   "preload": false,
   "schemaVersion": 41,
-  "tags": [],
+  "tags": [
+    "web",
+    "nginx",
+    "prometheus"
+  ],
   "templating": {
     "list": []
   },
