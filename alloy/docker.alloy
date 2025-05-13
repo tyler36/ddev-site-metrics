@@ -1,11 +1,18 @@
 // ##ddev-generated
-// This component is responsible for discovering new containers within the docker environment
+/**
+ * 'discovery.docker' discovers Docker Engine containers and exposes them as targets.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.docker/
+ */
 discovery.docker "docker" {
   host = "unix:///var/run/docker.sock"
   refresh_interval = "5s"
 }
 
-// This component is responsible for relabeling the discovered containers
+/**
+ * 'discovery.relabel' rewrites the label set of the input targets by applying one or more relabeling rules.
+ * If no rules are defined, then the input targets are exported as-is.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.relabel/
+ */
 discovery.relabel "docker" {
   targets = []
 
@@ -16,7 +23,10 @@ discovery.relabel "docker" {
   }
 }
 
-// This component is responsible for collecting logs from the discovered containers
+/**
+ * 'loki.source.docker' reads log entries from Docker containers and forwards them to other loki.* components.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/
+ */
 loki.source.docker "docker" {
   host             = "unix:///var/run/docker.sock"
   targets          = discovery.docker.docker.targets
@@ -25,7 +35,13 @@ loki.source.docker "docker" {
   refresh_interval = "5s"
 }
 
-// This component is responsible for processing the logs (In this case adding static labels)
+/**
+ * 'loki.process' receives log entries from other loki components, applies one or more processing stages,
+ * and forwards the results to the list of receivers in the component’s arguments.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/
+ *
+ * 'loki.write.default.receiver' is defined in `alloy/ddev-loki.alloy`
+ */
 loki.process "docker" {
   stage.static_labels {
     values = {
