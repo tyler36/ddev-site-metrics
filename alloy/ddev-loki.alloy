@@ -1,0 +1,10 @@
+// ##ddev-generated
+/**
+ * This component is responsible for writing the logs to Loki.
+ * We have centralized it here so other components can reference it.
+ */
+loki.write "default" {
+  endpoint {
+    url  = "http://loki:3100/loki/api/v1/push"
+  }
+}

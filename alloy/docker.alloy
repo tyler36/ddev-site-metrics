@@ -27,22 +27,10 @@ loki.source.docker "docker" {
 
 // This component is responsible for processing the logs (In this case adding static labels)
 loki.process "docker" {
-    stage.static_labels {
+  stage.static_labels {
     values = {
         env = "production",
       }
-    }
-    forward_to = [loki.write.docker.receiver]
-}
-
-// This component is responsible for writing the logs to Loki
-loki.write "docker" {
-  endpoint {
-    url  = "http://loki:3100/loki/api/v1/push"
   }
-}
-
-// Enables the ability to view logs in the Alloy UI in realtime
-livedebugging {
-  enabled = true
+  forward_to = [loki.write.default.receiver]
 }
