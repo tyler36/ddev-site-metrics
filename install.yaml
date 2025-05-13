@@ -10,6 +10,9 @@ project_files:
   - commands/host/grafana
   - docker-compose.prometheus.yaml
   - docker-compose.grafana.yaml
+  # The following files belong to the loki/alloy feature
+  - docker-compose.loki.yaml
+  - grafana/datasources/ddev-loki.yml
   # The following files belong to the nginx-prometheus-exporter feature.
   - docker-compose.nginx-prometheus-exporter.yaml
   - nginx_full/stub_status.conf

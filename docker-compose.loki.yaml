@@ -1,0 +1,15 @@
+##ddev-generated
+services:
+  loki:
+    container_name: ddev-${DDEV_SITENAME}-loki
+    image: grafana/loki:latest
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+    - ".:/mnt/ddev_config"
+    - "ddev-global-cache:/mnt/ddev-global-cache"
+    command: -config.file=/etc/loki/local-config.yaml
+    environment:
+      - HTTP_EXPOSE=3100:3100
