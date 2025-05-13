@@ -20,6 +20,7 @@
     - [Configure plugins](#configure-plugins)
     - [Grafana Alloy](#grafana-alloy)
       - [Usage](#usage)
+    - [Grafana Loki](#grafana-loki)
 - [Credits](#credits)
 
 ## Overview
@@ -225,6 +226,17 @@ ddev alloy
 
 ```shell
 ddev alloy -r
+```
+
+#### Grafana Loki
+
+[Grafana Loki](https://grafana.com/docs/loki/latest/) is a set of open source components that can be composed into a fully featured logging stack.
+
+Grafana Loki listens on its default port of `3100`.
+To view processed logs, visit `Drilldown | Logs` in the Grafana dashboard.
+
+```shell
+ddev :3000/a/grafana-lokiexplore-app/explore
 ```
 
 ## Credits
