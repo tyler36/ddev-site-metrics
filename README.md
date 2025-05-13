@@ -18,6 +18,8 @@
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
     - [Configure plugins](#configure-plugins)
+    - [Grafana Alloy](#grafana-alloy)
+      - [Usage](#usage)
 - [Credits](#credits)
 
 ## Overview
@@ -195,6 +197,35 @@ To find the plugin ID:
     ```shell
     grafana-cli plugins install grafana-clock-panel
     ```
+
+#### Grafana Alloy
+
+[Grafana Alloy](https://grafana.com/docs/alloy/latest/) can collect, process, and export telemetry signals to scale and future-proof your observability approach.
+
+This addon configures Grafana Alloy to collect and process:
+
+- Docker logs (`alloy/docker.alloy`),
+- Alloy logs (`alloy/alloy-logs.alloy`)
+- Enable live debugging of Alloy pipelines, where supported
+- Adds a pipeline to a DDEV-supported Grafana Loki process
+
+To configure Alloy, add/update files in `.ddev/alloy`. By default, all files in this directory are loaded and processed.
+
+##### Usage
+
+Grafana Alloy runs within the process on its default port of `12345`.
+
+- To open the Grafana Alloy dashboard, run the following command:
+
+```shell
+ddev alloy
+```
+
+- To reload Alloy configuration, run the following command:
+
+```shell
+ddev alloy -r
+```
 
 ## Credits
 
