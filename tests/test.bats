@@ -180,7 +180,7 @@ teardown() {
   assert_success
 
   # Check it exposes scraping URI
-  run ddev exec curl -vs http://web:8080/stub_status
+  run ddev exec curl -vs http://127.0.0.1:8080/stub_status
   assert_output --partial 'server accepts handled request'
 
   # Check it exposes endpoint with statistics
