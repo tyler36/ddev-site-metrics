@@ -1,0 +1,29 @@
+server:
+  http_listen_port: 3200
+  grpc_listen_port: 3300
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        http:
+          endpoint: "tempo:4318"  # Replace 3200 with your desired port number
+
+compactor:
+  compaction:
+    block_retention: 48h                # configure total trace retention here
+
+ingester:
+  trace_idle_period: 10s
+  max_block_duration: 1m  # Reduce from 5m to 1m
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /tmp/tempo/traces
+
+overrides:
+  defaults:
+    metrics_generator:
+      processors: [local-blocks]
