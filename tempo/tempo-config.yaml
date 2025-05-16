@@ -17,13 +17,29 @@ ingester:
   trace_idle_period: 10s
   max_block_duration: 1m  # Reduce from 5m to 1m
 
+metrics_generator:
+  registry:
+    external_labels:
+      source: tempo
+      cluster: docker-compose
+  storage:
+    path: /var/tempo/generator/wal
+    remote_write:
+      - url: prometheus:9090/api/v1/write
+        send_exemplars: true
+  traces_storage:
+    path: /var/tempo/generator/traces
+
 storage:
   trace:
     backend: local
     local:
-      path: /tmp/tempo/traces
+      path: /var/tempo/blocks
+    wal:
+      path: /var/tempo/wal
 
 overrides:
   defaults:
     metrics_generator:
-      processors: [local-blocks]
+      processors: [service-graphs, span-metrics, local-blocks] # enables metrics generator
+      generate_native_histograms: both
