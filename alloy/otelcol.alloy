@@ -16,8 +16,45 @@ otelcol.receiver.otlp "default" {
  */
 otelcol.processor.batch "default" {
   output {
-    traces  = [otelcol.exporter.otlphttp.tempo.input]
+    traces  = [otelcol.connector.spanlogs.default.input, otelcol.exporter.otlphttp.tempo.input]
   }
+}
+
+/**
+ * 'otelcol.connector.spanlogs' accepts traces telemetry data from other otelcol components and outputs logs telemetry data for each span, root, or process.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/
+ */
+otelcol.connector.spanlogs "default" {
+  roots              = true
+  events             = true
+  labels             = ["attribute1", "res_attribute1"]
+  span_attributes    = ["attribute1"]
+  process_attributes = ["res_attribute1"]
+  event_attributes   = ["log.severity", "log.message"]
+
+  overrides {
+    service_key = "service.key"
+  }
+
+  output {
+    logs = [otelcol.processor.attributes.default.input]
+  }
+}
+
+otelcol.processor.attributes "default" {
+  action {
+    key = "loki.attribute.labels"
+    action = "insert"
+    value = "attribute1"
+  }
+
+  output {
+    logs = [otelcol.exporter.loki.default.input]
+  }
+}
+
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
 }
 
 otelcol.exporter.otlphttp "tempo" {
