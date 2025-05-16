@@ -2,7 +2,7 @@
 services:
   alloy:
     container_name: ddev-${DDEV_SITENAME}-alloy
-    image: grafana/alloy:v1.7.5
+    image: grafana/alloy:v1.8.3
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: ${DDEV_APPROOT}
