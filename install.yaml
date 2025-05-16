@@ -17,6 +17,9 @@ project_files:
   - docker-compose.alloy.yaml
   - alloy
   - commands/host/alloy
+  # The following files belong to the tempo feature
+  - docker-compose.tempo.yaml
+  - tempo/tempo-config.yaml
   # The following files belong to the nginx-prometheus-exporter feature.
   - docker-compose.nginx-prometheus-exporter.yaml
   - nginx_full/stub_status.conf

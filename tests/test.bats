@@ -43,6 +43,7 @@ health_checks() {
   grafana_health_check
   loki_health_check
   alloy_health_check
+  tempo_health_check
 }
 
 prometheus_health_check() {
@@ -64,6 +65,11 @@ alloy_health_check() {
   # Attempt to reload alloy configuration to prove the site is functioning.
   run ddev alloy -r
   assert_output --partial config reloaded
+}
+
+tempo_health_check() {
+  run ddev exec curl -sf "tempo:3200/metrics"
+  assert_output --partial "HELP tempo_build_info"
 }
 
 teardown() {
