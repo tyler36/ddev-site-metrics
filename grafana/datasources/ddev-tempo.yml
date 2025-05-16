@@ -1,0 +1,14 @@
+#ddev-generated
+apiVersion: 1
+
+datasources:
+- name: Tempo
+  type: tempo
+  access: proxy
+  url: http://tempo:3200
+  basicAuth: false
+  jsonData:
+    tracesToMetrics:
+      datasourceUid: 'Prometheus'
+    serviceMap:
+        datasourceUid: 'Prometheus'
