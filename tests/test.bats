@@ -58,7 +58,7 @@ grafana_health_check() {
 
 loki_health_check() {
   run ddev exec curl -sf "loki:3100/metrics"
-  assert_output --partial "HELP loki_dns_lookups_total The number of DNS lookups resolutions attempts"
+  assert_output --partial "HELP loki_build_info"
 }
 
 alloy_health_check() {
