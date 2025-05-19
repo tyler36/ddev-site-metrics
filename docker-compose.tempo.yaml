@@ -1,0 +1,15 @@
+##ddev-generated
+services:
+  tempo:
+    container_name: ddev-${DDEV_SITENAME}-tempo
+    image: grafana/tempo:latest
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+      - ./tempo:/etc/tempo
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+    command: [ "-config.file=/etc/tempo/tempo-config.yaml" ]

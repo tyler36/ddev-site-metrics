@@ -1,0 +1,68 @@
+// ##ddev-generated
+
+otelcol.receiver.otlp "default" {
+  http {
+    endpoint="alloy:4318"
+  }
+
+  output {
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+/**
+ * 'otelcol.processor.batch' accepts telemetry data from other otelcol components and places them into batches.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.batch/
+ */
+otelcol.processor.batch "default" {
+  output {
+    traces  = [otelcol.connector.spanlogs.default.input, otelcol.exporter.otlphttp.tempo.input]
+  }
+}
+
+/**
+ * 'otelcol.connector.spanlogs' accepts traces telemetry data from other otelcol components and outputs logs telemetry data for each span, root, or process.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.connector.spanlogs/
+ */
+otelcol.connector.spanlogs "default" {
+  roots              = true
+  events             = true
+  labels             = ["attribute1", "res_attribute1"]
+  span_attributes    = ["attribute1"]
+  process_attributes = ["res_attribute1"]
+  event_attributes   = ["log.severity", "log.message"]
+
+  overrides {
+    service_key = "service.key"
+  }
+
+  output {
+    logs = [otelcol.processor.attributes.default.input]
+  }
+}
+
+otelcol.processor.attributes "default" {
+  action {
+    key = "loki.attribute.labels"
+    action = "insert"
+    value = "attribute1"
+  }
+
+  output {
+    logs = [otelcol.exporter.loki.default.input]
+  }
+}
+
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+otelcol.exporter.otlphttp "tempo" {
+    client {
+        endpoint = "http://tempo:4318"
+        tls {
+            insecure             = true
+            insecure_skip_verify = true
+        }
+    }
+}
