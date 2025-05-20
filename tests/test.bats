@@ -109,7 +109,7 @@ teardown() {
   assert_output --partial "<title>Grafana</title>"
 }
 
-@test "Grafana is pre-configured with Prometheus datasource" {
+@test "Grafana is pre-configured with datasources" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
@@ -123,6 +123,16 @@ teardown() {
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
   assert_output --partial '"name":"Prometheus"'
   assert_output --partial '"url":"http://prometheus:9090"'
+
+  # Query Grafana API for Loki datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
+  assert_output --partial '"name":"Loki"'
+  assert_output --partial '"url":"http://loki:3100"'
+
+  # Query Grafana API for Tempo datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
+  assert_output --partial '"name":"Tempo"'
+  assert_output --partial '"url":"http://tempo:3200"'
 }
 
 @test "Grafana is pre-configured with DDEV MySQL datasource" {
