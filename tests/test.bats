@@ -109,6 +109,22 @@ teardown() {
   assert_output --partial "<title>Grafana</title>"
 }
 
+@test "Grafana is pre-configured with Prometheus datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Query Grafana API for Prometheus datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
+  assert_output --partial '"name":"Prometheus"'
+  assert_output --partial '"url":"http://prometheus:9090"'
+}
+
 @test "Prometheus port is configurable" {
   set -eu -o pipefail
 
@@ -124,21 +140,6 @@ teardown() {
 
   run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
-}
-
-@test "Grafana is pre-configured with Prometheus datasource" {
-  set -eu -o pipefail
-
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${DIR}"
-  assert_success
-
-  run ddev restart -y
-  assert_success
-
-  # Grafana uses the HTTP endpoint, so check that the datasources contains the correct URL.
-  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-prometheus.yml
-  assert_output --partial 'url: http://prometheus:9090'
 }
 
 @test "Grafana is pre-configured with DDEV MySQL datasource" {
