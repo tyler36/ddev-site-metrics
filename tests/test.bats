@@ -92,6 +92,23 @@ teardown() {
   health_checks
 }
 
+@test "Grafana port is configurable" {
+  set -eu -o pipefail
+
+  export GRAFANA_HTTPS_PORT=3043
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  ddev dotenv set .ddev/.env --grafana-https-port="${GRAFANA_HTTPS_PORT}"
+  run ddev restart -y
+  assert_success
+
+  run curl -sf "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
+  assert_output --partial "<title>Grafana</title>"
+}
+
 @test "Prometheus port is configurable" {
   set -eu -o pipefail
 
@@ -107,23 +124,6 @@ teardown() {
 
   run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
-}
-
-@test "Grafana port is configurable" {
-  set -eu -o pipefail
-
-  export GRAFANA_HTTPS_PORT=3043
-
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${DIR}"
-  assert_success
-
-  ddev dotenv set .ddev/.env --grafana-https-port="${GRAFANA_HTTPS_PORT}"
-  run ddev restart -y
-  assert_success
-
-  run curl -sf "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
-  assert_output --partial "Grafana"
 }
 
 @test "Grafana is pre-configured with Prometheus datasource" {
