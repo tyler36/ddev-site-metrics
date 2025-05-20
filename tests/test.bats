@@ -39,21 +39,22 @@ setup() {
 }
 
 health_checks() {
-  prometheus_health_check
   grafana_health_check
+  prometheus_health_check
   loki_health_check
   alloy_health_check
   tempo_health_check
 }
 
+grafana_health_check() {
+  # Test the Grafana main page is accessible
+  run curl -sf "https://${PROJNAME}.ddev.site:3000"
+  assert_output --partial "<title>Grafana</title>"
+}
+
 prometheus_health_check() {
   run curl -sf "https://${PROJNAME}.ddev.site:9090/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
-}
-
-grafana_health_check() {
-  run curl -sf "https://${PROJNAME}.ddev.site:3000"
-  assert_output --partial "<title>Grafana</title>"
 }
 
 loki_health_check() {
