@@ -22,7 +22,7 @@ project_files:
   - grafana/datasources/ddev-tempo.yml
   - tempo/tempo-config.yaml
   # The following files belong to the nginx-prometheus-exporter feature.
-  - docker-compose.nginx-prometheus-exporter.yaml
+  - docker-compose.prometheus-nginx-exporter.yaml
   - nginx_full/stub_status.conf
   - grafana/dashboards/nginx.json
   # The following files belong to the mysqld-exporter feature.
