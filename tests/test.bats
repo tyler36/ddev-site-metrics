@@ -64,7 +64,7 @@ prometheus_health_check() {
 
 grafana_loki_health_check() {
   # Test Grafana Loki exposes metrics
-  run ddev exec curl -sf "loki:3100/metrics"
+  run ddev exec curl -sf "grafana-loki:3100/metrics"
   assert_output --partial "HELP loki_build_info"
 }
 
