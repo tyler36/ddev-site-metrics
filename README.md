@@ -127,6 +127,11 @@ To view processed logs, visit `Drilldown | Logs` in the Grafana dashboard.
 ddev launch :3000/a/grafana-lokiexplore-app/explore
 ```
 
+Key files include:
+
+- `docker-compose.grafana-loki.yaml`: loads Grafana Loki image
+- `loki/local-config.yaml`: Grafana Loki configuration file
+
 #### Grafana Tempo
 
 [Grafana Tempo](https://grafana.com/docs/tempo/latest/) is an open-source, easy-to-use, and high-scale distributed tracing backend.

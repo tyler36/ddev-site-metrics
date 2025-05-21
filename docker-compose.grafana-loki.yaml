@@ -1,7 +1,7 @@
 ##ddev-generated
 services:
-  loki:
-    container_name: ddev-${DDEV_SITENAME}-loki
+  grafana-loki:
+    container_name: ddev-${DDEV_SITENAME}-grafana-loki
     image: grafana/loki:3.4.2
     # These labels ensure this service is discoverable by ddev.
     labels:

@@ -15,7 +15,7 @@ scrape_configs:
   - job_name: 'loki'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['loki:3100']
+      - targets: ['grafana-loki:3100']
   # Get hardware and OS metrics exposed by *NIX kernels
   - job_name: 'node-exporter'
     static_configs:
