@@ -1,0 +1,12 @@
+##ddev-generated
+
+# Node Exporter
+# This file configures Prometheus for Node Exporter. Metrics are prefixed with `node`.
+# @See https://github.com/prometheus/node_exporter
+
+scrape_configs:
+  # Get exposed Nginx metrics
+  - job_name: 'nginx'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
