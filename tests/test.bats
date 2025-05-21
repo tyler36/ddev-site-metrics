@@ -265,6 +265,7 @@ teardown() {
   # Assert 'mysql-exporter' files exist.
   assert_file_exists .ddev/docker-compose.mysql-exporter.yaml
   assert_file_exists .ddev/grafana/dashboards/mysql.json
+  assert_file_exists .ddev/prometheus/mysql-exporter.yml
   # Assert 'postgres-exporter' files do NOT exist.
   assert_file_not_exist .ddev/docker-compose.postgres-exporter.yaml
   assert_file_not_exist .ddev/grafana/dashboards/postgres.json
@@ -280,6 +281,7 @@ teardown() {
   # Assert 'mysql-exporter' files do NOT exist.
   assert_file_not_exist .ddev/docker-compose.mysql-exporter.yaml
   assert_file_not_exist .ddev/grafana/dashboards/mysql.json
+  assert_file_not_exist .ddev/prometheus/mysql-exporter.yml
 
   # Assert 'postgres-exporter' files exist.
   assert_file_exists .ddev/docker-compose.postgres-exporter.yaml

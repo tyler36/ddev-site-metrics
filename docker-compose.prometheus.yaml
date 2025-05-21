@@ -4,7 +4,7 @@ services:
       container_name: ddev-${DDEV_SITENAME}-prometheus
       image: prom/prometheus:latest
       volumes:
-        - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+        - "./prometheus/:/etc/prometheus/"
         - ".:/mnt/ddev_config"
         - "ddev-global-cache:/mnt/ddev-global-cache"
       labels:
