@@ -1,7 +1,7 @@
 ##ddev-generated
 services:
-  metrics-nginx:
-    container_name: ddev-${DDEV_SITENAME}-metrics-nginx
+  nginx-exporter:
+    container_name: ddev-${DDEV_SITENAME}-nginx-exporter
     image: nginx/nginx-prometheus-exporter:1.4.2
     # These labels ensure this service is discoverable by ddev.
     labels:

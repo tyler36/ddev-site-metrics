@@ -16,11 +16,13 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['loki:3100']
+  # Get exposed Nginx metrics
   - job_name: 'nginx'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['nginx-prometheus-exporter:9113']
-  - job_name: mysql # To get metrics about the mysql exporter's targets
+      - targets: ['nginx-exporter:9113']
+  # Get exposed MySQL metrics
+  - job_name: mysql
     metrics_path: /probe
     params:
       # Not required. Will match value to child in config file. Default value is `client`.

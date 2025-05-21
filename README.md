@@ -18,7 +18,7 @@
     - [Grafana Tempo](#grafana-tempo)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
-    - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
+    - [Addon: Nginx Exporter](#addon-nginx-exporter)
     - [Addon: MySql Exporter](#addon-mysql-exporter)
     - [Addon: postgres-exporter](#addon-postgres-exporter)
     - [Addon: node-exporter](#addon-node-exporter)
@@ -173,12 +173,17 @@ scrape_configs:
 PROMETHEUS_HTTPS_PORT=9090
 ```
 
-#### Addon: nginx-prometheus-exporter
+#### Addon: Nginx Exporter
 
-[NGINX Prometheus exporter](https://hub.docker.com/r/nginx/nginx-prometheus-exporter) makes it possible to monitor NGINX or NGINX Plus using Prometheus.
+The Nginx Exporter uses [NGINX Prometheus exporter](https://hub.docker.com/r/nginx/nginx-prometheus-exporter) to monitor NGINX or NGINX Plus using Prometheus.
 
-This addon pre-configures the Nginx Prometheus exporter for a DDEV environment.
+This addon pre-configures the Nginx Prometheus exporter for a DDEV environment
 In additional, an example dashboard is available in Grafana.
+
+Key files include:
+
+- `docker-compose.nginx-exporter.yaml`: loads NGINX Prometheus exporter image
+- `.ddev/nginx_full/stub_status.conf`: Exposes stub statistics from Nginx
 
 #### Addon: MySql Exporter
 
