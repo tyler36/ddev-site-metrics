@@ -102,7 +102,7 @@ teardown() {
 
   export GRAFANA_HTTPS_PORT=3043
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -117,7 +117,7 @@ teardown() {
 @test "Grafana is pre-configured with datasources" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -143,7 +143,7 @@ teardown() {
 @test "Grafana is pre-configured with DDEV MySQL datasource" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -161,7 +161,7 @@ teardown() {
 @test "Grafana is pre-configured with DDEV Postgres datasource" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -181,7 +181,7 @@ teardown() {
 
   export PROMETHEUS_HTTPS_PORT=9043
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -201,7 +201,7 @@ teardown() {
 @test "Nginx metrics are exposed" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
   run ddev restart -y
@@ -221,7 +221,7 @@ teardown() {
 @test "MYSQLD-exporter exposes statistics" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -240,7 +240,7 @@ teardown() {
   ddev delete -Oy
   ddev config --database=postgres:16
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
   run ddev restart -y
@@ -260,7 +260,7 @@ teardown() {
 @test "It only installs one database type" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -275,7 +275,7 @@ teardown() {
   ddev delete -Oy
   ddev config --database=postgres:16
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
@@ -291,7 +291,7 @@ teardown() {
 @test "Node metrics are exposed" {
   set -eu -o pipefail
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
   run ddev restart -y
@@ -313,7 +313,7 @@ teardown() {
 
   export NODE_EXPORTER_HTTP_PORT=9001
 
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
 
