@@ -198,7 +198,7 @@ teardown() {
   assert_output --partial 'TYPE prometheus_build_info'
 }
 
-@test "Nginx-prometheus-exporter exposes statistics" {
+@test "Nginx metrics are exposed" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
@@ -207,13 +207,15 @@ teardown() {
   run ddev restart -y
   assert_success
 
-  # Check it exposes scraping URI
-  run ddev exec curl -vs http://127.0.0.1:8080/stub_status
-  assert_output --partial 'server accepts handled request'
+  export TARGET_METRIC='nginx_exporter_build_info'
 
   # Check it exposes endpoint with statistics
-  run ddev exec curl -vs nginx-prometheus-exporter:9113/metrics
-  assert_output --partial 'HELP nginx_exporter_build_info'
+  run ddev exec curl -vs prometheus-nginx-exporter:9113/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
 }
 
 @test "MYSQLD-exporter exposes statistics" {
