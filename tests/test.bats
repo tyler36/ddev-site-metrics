@@ -50,6 +50,10 @@ prometheus_health_check() {
   # Test the Prometheus API is available
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/status/config"
   assert_output --partial '"status":"success"'
+
+  # Test Prometheus exposes metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/metrics"
+  assert_output --partial 'TYPE prometheus_build_info'
 }
 
 grafana_health_check() {
@@ -108,6 +112,10 @@ teardown() {
   # Test the Prometheus API is available
   run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/api/v1/status/config"
   assert_output --partial '"status":"success"'
+
+  # Test Prometheus exposes metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/metrics"
+  assert_output --partial 'TYPE prometheus_build_info'
 }
 
 @test "Grafana port is configurable" {
