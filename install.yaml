@@ -26,8 +26,8 @@ project_files:
   - nginx_full/stub_status.conf
   - grafana/dashboards/nginx.json
   # The following files belong to the mysqld-exporter feature.
-  - docker-compose.mysqld-exporter.yaml
-  - mysqld_exporter
+  - docker-compose.mysql-exporter.yaml
+  - site-metrics/mysql-exporter/.my.cnf
   - grafana/dashboards/mysql.json
   # The following files belong to the postgres-exporter feature.
   - docker-compose.postgres-exporter.yaml

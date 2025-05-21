@@ -46,6 +46,7 @@ After installation, make sure to commit the .ddev directory to version control.
 
 ## Tools
 
+
 ### Grafana
 
 [Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
@@ -201,7 +202,8 @@ To use, ensure the `.ddev/prometheus/prometheus.yml` file scrapes the endpoint:
 ```yml
 scrape_configs:
   ...
-  - job_name: mysql # To get metrics about the mysql exporter's targets
+  # Get exposed MySQL metrics
+  - job_name: mysql
     metrics_path: /probe
     params:
       # Not required. Will match value to child in config file. Default value is `client`.
@@ -211,7 +213,7 @@ scrape_configs:
         # All mysql hostnames or unix sockets to monitor.
         - db:3306
         # Uncomment to target unix sockets.
-        - unix:///run/mysqld/mysqld.sock
+        # - unix:///run/mysqld/mysqld.sock
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -219,7 +221,7 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         # The mysqld_exporter host:port
-        replacement: mysqld-exporter:9104
+        replacement: mysql-exporter:9104
 ```
 
 #### Addon: Postgres Exporter
