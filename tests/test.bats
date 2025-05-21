@@ -83,7 +83,7 @@ grafana_tempo_health_check() {
 teardown() {
   set -eu -o pipefail
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
-  # [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
 @test "install from directory" {
@@ -374,6 +374,23 @@ teardown() {
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
   assert_output --partial '"name":"Tempo"'
   assert_output --partial '"url":"http://grafana-tempo:3200"'
+}
+
+@test "Grafana Alloy command reloads configuration" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  grafana_alloy_health_check
+
+  # Confirm Alloy command successfully reloads configuration
+  run ddev alloy -r
+  assert_output --partial config reloaded
 }
 
 # bats test_tags=release
