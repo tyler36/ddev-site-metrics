@@ -41,7 +41,7 @@ setup() {
 health_checks() {
   grafana_health_check
   prometheus_health_check
-  loki_health_check
+  grafana_loki_health_check
   alloy_health_check
   tempo_health_check
 }
@@ -62,8 +62,9 @@ prometheus_health_check() {
   assert_output --partial 'TYPE prometheus_build_info'
 }
 
-loki_health_check() {
-  run ddev exec curl -sf "loki:3100/metrics"
+grafana_loki_health_check() {
+  # Test Grafana Loki exposes metrics
+  run ddev exec curl -sf "grafana-loki:3100/metrics"
   assert_output --partial "HELP loki_build_info"
 }
 
@@ -128,11 +129,6 @@ teardown() {
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
   assert_output --partial '"name":"Prometheus"'
   assert_output --partial '"url":"http://prometheus:9090"'
-
-  # Query Grafana API for Loki datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
-  assert_output --partial '"name":"Loki"'
-  assert_output --partial '"url":"http://loki:3100"'
 
   # Query Grafana API for Tempo datasource
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
@@ -330,6 +326,32 @@ teardown() {
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs "node-exporter:${NODE_EXPORTER_HTTP_PORT}/metrics"
   assert_output --partial 'HELP node_network_up Value is 1'
+}
+
+@test "Grafana Loki workflow is configured" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  export TARGET_METRIC='loki_build_info'
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs grafana-loki:3100/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
+
+  # Query Grafana API for Loki datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
+  assert_output --partial '"name":"Loki"'
+  assert_output --partial '"url":"http://grafana-loki:3100"'
 }
 
 # bats test_tags=release
