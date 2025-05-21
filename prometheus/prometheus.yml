@@ -26,12 +26,9 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['nginx-exporter:9113']
-  # Get exposed Postgres metrics
-  - job_name: 'postgres'
-    static_configs:
-      - targets: ['postgres-exporter:9187']
 
 # Scrape config files specifies a list of globs. Scrape configs are read from
 # all matching files and appended to the list of scrape configs.
 scrape_config_files:
   - mysql-exporter.yml
+  - postgres-exporter.yml
