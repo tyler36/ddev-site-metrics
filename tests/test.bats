@@ -43,7 +43,7 @@ health_checks() {
   prometheus_health_check
   grafana_loki_health_check
   alloy_health_check
-  tempo_health_check
+  grafana_tempo_health_check
 }
 
 grafana_health_check() {
@@ -74,8 +74,9 @@ alloy_health_check() {
   assert_output --partial config reloaded
 }
 
-tempo_health_check() {
-  run ddev exec curl -sf "tempo:3200/metrics"
+grafana_tempo_health_check() {
+  # Test Grafana Tempo exposes metrics
+  run ddev exec curl -sf "grafana-tempo:3200/metrics"
   assert_output --partial "HELP tempo_build_info"
 }
 
@@ -129,11 +130,6 @@ teardown() {
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
   assert_output --partial '"name":"Prometheus"'
   assert_output --partial '"url":"http://prometheus:9090"'
-
-  # Query Grafana API for Tempo datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
-  assert_output --partial '"name":"Tempo"'
-  assert_output --partial '"url":"http://tempo:3200"'
 }
 
 @test "Grafana is pre-configured with DDEV MySQL datasource" {
@@ -352,6 +348,32 @@ teardown() {
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
   assert_output --partial '"name":"Loki"'
   assert_output --partial '"url":"http://grafana-loki:3100"'
+}
+
+@test "Grafana Tempo workflow is configured" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  export TARGET_METRIC='tempo_build_info'
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs grafana-tempo:3200/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
+
+  # Query Grafana API for Tempo datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
+  assert_output --partial '"name":"Tempo"'
+  assert_output --partial '"url":"http://grafana-tempo:3200"'
 }
 
 # bats test_tags=release

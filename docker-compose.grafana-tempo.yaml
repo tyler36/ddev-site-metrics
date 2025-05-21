@@ -1,7 +1,7 @@
 ##ddev-generated
 services:
-  tempo:
-    container_name: ddev-${DDEV_SITENAME}-tempo
+  grafana-tempo:
+    container_name: ddev-${DDEV_SITENAME}-grafana-tempo
     image: grafana/tempo:latest
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}

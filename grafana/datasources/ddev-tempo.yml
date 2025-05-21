@@ -6,7 +6,7 @@ datasources:
   uid: tempo
   type: tempo
   access: proxy
-  url: http://tempo:3200
+  url: http://grafana-tempo:3200
   basicAuth: false
   jsonData:
     tracesToMetrics:

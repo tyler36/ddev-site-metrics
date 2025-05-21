@@ -10,7 +10,7 @@ scrape_configs:
   # Add Tempo metrics
   - job_name: 'tempo'
     static_configs:
-      - targets: [ 'tempo:3200' ]
+      - targets: [ 'grafana-tempo:3200' ]
   # Add Loki metrics
   - job_name: 'loki'
     metrics_path: '/metrics'
