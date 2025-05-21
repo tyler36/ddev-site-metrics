@@ -36,7 +36,7 @@ scrape_configs:
         # All mysql hostnames or unix sockets to monitor.
         - db:3306
         # Uncomment to target unix sockets.
-        - unix:///run/mysqld/mysqld.sock
+        # - unix:///run/mysqld/mysqld.sock
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -44,7 +44,7 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         # The mysqld_exporter host:port
-        replacement: mysqld-exporter:9104
+        replacement: mysql-exporter:9104
   # Get exposed Postgres metrics
   - job_name: 'postgres'
     static_configs:

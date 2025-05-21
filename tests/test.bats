@@ -218,7 +218,7 @@ teardown() {
   assert_output --partial "${TARGET_METRIC}"
 }
 
-@test "MYSQLD-exporter exposes statistics" {
+@test "MySQL metrics are exposed" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
@@ -228,9 +228,15 @@ teardown() {
   run ddev restart -y
   assert_success
 
+  export TARGET_METRIC='mysql_up'
+
   # Check it exposes endpoint with statistics
-  run ddev exec curl -s mysqld-exporter:9104/metrics
-  assert_output --partial 'HELP mysql_up Whether the MySQL server is up.'
+  run ddev exec curl -vs mysql-exporter:9104/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
 }
 
 @test "Postgres metrics are exposed" {
@@ -264,8 +270,8 @@ teardown() {
   run ddev add-on get "${DIR}"
   assert_success
 
-  # Assert 'mysqld-exporter' files exist.
-  assert_file_exists .ddev/docker-compose.mysqld-exporter.yaml
+  # Assert 'mysql-exporter' files exist.
+  assert_file_exists .ddev/docker-compose.mysql-exporter.yaml
   assert_file_exists .ddev/grafana/dashboards/mysql.json
   # Assert 'postgres-exporter' files do NOT exist.
   assert_file_not_exist .ddev/docker-compose.postgres-exporter.yaml
@@ -279,8 +285,8 @@ teardown() {
   run ddev add-on get "${DIR}"
   assert_success
 
-  # Assert 'mysqld-exporter' files do NOT exist.
-  assert_file_not_exist .ddev/docker-compose.mysqld-exporter.yaml
+  # Assert 'mysql-exporter' files do NOT exist.
+  assert_file_not_exist .ddev/docker-compose.mysql-exporter.yaml
   assert_file_not_exist .ddev/grafana/dashboards/mysql.json
 
   # Assert 'postgres-exporter' files exist.
