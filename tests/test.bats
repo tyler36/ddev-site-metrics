@@ -210,7 +210,7 @@ teardown() {
   export TARGET_METRIC='nginx_exporter_build_info'
 
   # Check it exposes endpoint with statistics
-  run ddev exec curl -vs prometheus-nginx-exporter:9113/metrics
+  run ddev exec curl -vs metrics-nginx:9113/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
