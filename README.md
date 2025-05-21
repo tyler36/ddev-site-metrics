@@ -14,7 +14,7 @@
     - [Configure plugins](#configure-plugins)
     - [Grafana Alloy](#grafana-alloy)
       - [Usage](#usage)
-    - [Grafana Loki](#grafana-loki)
+  - [Grafana Loki](#grafana-loki)
     - [Grafana Tempo](#grafana-tempo)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
@@ -116,7 +116,7 @@ ddev alloy
 ddev alloy -r
 ```
 
-#### Grafana Loki
+### Grafana Loki
 
 [Grafana Loki](https://grafana.com/docs/loki/latest/) is a set of open source components that can be composed into a fully featured logging stack.
 
