@@ -39,21 +39,22 @@ setup() {
 }
 
 health_checks() {
-  prometheus_health_check
   grafana_health_check
+  prometheus_health_check
   loki_health_check
   alloy_health_check
   tempo_health_check
 }
 
+grafana_health_check() {
+  # Test the Grafana main page is accessible
+  run curl -sf "https://${PROJNAME}.ddev.site:3000"
+  assert_output --partial "<title>Grafana</title>"
+}
+
 prometheus_health_check() {
   run curl -sf "https://${PROJNAME}.ddev.site:9090/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
-}
-
-grafana_health_check() {
-  run curl -sf "https://${PROJNAME}.ddev.site:3000"
-  assert_output --partial "<title>Grafana</title>"
 }
 
 loki_health_check() {
@@ -91,6 +92,85 @@ teardown() {
   health_checks
 }
 
+@test "Grafana port is configurable" {
+  set -eu -o pipefail
+
+  export GRAFANA_HTTPS_PORT=3043
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  ddev dotenv set .ddev/.env --grafana-https-port="${GRAFANA_HTTPS_PORT}"
+  run ddev restart -y
+  assert_success
+
+  run curl -sf "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
+  assert_output --partial "<title>Grafana</title>"
+}
+
+@test "Grafana is pre-configured with datasources" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Query Grafana API for Prometheus datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
+  assert_output --partial '"name":"Prometheus"'
+  assert_output --partial '"url":"http://prometheus:9090"'
+
+  # Query Grafana API for Loki datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
+  assert_output --partial '"name":"Loki"'
+  assert_output --partial '"url":"http://loki:3100"'
+
+  # Query Grafana API for Tempo datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
+  assert_output --partial '"name":"Tempo"'
+  assert_output --partial '"url":"http://tempo:3200"'
+}
+
+@test "Grafana is pre-configured with DDEV MySQL datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Query Grafana API for MySQL datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/mysql"
+  assert_output --partial '"name":"MySQL"'
+  assert_output --partial '"url":"db:3306"'
+  assert_output --partial '"database":"db"'
+  assert_output --partial '"user":"db"'
+}
+
+@test "Grafana is pre-configured with DDEV Postgres datasource" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Query Grafana API for Postgres datasource
+  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/postgres"
+  assert_output --partial '"name":"Postgres"'
+  assert_output --partial '"url":"db:5432"'
+  assert_output --partial '"database":"db"'
+  assert_output --partial '"user":"db"'
+}
+
 @test "Prometheus port is configurable" {
   set -eu -o pipefail
 
@@ -106,74 +186,6 @@ teardown() {
 
   run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/query"
   assert_output --partial "Prometheus Time Series Collection and Processing Server"
-}
-
-@test "Grafana port is configurable" {
-  set -eu -o pipefail
-
-  export GRAFANA_HTTPS_PORT=3043
-
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${DIR}"
-  assert_success
-
-  ddev dotenv set .ddev/.env --grafana-https-port="${GRAFANA_HTTPS_PORT}"
-  run ddev restart -y
-  assert_success
-
-  run curl -sf "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
-  assert_output --partial "Grafana"
-}
-
-@test "Grafana is pre-configured with Prometheus datasource" {
-  set -eu -o pipefail
-
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${DIR}"
-  assert_success
-
-  run ddev restart -y
-  assert_success
-
-  # Grafana uses the HTTP endpoint, so check that the datasources contains the correct URL.
-  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-prometheus.yml
-  assert_output --partial 'url: http://prometheus:9090'
-}
-
-@test "Grafana is pre-configured with DDEV MySQL datasource" {
-  set -eu -o pipefail
-
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${DIR}"
-  assert_success
-
-  run ddev restart -y
-  assert_success
-
-  # Check MySQL settings
-  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-mysql.yml
-  assert_output --partial 'url: db:3306'
-  assert_output --partial 'database: db'
-  assert_output --partial 'user: db'
-  assert_output --partial 'password: db'
-}
-
-@test "Grafana is pre-configured with DDEV Postgres datasource" {
-  set -eu -o pipefail
-
-  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
-  run ddev add-on get "${DIR}"
-  assert_success
-
-  run ddev restart -y
-  assert_success
-
-  # Check Postgres settings
-  run ddev exec -s grafana cat /etc/grafana/provisioning/datasources/ddev-postgres.yml
-  assert_output --partial 'url: db:5432'
-  assert_output --partial 'database: db'
-  assert_output --partial 'user: db'
-  assert_output --partial 'password: db'
 }
 
 @test "Nginx-prometheus-exporter exposes statistics" {

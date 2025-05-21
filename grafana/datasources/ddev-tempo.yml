@@ -1,8 +1,9 @@
-#ddev-generated
+##ddev-generated
 apiVersion: 1
 
 datasources:
 - name: Tempo
+  uid: tempo
   type: tempo
   access: proxy
   url: http://tempo:3200

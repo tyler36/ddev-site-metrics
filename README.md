@@ -8,12 +8,6 @@
 - [Overview](#overview)
 - [Installation](#installation)
 - [Tools](#tools)
-  - [Prometheus](#prometheus)
-    - [Customize Prometheus](#customize-prometheus)
-    - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
-    - [Addon: MySql Exporter](#addon-mysql-exporter)
-    - [Addon: postgres-exporter](#addon-postgres-exporter)
-    - [Addon: node-exporter](#addon-node-exporter)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
@@ -22,6 +16,12 @@
       - [Usage](#usage)
     - [Grafana Loki](#grafana-loki)
     - [Grafana Tempo](#grafana-tempo)
+  - [Prometheus](#prometheus)
+    - [Customize Prometheus](#customize-prometheus)
+    - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
+    - [Addon: MySql Exporter](#addon-mysql-exporter)
+    - [Addon: postgres-exporter](#addon-postgres-exporter)
+    - [Addon: node-exporter](#addon-node-exporter)
 - [Credits](#credits)
 
 ## Overview
@@ -45,6 +45,101 @@ ddev restart
 After installation, make sure to commit the .ddev directory to version control.
 
 ## Tools
+
+### Grafana
+
+[Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
+
+#### Configure Datasources
+
+This addon pre-configures Prometheus as a datasource.
+
+- To include customize, or include additional datasources, update `.ddev/grafana/datasources/grafana-datasources.yml`.
+
+See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#grafana-data-sources).
+
+#### Configure Dashboards
+
+This add-on pre-configures `.ddev/grafana/dashboards` as the provisioned dashboard folder.
+See [Dashboards](https://grafana.com/docs/grafana/latest/dashboards/).
+See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/).
+
+#### Configure plugins
+
+To install a plugin, create or update `.ddev/docker-compose.grafana_custom.yaml`.
+Replace `<plugin-id>` with the plugin ID.
+
+```yaml
+services:
+  grafana:
+    environment:
+      - GF_PLUGINS_PREINSTALL=<plugin-id>
+```
+
+To find the plugin ID:
+
+- visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
+- search for the desired plugin.
+- click the "Installation" tab.
+- Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
+
+    ```shell
+    grafana-cli plugins install grafana-clock-panel
+    ```
+
+#### Grafana Alloy
+
+[Grafana Alloy](https://grafana.com/docs/alloy/latest/) can collect, process, and export telemetry signals to scale and future-proof your observability approach.
+
+This addon configures Grafana Alloy to collect and process:
+
+- Docker logs (`alloy/docker.alloy`),
+- Alloy logs (`alloy/alloy-logs.alloy`)
+- Enable live debugging of Alloy pipelines, where supported
+- Adds a pipeline to a DDEV-supported Grafana Loki process
+
+To configure Alloy, add/update files in `.ddev/alloy`. By default, all files in this directory are loaded and processed.
+
+##### Usage
+
+Grafana Alloy runs within the process on its default port of `12345`.
+
+- To open the Grafana Alloy dashboard, run the following command:
+
+```shell
+ddev alloy
+```
+
+- To reload Alloy configuration, run the following command:
+
+```shell
+ddev alloy -r
+```
+
+#### Grafana Loki
+
+[Grafana Loki](https://grafana.com/docs/loki/latest/) is a set of open source components that can be composed into a fully featured logging stack.
+
+Grafana Loki listens on its default port of `3100`.
+To view processed logs, visit `Drilldown | Logs` in the Grafana dashboard.
+
+```shell
+ddev :3000/a/grafana-lokiexplore-app/explore
+```
+
+#### Grafana Tempo
+
+[Grafana Tempo](https://grafana.com/docs/tempo/latest/) is an open-source, easy-to-use, and high-scale distributed tracing backend.
+
+In this add-on, Grafana Alloy forwards open telemetry data it receives to Grafana Tempo for processing ([./alloy/otelcol.alloy](./alloy/otelcol.alloy)). Grafana Tempo datasource is pre-configured in Grafana allowing a centralized location for interacting with traces.
+
+- To configure Grafana Tempo, update `.ddev/tempo/tempo-config.yaml` and restart DDEV.
+- To forward Grafana Tempo traces to Grafana, update `.ddev/.env.tempo`
+
+```conf
+OTEL_SERVICE_NAME="tempo"
+OTEL_EXPORTER_OTLP_ENDPOINT="http://alloy:4318"
+```
 
 ### Prometheus
 
@@ -158,101 +253,6 @@ To change the port,
 - restart DDEV to apply the changes.
 
 This addon includes an example node dashboard based on [Node Exporter Full (v40)](https://grafana.com/grafana/dashboards/1860-node-exporter-full/).
-
-### Grafana
-
-[Grafana](https://grafana.com/docs/grafana/latest/) is a tool to "Query, visualize, alert on, and explore your metrics, logs, and traces wherever they are stored.".
-
-#### Configure Datasources
-
-This addon pre-configures Prometheus as a datasource.
-
-- To include customize, or include additional datasources, update `.ddev/grafana/datasources/grafana-datasources.yml`.
-
-See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#grafana-data-sources).
-
-#### Configure Dashboards
-
-This add-on pre-configures `.ddev/grafana/dashboards` as the provisioned dashboard folder.
-See [Dashboards](https://grafana.com/docs/grafana/latest/dashboards/).
-See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/).
-
-#### Configure plugins
-
-To install a plugin, create or update `.ddev/docker-compose.grafana_custom.yaml`.
-Replace `<plugin-id>` with the plugin ID.
-
-```yaml
-services:
-  grafana:
-    environment:
-      - GF_PLUGINS_PREINSTALL=<plugin-id>
-```
-
-To find the plugin ID:
-
-- visit [All plugins for Grafana](https://grafana.com/grafana/plugins/all-plugins/).
-- search for the desired plugin.
-- click the "Installation" tab.
-- Look at the "Install the Panel" code. In the below example, `grafana-clock-panel` is the plugin ID.
-
-    ```shell
-    grafana-cli plugins install grafana-clock-panel
-    ```
-
-#### Grafana Alloy
-
-[Grafana Alloy](https://grafana.com/docs/alloy/latest/) can collect, process, and export telemetry signals to scale and future-proof your observability approach.
-
-This addon configures Grafana Alloy to collect and process:
-
-- Docker logs (`alloy/docker.alloy`),
-- Alloy logs (`alloy/alloy-logs.alloy`)
-- Enable live debugging of Alloy pipelines, where supported
-- Adds a pipeline to a DDEV-supported Grafana Loki process
-
-To configure Alloy, add/update files in `.ddev/alloy`. By default, all files in this directory are loaded and processed.
-
-##### Usage
-
-Grafana Alloy runs within the process on its default port of `12345`.
-
-- To open the Grafana Alloy dashboard, run the following command:
-
-```shell
-ddev alloy
-```
-
-- To reload Alloy configuration, run the following command:
-
-```shell
-ddev alloy -r
-```
-
-#### Grafana Loki
-
-[Grafana Loki](https://grafana.com/docs/loki/latest/) is a set of open source components that can be composed into a fully featured logging stack.
-
-Grafana Loki listens on its default port of `3100`.
-To view processed logs, visit `Drilldown | Logs` in the Grafana dashboard.
-
-```shell
-ddev :3000/a/grafana-lokiexplore-app/explore
-```
-
-#### Grafana Tempo
-
-[Grafana Tempo](https://grafana.com/docs/tempo/latest/) is an open-source, easy-to-use, and high-scale distributed tracing backend.
-
-In this add-on, Grafana Alloy forwards open telemetry data it receives to Grafana Tempo for processing ([./alloy/otelcol.alloy](./alloy/otelcol.alloy)). Grafana Tempo datasource is pre-configured in Grafana allowing a centralized location for interacting with traces.
-
-- To configure Grafana Tempo, update `.ddev/tempo/tempo-config.yaml` and restart DDEV.
-- To forward Grafana Tempo traces to Grafana, update `.ddev/.env.tempo`
-
-```conf
-OTEL_SERVICE_NAME="tempo"
-OTEL_EXPORTER_OTLP_ENDPOINT="http://alloy:4318"
-```
 
 ## Credits
 
