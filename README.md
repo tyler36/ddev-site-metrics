@@ -15,7 +15,7 @@
     - [Grafana Alloy](#grafana-alloy)
       - [Usage](#usage)
   - [Grafana Loki](#grafana-loki)
-    - [Grafana Tempo](#grafana-tempo)
+  - [Grafana Tempo](#grafana-tempo)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
     - [Addon: Nginx Exporter](#addon-nginx-exporter)
@@ -133,14 +133,19 @@ Key files include:
 - `docker-compose.grafana-loki.yaml`: loads Grafana Loki image
 - `loki/local-config.yaml`: Grafana Loki configuration file
 
-#### Grafana Tempo
+Key files include:
+
+- `docker-compose.grafana-loki.yaml`: loads Grafana Loki image
+- `loki/local-config.yaml`: Grafana Loki configuration file
+
+### Grafana Tempo
 
 [Grafana Tempo](https://grafana.com/docs/tempo/latest/) is an open-source, easy-to-use, and high-scale distributed tracing backend.
 
 In this add-on, Grafana Alloy forwards open telemetry data it receives to Grafana Tempo for processing ([./alloy/otelcol.alloy](./alloy/otelcol.alloy)). Grafana Tempo datasource is pre-configured in Grafana allowing a centralized location for interacting with traces.
 
 - To configure Grafana Tempo, update `.ddev/tempo/tempo-config.yaml` and restart DDEV.
-- To forward Grafana Tempo traces to Grafana, update `.ddev/.env.tempo`
+- To forward Grafana Tempo traces to Grafana, update `.ddev/.env.grafana-tempo`
 
 ```conf
 OTEL_SERVICE_NAME="tempo"
