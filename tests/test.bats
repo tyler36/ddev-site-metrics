@@ -270,8 +270,8 @@ teardown() {
   run ddev add-on get "${DIR}"
   assert_success
 
-  # Assert 'mysqld-exporter' files exist.
-  assert_file_exists .ddev/docker-compose.mysqld-exporter.yaml
+  # Assert 'mysql-exporter' files exist.
+  assert_file_exists .ddev/docker-compose.mysql-exporter.yaml
   assert_file_exists .ddev/grafana/dashboards/mysql.json
   # Assert 'postgres-exporter' files do NOT exist.
   assert_file_not_exist .ddev/docker-compose.postgres-exporter.yaml
@@ -285,8 +285,8 @@ teardown() {
   run ddev add-on get "${DIR}"
   assert_success
 
-  # Assert 'mysqld-exporter' files do NOT exist.
-  assert_file_not_exist .ddev/docker-compose.mysqld-exporter.yaml
+  # Assert 'mysql-exporter' files do NOT exist.
+  assert_file_not_exist .ddev/docker-compose.mysql-exporter.yaml
   assert_file_not_exist .ddev/grafana/dashboards/mysql.json
 
   # Assert 'postgres-exporter' files exist.
