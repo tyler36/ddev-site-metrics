@@ -376,6 +376,32 @@ teardown() {
   assert_output --partial '"url":"http://grafana-tempo:3200"'
 }
 
+@test "Grafana Alloy workflow is configured" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  export TARGET_METRIC='alloy_build_info'
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs grafana-alloy:12345/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
+
+  # Query Grafana Loki ingests Grafana Alloy Logs
+  run ddev exec curl -sf "loki:3100/loki/api/v1/series"
+  assert_output --partial '"component":"alloy"'
+  assert_output --partial '"service_name":"alloy"'
+}
+
 @test "Grafana Alloy command reloads configuration" {
   set -eu -o pipefail
 
