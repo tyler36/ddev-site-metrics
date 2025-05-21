@@ -231,7 +231,7 @@ teardown() {
   assert_output --partial 'HELP mysql_up Whether the MySQL server is up.'
 }
 
-@test "Postgres-exporter exposes statistics" {
+@test "Postgres metrics are exposed" {
   set -eu -o pipefail
 
   echo "# Convert project to Postgres" >&3
@@ -244,10 +244,15 @@ teardown() {
   run ddev restart -y
   assert_success
 
+  export TARGET_METRIC='postgres_exporter_build_info'
+
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs postgres-exporter:9187/metrics
-  assert_output --partial 'HELP pg_settings_track_activities Server Parameter: track_activities'
-  assert_output --partial 'pg_up 1'
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
 }
 
 @test "It only installs one database type" {

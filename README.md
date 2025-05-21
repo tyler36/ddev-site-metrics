@@ -20,7 +20,7 @@
     - [Customize Prometheus](#customize-prometheus)
     - [Addon: nginx-prometheus-exporter](#addon-nginx-prometheus-exporter)
     - [Addon: MySql Exporter](#addon-mysql-exporter)
-    - [Addon: postgres-exporter](#addon-postgres-exporter)
+    - [Addon: Postgres Exporter](#addon-postgres-exporter)
     - [Addon: node-exporter](#addon-node-exporter)
 - [Credits](#credits)
 
@@ -217,7 +217,7 @@ scrape_configs:
         replacement: mysqld-exporter:9104
 ```
 
-#### Addon: postgres-exporter
+#### Addon: Postgres Exporter
 
 [Postgres-exporter](https://github.com/prometheus-community/postgres_exporter) exposes PostgreSQL server metrics to Prometheus.
 
@@ -226,10 +226,17 @@ To use, ensure the `.ddev/prometheus/prometheus.yml` file scrapes the endpoint:
 ```yml
 scrape_configs:
   ...
+  # Get exposed Postgres metrics
   - job_name: 'postgres'
     static_configs:
       - targets: ['postgres-exporter:9187']
 ```
+
+Key files include:
+
+- `docker-compose.postgres-exporter.yaml`: loads Postgres-exporter image
+
+Exposed metrics use the following prefixes: `pg` and `postgres`.
 
 #### Addon: node-exporter
 

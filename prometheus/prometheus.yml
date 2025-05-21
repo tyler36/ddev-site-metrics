@@ -39,3 +39,7 @@ scrape_configs:
       - target_label: __address__
         # The mysqld_exporter host:port
         replacement: mysqld-exporter:9104
+  # Get exposed Postgres metrics
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
