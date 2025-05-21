@@ -1,7 +1,7 @@
 ##ddev-generated
 services:
-  alloy:
-    container_name: ddev-${DDEV_SITENAME}-alloy
+  grafana-alloy:
+    container_name: ddev-${DDEV_SITENAME}-grafana-alloy
     image: grafana/alloy:v1.8.3
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}

@@ -1,9 +1,9 @@
 # Configuration
 <!-- ##ddev-generated -->
 
-This directory is contains Alloy configuration files.
+This directory is contains Grafana Alloy configuration files.
 
-Alloy finds `*.alloy` files (ignoring nested directories) and loads them as a single configuration source. However, component names must be unique across all Alloy configuration files, and configuration blocks must not be repeated.
+Grafana Alloy finds `*.alloy` files (ignoring nested directories) and loads them as a single configuration source. However, component names must be unique across all Grafana Alloy configuration files, and configuration blocks must not be repeated.
 
 See [Components](https://grafana.com/docs/alloy/latest/reference/components/).
 

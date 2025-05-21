@@ -2,7 +2,7 @@
 
 otelcol.receiver.otlp "default" {
   http {
-    endpoint="alloy:4318"
+    endpoint="grafana-alloy:4318"
   }
 
   output {

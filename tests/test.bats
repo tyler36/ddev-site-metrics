@@ -41,8 +41,8 @@ setup() {
 health_checks() {
   grafana_health_check
   prometheus_health_check
+  grafana_alloy_health_check
   grafana_loki_health_check
-  alloy_health_check
   grafana_tempo_health_check
 }
 
@@ -62,16 +62,16 @@ prometheus_health_check() {
   assert_output --partial 'TYPE prometheus_build_info'
 }
 
+grafana_alloy_health_check() {
+  # Test Grafana Alloy reports as healthy.
+  run curl -sf "https://${PROJNAME}.ddev.site:12345/-/healthy"
+  assert_output --partial 'All Alloy components are healthy'
+}
+
 grafana_loki_health_check() {
   # Test Grafana Loki exposes metrics
   run ddev exec curl -sf "grafana-loki:3100/metrics"
   assert_output --partial "HELP loki_build_info"
-}
-
-alloy_health_check() {
-  # Attempt to reload alloy configuration to prove the site is functioning.
-  run ddev alloy -r
-  assert_output --partial config reloaded
 }
 
 grafana_tempo_health_check() {
@@ -83,7 +83,7 @@ grafana_tempo_health_check() {
 teardown() {
   set -eu -o pipefail
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
-  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  # [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
 @test "install from directory" {
