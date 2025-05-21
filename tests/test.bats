@@ -53,8 +53,13 @@ grafana_health_check() {
 }
 
 prometheus_health_check() {
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/query"
-  assert_output --partial "Prometheus Time Series Collection and Processing Server"
+  # Test the Prometheus API is available
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/status/config"
+  assert_output --partial '"status":"success"'
+
+  # Test Prometheus exposes metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/metrics"
+  assert_output --partial 'TYPE prometheus_build_info'
 }
 
 loki_health_check() {
@@ -184,8 +189,13 @@ teardown() {
   run ddev restart -y
   assert_success
 
-  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/query"
-  assert_output --partial "Prometheus Time Series Collection and Processing Server"
+  # Test the Prometheus API is available
+  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/api/v1/status/config"
+  assert_output --partial '"status":"success"'
+
+  # Test Prometheus exposes metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/metrics"
+  assert_output --partial 'TYPE prometheus_build_info'
 }
 
 @test "Nginx-prometheus-exporter exposes statistics" {
