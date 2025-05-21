@@ -124,7 +124,7 @@ Grafana Loki listens on its default port of `3100`.
 To view processed logs, visit `Drilldown | Logs` in the Grafana dashboard.
 
 ```shell
-ddev :3000/a/grafana-lokiexplore-app/explore
+ddev launch :3000/a/grafana-lokiexplore-app/explore
 ```
 
 #### Grafana Tempo
