@@ -288,7 +288,7 @@ teardown() {
   assert_file_exists .ddev/grafana/dashboards/postgres.json
 }
 
-@test "Node-exporter exposes statistics" {
+@test "Node metrics are exposed" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
@@ -297,9 +297,15 @@ teardown() {
   run ddev restart -y
   assert_success
 
+  export TARGET_METRIC='node_network_up'
+
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs node-exporter:9100/metrics
-  assert_output --partial 'HELP node_network_up Value is 1'
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
 }
 
 @test "Node-exporter port is configurable" {
