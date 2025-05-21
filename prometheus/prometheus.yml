@@ -1,3 +1,4 @@
+##ddev-generated
 global:
   scrape_interval: 5s  # How often Prometheus scrapes data
 
