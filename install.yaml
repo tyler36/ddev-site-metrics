@@ -25,6 +25,7 @@ project_files:
   - docker-compose.nginx-exporter.yaml
   - nginx_full/stub_status.conf
   - grafana/dashboards/nginx.json
+  - prometheus/nginx-exporter.yml
   # The following files belong to the mysqld-exporter feature.
   - docker-compose.mysql-exporter.yaml
   - grafana/dashboards/mysql.json

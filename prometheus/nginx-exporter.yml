@@ -1,0 +1,12 @@
+##ddev-generated
+
+# Nginx Exporter
+# This file configures Prometheus for Nginx Exporter. Metrics are prefixed with `nginx`.
+# @See https://github.com/nginx/nginx-prometheus-exporter
+
+scrape_configs:
+  # Get exposed Nginx metrics
+  - job_name: 'nginx'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
