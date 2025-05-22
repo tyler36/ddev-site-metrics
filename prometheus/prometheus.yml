@@ -8,13 +8,10 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['grafana-alloy:12345']
-  # Add Tempo metrics
-  - job_name: 'tempo'
-    static_configs:
-      - targets: [ 'grafana-tempo:3200' ]
 
 # Scrape config files specifies a list of globs. Scrape configs are read from
 # all matching files and appended to the list of scrape configs.
 scrape_config_files:
   - '*-exporter.yml'
   - 'grafana-loki.yml'
+  - 'grafana-tempo.yml'
