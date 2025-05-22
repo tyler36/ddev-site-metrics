@@ -5,8 +5,7 @@
 # @See https://github.com/prometheus/node_exporter
 
 scrape_configs:
-  # Get exposed Nginx metrics
-  - job_name: 'nginx'
-    metrics_path: '/metrics'
+  # Get exposed Node metrics
+  - job_name: 'node-exporter'
     static_configs:
-      - targets: ['nginx-exporter:9113']
+      - targets: ['node-exporter:9100']
