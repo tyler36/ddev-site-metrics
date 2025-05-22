@@ -265,12 +265,12 @@ teardown() {
   # Assert 'mysql-exporter' files exist.
   assert_file_exists .ddev/docker-compose.mysql-exporter.yaml
   assert_file_exists .ddev/grafana/dashboards/mysql.json
-  assert_file_exists .ddev/prometheus/mysql-exporter.yml
+  assert_file_exists .ddev/prometheus/scrape-mysql-exporter.yml
 
   # Assert 'postgres-exporter' files do NOT exist.
   assert_file_not_exist .ddev/docker-compose.postgres-exporter.yaml
   assert_file_not_exist .ddev/grafana/dashboards/postgres.json
-  assert_file_not_exist .ddev/prometheus/postgres-exporter.yml
+  assert_file_not_exist .ddev/prometheus/scrape-postgres-exporter.yml
 
   echo "# Convert project to Postgres" >&3
   ddev delete -Oy
@@ -283,12 +283,12 @@ teardown() {
   # Assert 'mysql-exporter' files do NOT exist.
   assert_file_not_exist .ddev/docker-compose.mysql-exporter.yaml
   assert_file_not_exist .ddev/grafana/dashboards/mysql.json
-  assert_file_not_exist .ddev/prometheus/mysql-exporter.yml
+  assert_file_not_exist .ddev/prometheus/scrape-mysql-exporter.yml
 
   # Assert 'postgres-exporter' files exist.
   assert_file_exists .ddev/docker-compose.postgres-exporter.yaml
   assert_file_exists .ddev/grafana/dashboards/postgres.json
-  assert_file_exists .ddev/prometheus/postgres-exporter.yml
+  assert_file_exists .ddev/prometheus/scrape-postgres-exporter.yml
 }
 
 @test "Node metrics are exposed" {

@@ -5,7 +5,7 @@
 # @See https://github.com/prometheus-community/postgres_exporter
 
 scrape_configs:
-  # Get hardware and OS metrics exposed by *NIX kernels
-  - job_name: 'node-exporter'
+  # Get exposed Postgres metrics
+  - job_name: 'postgres'
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets: ['postgres-exporter:9187']
