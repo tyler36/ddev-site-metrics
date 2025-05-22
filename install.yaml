@@ -14,6 +14,7 @@ project_files:
   - docker-compose.grafana-loki.yaml
   - grafana/datasources/ddev-loki.yml
   - loki/local-config.yaml
+  - prometheus/grafana-loki.yml
   - docker-compose.grafana-alloy.yaml
   - alloy
   - commands/host/alloy
