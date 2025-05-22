@@ -12,8 +12,8 @@
     - [Configure Datasources](#configure-datasources)
     - [Configure Dashboards](#configure-dashboards)
     - [Configure plugins](#configure-plugins)
-    - [Grafana Alloy](#grafana-alloy)
-      - [Usage](#usage)
+  - [Grafana Alloy](#grafana-alloy)
+    - [Usage](#usage)
   - [Grafana Loki](#grafana-loki)
   - [Grafana Tempo](#grafana-tempo)
   - [Prometheus](#prometheus)
@@ -45,7 +45,6 @@ ddev restart
 After installation, make sure to commit the .ddev directory to version control.
 
 ## Tools
-
 
 ### Grafana
 
@@ -88,20 +87,20 @@ To find the plugin ID:
     grafana-cli plugins install grafana-clock-panel
     ```
 
-#### Grafana Alloy
+### Grafana Alloy
 
 [Grafana Alloy](https://grafana.com/docs/alloy/latest/) can collect, process, and export telemetry signals to scale and future-proof your observability approach.
 
 This addon configures Grafana Alloy to collect and process:
 
 - Docker logs (`alloy/docker.alloy`),
-- Alloy logs (`alloy/alloy-logs.alloy`)
+- Grafana Alloy logs (`alloy/alloy-logs.alloy`)
 - Enable live debugging of Alloy pipelines, where supported
 - Adds a pipeline to a DDEV-supported Grafana Loki process
 
-To configure Alloy, add/update files in `.ddev/alloy`. By default, all files in this directory are loaded and processed.
+To configure Grafana Alloy, add/update files in `.ddev/alloy`. By default, all files in this directory are loaded and processed.
 
-##### Usage
+#### Usage
 
 Grafana Alloy runs within the process on its default port of `12345`.
 
@@ -111,7 +110,7 @@ Grafana Alloy runs within the process on its default port of `12345`.
 ddev alloy
 ```
 
-- To reload Alloy configuration, run the following command:
+- To reload Grafana Alloy configuration, run the following command:
 
 ```shell
 ddev alloy -r
@@ -149,7 +148,7 @@ In this add-on, Grafana Alloy forwards open telemetry data it receives to Grafan
 
 ```conf
 OTEL_SERVICE_NAME="tempo"
-OTEL_EXPORTER_OTLP_ENDPOINT="http://alloy:4318"
+OTEL_EXPORTER_OTLP_ENDPOINT="http://grafana-alloy:4318"
 ```
 
 ### Prometheus

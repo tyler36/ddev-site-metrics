@@ -14,7 +14,7 @@ project_files:
   - docker-compose.grafana-loki.yaml
   - grafana/datasources/ddev-loki.yml
   - loki/local-config.yaml
-  - docker-compose.alloy.yaml
+  - docker-compose.grafana-alloy.yaml
   - alloy
   - commands/host/alloy
   # The following files belong to the tempo feature
