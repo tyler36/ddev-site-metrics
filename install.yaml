@@ -18,6 +18,7 @@ project_files:
   - docker-compose.grafana-alloy.yaml
   - alloy
   - commands/host/alloy
+  - prometheus/grafana-alloy.yml
   # The following files belong to the tempo feature
   - docker-compose.grafana-tempo.yaml
   - grafana/datasources/ddev-tempo.yml
