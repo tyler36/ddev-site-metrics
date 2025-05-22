@@ -163,8 +163,10 @@ To open Prometheus: `ddev prometheus` or `ddev launch :9090` (assuming the defau
 
 Prometheus is configured via `./.ddev/prometheus/prometheus.yml`. This addon provides an example, but need to customize it for your use-case.
 
+Prometheus's main configuration is in `.ddev/prometheus/prometheus.yml`.
 To customize, take ownership by removing `#ddev-generated` and making the changes as required.
-The example polls `/metrics` in the WEB container every 5 seconds.
+
+Developers can add `scrape_confi` details to this file, as shown below.
 
 ```yml
 global:
@@ -176,6 +178,8 @@ scrape_configs:
     static_configs:
       - targets: ['web'] # Change to your app's hostname and port. Here, we use DDEV web container.
 ```
+
+However, this Prometheus will try to load `.ddev/prometheus/scrape-*.yml` files. Inversely, removing one of these scrap files will disable it. View `.ddev/prometheus/scrape-*.yml` for more information.
 
 - To customize the default port, update `.ddev/.env`
 

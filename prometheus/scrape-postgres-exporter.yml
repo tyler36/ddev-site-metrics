@@ -1,0 +1,11 @@
+##ddev-generated
+
+# Postgres Exporter
+# This file configures Prometheus for Postgres Exporter. Metrics are prefixed with `pg`.
+# @See https://github.com/prometheus-community/postgres_exporter
+
+scrape_configs:
+  # Get exposed Postgres metrics
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']

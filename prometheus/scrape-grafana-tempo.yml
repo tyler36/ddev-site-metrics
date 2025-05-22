@@ -1,0 +1,12 @@
+##ddev-generated
+
+# Grafana Tempo metrics
+# This file configures Prometheus for Grafana Tempo. Metrics are prefixed with `tempo`.
+# @See https://grafana.com/docs/tempo/latest/metrics-generator/
+
+scrape_configs:
+  # Add Grafana Tempo metrics
+  - job_name: 'grafana-tempo'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: [ 'grafana-tempo:3200' ]
