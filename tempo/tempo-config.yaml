@@ -8,7 +8,7 @@ distributor:
     otlp:
       protocols:
         http:
-          endpoint: "tempo:4318"  # Replace 3200 with your desired port number
+          endpoint: "grafana-tempo:4318"  # Replace 3200 with your desired port number
 
 compactor:
   compaction:

@@ -368,6 +368,10 @@ teardown() {
   export TEMPO_SERVER='grafana-tempo:3200'
   export TARGET_METRIC='tempo_build_info'
 
+  # Confirm Grafana Tempo OTEL endpoint is set
+  run grep 'endpoint: "grafana-tempo:4318"' .ddev/tempo/tempo-config.yaml
+  assert_success
+
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs "${TEMPO_SERVER}/metrics"
   assert_output --partial "HELP ${TARGET_METRIC}"
