@@ -1,4 +1,4 @@
-## ddev-generated
+##ddev-generated
 
 # MySQL Exporter
 # This file configures Prometheus for MySQL-exporter. Metrics are prefixed with `mysql`.
