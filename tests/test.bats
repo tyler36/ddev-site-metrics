@@ -397,7 +397,7 @@ teardown() {
   assert_output --partial "${TARGET_METRIC}"
 
   # Query Grafana Loki ingests Grafana Alloy Logs
-  run ddev exec curl -sf "loki:3100/loki/api/v1/series"
+  run ddev exec curl -sf "grafana-loki:3100/loki/api/v1/series"
   assert_output --partial '"component":"alloy"'
   assert_output --partial '"service_name":"alloy"'
 }
