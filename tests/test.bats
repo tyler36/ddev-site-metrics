@@ -365,10 +365,17 @@ teardown() {
   run ddev restart -y
   assert_success
 
+  export TEMPO_SERVER='grafana-tempo:3200'
   export TARGET_METRIC='tempo_build_info'
 
+  # Confirm Grafana Tempo OTEL endpoint is set
+  run grep 'endpoint: "grafana-tempo:4318"' .ddev/tempo/tempo-config.yaml
+  assert_success
+  run grep 'endpoint = "http://grafana-tempo:4318"' .ddev/alloy/otelcol.alloy
+  assert_success
+
   # Check it exposes endpoint with statistics
-  run ddev exec curl -vs grafana-tempo:3200/metrics
+  run ddev exec curl -vs "${TEMPO_SERVER}/metrics"
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
@@ -378,7 +385,7 @@ teardown() {
   # Query Grafana API for Tempo datasource
   run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
   assert_output --partial '"name":"Tempo"'
-  assert_output --partial '"url":"http://grafana-tempo:3200"'
+  assert_output --partial "url\":\"http://${TEMPO_SERVER}\""
 }
 
 @test "Grafana Alloy workflow is configured" {
