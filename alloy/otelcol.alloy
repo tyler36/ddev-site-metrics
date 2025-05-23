@@ -29,8 +29,6 @@ otelcol.connector.spanlogs "default" {
   spans              = true
   events             = true
   labels             = ["srv", "tid"]
-  span_attributes    = ["srv", "tid"]
-  process_attributes = ["srv", "tid"]
   event_attributes   = ["log.severity", "log.message"]
 
   overrides {
