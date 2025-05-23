@@ -26,14 +26,14 @@ otelcol.processor.batch "default" {
  */
 otelcol.connector.spanlogs "default" {
   roots              = true
-  events             = true
-  labels             = ["attribute1", "res_attribute1"]
-  span_attributes    = ["attribute1"]
-  process_attributes = ["res_attribute1"]
+  spans              = true
+  labels             = ["srv", "tid"]
+  span_attributes    = ["srv", "tid"]
+  process_attributes = ["srv", "tid"]
   event_attributes   = ["log.severity", "log.message"]
 
   overrides {
-    service_key = "service.key"
+    service_key = "srv"
   }
 
   output {
@@ -42,10 +42,32 @@ otelcol.connector.spanlogs "default" {
 }
 
 otelcol.processor.attributes "default" {
+  // Extract app name from service.name attribute
+  action {
+    key = "service.name"
+    from_attribute = "srv"
+    action = "upsert"
+  }
+
+  // Extract app name from service.name attribute
+  action {
+    key = "app"
+    from_attribute = "service.name"
+    action = "upsert"
+  }
+
+  // Extract app name from service.name attribute
+  action {
+    key = "app"
+    from_attribute = "service.name"
+    action = "upsert"
+  }
+
+  // Generate loki labels from OpenTelemetry attributes
   action {
     key = "loki.attribute.labels"
     action = "insert"
-    value = "attribute1"
+    value = "service.name,app"  // comma separated list
   }
 
   output {
