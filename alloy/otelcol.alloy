@@ -41,6 +41,10 @@ otelcol.connector.spanlogs "default" {
   }
 }
 
+/*
+ * 'otelcol.processor.attributes' accepts telemetry data from other otelcol components and modifies attributes of a span, log, or metric.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.attributes/
+ */
 otelcol.processor.attributes "default" {
   // Extract app name from service.name attribute
   action {
