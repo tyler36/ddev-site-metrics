@@ -27,6 +27,7 @@ otelcol.processor.batch "default" {
 otelcol.connector.spanlogs "default" {
   roots              = true
   spans              = true
+  events             = true
   labels             = ["srv", "tid"]
   span_attributes    = ["srv", "tid"]
   process_attributes = ["srv", "tid"]
