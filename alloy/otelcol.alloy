@@ -6,6 +6,7 @@ otelcol.receiver.otlp "default" {
   }
 
   output {
+    metrics = [otelcol.processor.batch.default.input]
     traces  = [otelcol.processor.batch.default.input]
   }
 }
@@ -16,6 +17,7 @@ otelcol.receiver.otlp "default" {
  */
 otelcol.processor.batch "default" {
   output {
+    metrics = [otelcol.exporter.prometheus.default.input]
     traces  = [otelcol.connector.spanlogs.default.input, otelcol.exporter.otlphttp.tempo.input]
   }
 }
@@ -76,6 +78,14 @@ otelcol.processor.attributes "default" {
   output {
     logs = [otelcol.exporter.loki.default.input]
   }
+}
+
+/**
+ * 'otelcol.exporter.prometheus' accepts OTLP-formatted metrics from other otelcol components, converts metrics to Prometheus-formatted metrics, and forwards the resulting metrics to prometheus components.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.exporter.prometheus/
+ */
+otelcol.exporter.prometheus "default" {
+  forward_to = [prometheus.remote_write.default.receiver]
 }
 
 otelcol.exporter.loki "default" {

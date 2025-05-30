@@ -13,3 +13,7 @@ services:
       environment:
         - VIRTUAL_HOST=$DDEV_HOSTNAME
         - HTTPS_EXPOSE=${PROMETHEUS_HTTPS_PORT:-9090}:9090
+      command:
+       - '--config.file=/etc/prometheus/prometheus.yml'
+       - '--web.enable-remote-write-receiver'
+       - '--enable-feature=remote-write-receiver'
