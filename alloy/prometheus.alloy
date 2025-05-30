@@ -1,0 +1,11 @@
+// ##ddev-generated
+
+/**
+ * 'prometheus.remote_write' collects metrics sent from other components into a Write-Ahead Log (WAL) and forwards them over the network to a series of user-supplied endpoints.
+ * @See https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.remote_write/
+ */
+prometheus.remote_write "default" {
+  endpoint {
+    url = "http://prometheus:9090/api/v1/write"
+  }
+}
