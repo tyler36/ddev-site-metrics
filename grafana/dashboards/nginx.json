@@ -11,7 +11,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
+        "name": "アノテーションとアラート",
         "type": "dashboard"
       }
     ]
@@ -84,13 +84,13 @@
           "expr": "nginx_http_requests_total",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "legendFormat": "Total Request",
+          "legendFormat": "総リクエスト数",
           "range": true,
           "refId": "A",
           "useBackend": false
         }
       ],
-      "title": "Total Request",
+      "title": "総リクエスト数",
       "type": "stat"
     },
     {
@@ -186,7 +186,7 @@
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "Handled",
+          "legendFormat": "処理済み",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -197,13 +197,13 @@
           "expr": "nginx_connections_waiting",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "legendFormat": "Waiting",
+          "legendFormat": "待機中",
           "range": true,
           "refId": "A",
           "useBackend": false
         }
       ],
-      "title": "Responses",
+      "title": "レスポンス",
       "type": "timeseries"
     },
     {
@@ -323,7 +323,7 @@
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "Writing",
+          "legendFormat": "書き込み中",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -340,13 +340,13 @@
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "Reading",
+          "legendFormat": "読み込み中",
           "range": true,
           "refId": "B",
           "useBackend": false
         }
       ],
-      "title": "Activity",
+      "title": "アクティビティ",
       "type": "timeseries"
     },
     {
@@ -507,7 +507,7 @@
           "useBackend": false
         }
       ],
-      "title": "Error Codes",
+      "title": "エラーコード",
       "type": "timeseries"
     }
   ],

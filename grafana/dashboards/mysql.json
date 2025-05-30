@@ -21,7 +21,7 @@
       }
     ]
   },
-  "description": "Dashboard from Percona Monitoring and Management project. ",
+  "description": "Percona Monitoring and Management プロジェクトからのダッシュボード。",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -35,7 +35,7 @@
         "QAN"
       ],
       "targetBlank": false,
-      "title": "Query Analytics",
+      "title": "クエリアナリティクス",
       "type": "link",
       "url": "/graph/dashboard/db/_pmm-query-analytics"
     },
@@ -91,7 +91,7 @@
         "Cloud"
       ],
       "targetBlank": false,
-      "title": "Cloud",
+      "title": "クラウド",
       "type": "dashboards"
     },
     {
@@ -102,7 +102,7 @@
         "Insight"
       ],
       "targetBlank": false,
-      "title": "Insight",
+      "title": "インサイト",
       "type": "dashboards"
     },
     {
@@ -136,7 +136,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Uptime**\n\nThe amount of time since the last restart of the MySQL server process.",
+      "description": "**MySQL アップタイム**\n\nMySQL サーバープロセスの最後の再起動からの経過時間。",
       "fieldConfig": {
         "defaults": {
           "decimals": 1,
@@ -207,7 +207,7 @@
           "step": 300
         }
       ],
-      "title": "MySQL Uptime",
+      "title": "MySQL アップタイム",
       "type": "stat"
     },
     {
@@ -215,7 +215,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**Current QPS**\n\nBased on the queries reported by MySQL's ``SHOW STATUS`` command, it is the number of statements executed by the server within the last second. This variable includes statements executed within stored programs, unlike the Questions variable. It does not count \n``COM_PING`` or ``COM_STATISTICS`` commands.",
+      "description": "**現在の QPS**\n\nMySQL の ``SHOW STATUS`` コマンドで報告されたクエリに基づき、サーバーが直近 1 秒間に実行したステートメント数です。この変数は Questions 変数とは異なり、ストアドプログラム内で実行されたステートメントも含みます。\n``COM_PING`` や ``COM_STATISTICS`` コマンドはカウントされません。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -255,7 +255,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "MySQL Server Status Variables",
+          "title": "MySQL サーバーステータス変数",
           "url": "https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html#statvar_Queries"
         }
       ],
@@ -299,7 +299,7 @@
           "step": 20
         }
       ],
-      "title": "Current QPS",
+      "title": "現在の QPS",
       "type": "stat"
     },
     {
@@ -307,7 +307,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**InnoDB Buffer Pool Size**\n\nInnoDB maintains a storage area called the buffer pool for caching data and indexes in memory.  Knowing how the InnoDB buffer pool works, and taking advantage of it to keep frequently accessed data in memory, is one of the most important aspects of MySQL tuning. The goal is to keep the working set in memory. In most cases, this should be between 60%-90% of available memory on a dedicated database host, but depends on many factors.",
+      "description": "**InnoDB バッファプールサイズ**\n\nInnoDB はデータやインデックスをメモリにキャッシュするためのバッファプール領域を維持します。バッファプールを活用して頻繁にアクセスされるデータをメモリに保持することが、MySQL チューニングの最も重要な側面の一つです。ワーキングセットをメモリ内に収めることが目標です。多くの場合、専用データベースホストの利用可能メモリの 60%-90% の範囲が推奨されますが、多くの要因によります。",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -343,7 +343,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Tuning the InnoDB Buffer Pool Size",
+          "title": "InnoDB バッファプールサイズのチューニング",
           "url": "https://www.percona.com/blog/2015/06/02/80-ram-tune-innodb_buffer_pool_size/"
         }
       ],
@@ -385,7 +385,7 @@
           "step": 300
         }
       ],
-      "title": "InnoDB Buffer Pool Size",
+      "title": "InnoDB バッファプールサイズ",
       "type": "stat"
     },
     {
@@ -403,7 +403,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**Max Connections** \n\nMax Connections is the maximum permitted number of simultaneous client connections. By default, this is 151. Increasing this value increases the number of file descriptors that mysqld requires. If the required number of descriptors are not available, the server reduces the value of Max Connections.\n\nmysqld actually permits Max Connections + 1 clients to connect. The extra connection is reserved for use by accounts that have the SUPER privilege, such as root.\n\nMax Used Connections is the maximum number of connections that have been in use simultaneously since the server started.\n\nConnections is the number of connection attempts (successful or not) to the MySQL server.",
+          "description": "**最大接続数**\n\n最大接続数は同時クライアント接続の最大許可数です。デフォルトは 151 です。この値を増やすと mysqld が必要とするファイルディスクリプタ数も増加します。必要なディスクリプタ数が利用できない場合、サーバーは最大接続数の値を減らします。\n\nmysqld は実際には最大接続数 + 1 のクライアント接続を許可します。この追加の接続は root など SUPER 権限を持つアカウント用に予約されています。\n\n最大使用接続数は、サーバー起動後に同時に使用された接続数の最大値です。\n\n接続数は MySQL サーバーへの接続試行回数（成功・失敗問わず）です。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -483,7 +483,7 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "MySQL Server System Variables",
+              "title": "MySQL サーバーシステム変数",
               "url": "https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_max_connections"
             }
           ],
@@ -568,7 +568,7 @@
               "target": ""
             }
           ],
-          "title": "MySQL Connections",
+          "title": "MySQL 接続数",
           "type": "timeseries"
         },
         {
@@ -576,7 +576,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**MySQL Active Threads**\n\nThreads Connected is the number of open connections, while Threads Running is the number of threads not sleeping.",
+          "description": "**MySQL アクティブスレッド**\n\nThreads Connected はオープン接続数、Threads Running はスリープしていないスレッド数です。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -767,11 +767,11 @@
               "step": 20
             }
           ],
-          "title": "MySQL Client Thread Activity",
+          "title": "MySQL クライアントスレッドアクティビティ",
           "type": "timeseries"
         }
       ],
-      "title": "Connections",
+      "title": "接続",
       "type": "row"
     },
     {
@@ -784,7 +784,7 @@
       },
       "id": 384,
       "panels": [],
-      "title": "Table Locks",
+      "title": "テーブルロック",
       "type": "row"
     },
     {
@@ -792,7 +792,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Questions**\n\nThe number of statements executed by the server. This includes only statements sent to the server by clients and not statements executed within stored programs, unlike the Queries used in the QPS calculation. \n\nThis variable does not count the following commands:\n* ``COM_PING``\n* ``COM_STATISTICS``\n* ``COM_STMT_PREPARE``\n* ``COM_STMT_CLOSE``\n* ``COM_STMT_RESET``",
+      "description": "**MySQL Questions**\n\nサーバーが実行したステートメント数です。これはクライアントからサーバーに送信されたステートメントのみを含み、QPS 計算で使われる Queries とは異なり、ストアドプログラム内で実行されたステートメントは含みません。\n\n以下のコマンドはカウントされません:\n* ``COM_PING``\n* ``COM_STATISTICS``\n* ``COM_STMT_PREPARE``\n* ``COM_STMT_CLOSE``\n* ``COM_STMT_RESET``",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -859,7 +859,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "MySQL Queries and Questions",
+          "title": "MySQL クエリと Questions",
           "url": "https://www.percona.com/blog/2014/05/29/how-mysql-queries-and-questions-are-measured/"
         }
       ],
@@ -908,7 +908,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Thread Cache**\n\nThe thread_cache_size variable sets how many threads the server should cache to reuse. When a client disconnects, the client's threads are put in the cache if the cache is not full. It is autosized in MySQL 5.6.8 and above (capped to 100). Requests for threads are satisfied by reusing threads taken from the cache if possible, and only when the cache is empty is a new thread created.\n\n* *Threads_created*: The number of threads created to handle connections.\n* *Threads_cached*: The number of threads in the thread cache.",
+      "description": "**MySQL スレッドキャッシュ**\n\nthread_cache_size 変数は、サーバーが再利用のためにキャッシュすべきスレッド数を設定します。クライアントが切断されると、キャッシュが満杯でなければそのクライアントのスレッドがキャッシュに入ります。MySQL 5.6.8 以降では自動サイズ（最大 100 まで）です。スレッド要求はキャッシュから再利用され、キャッシュが空の場合のみ新しいスレッドが作成されます。\n\n* *Threads_created*: 接続処理のために作成されたスレッド数。\n* *Threads_cached*: スレッドキャッシュ内のスレッド数。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -987,7 +987,7 @@
       "id": 11,
       "links": [
         {
-          "title": "Tuning information",
+          "title": "チューニング情報",
           "url": "https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_thread_cache_size"
         }
       ],
@@ -1062,7 +1062,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Thread Cache",
+      "title": "MySQL スレッドキャッシュ",
       "type": "timeseries"
     },
     {
@@ -1080,7 +1080,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**MySQL Sorts**\n\nDue to a query's structure, order, or other requirements, MySQL sorts the rows before returning them. For example, if a table is ordered 1 to 10 but you want the results reversed, MySQL then has to sort the rows to return 10 to 1.\n\nThis graph also shows when sorts had to scan a whole table or a given range of a table in order to return the results and which could not have been sorted via an index.",
+          "description": "**MySQL ソート**\n\nクエリの構造や順序などの要件により、MySQL は返す前に行をソートします。例えば、テーブルが 1 から 10 で並んでいても、逆順で結果が必要な場合、MySQL は 10 から 1 へとソートします。\n\nこのグラフは、全テーブルや特定範囲のスキャンが必要だったソートや、インデックスでソートできなかったケースも示します。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1253,7 +1253,7 @@
               "step": 20
             }
           ],
-          "title": "MySQL Sorts",
+          "title": "MySQL ソート",
           "type": "timeseries"
         },
         {
@@ -1261,7 +1261,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**MySQL Slow Queries**\n\nSlow queries are defined as queries being slower than the long_query_time setting. For example, if you have long_query_time set to 3, all queries that take longer than 3 seconds to complete will show on this graph.",
+          "description": "**MySQL スロークエリ**\n\nスロークエリは long_query_time 設定より遅いクエリとして定義されます。例えば long_query_time が 3 の場合、3 秒以上かかるクエリがこのグラフに表示されます。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1362,11 +1362,11 @@
               "step": 20
             }
           ],
-          "title": "MySQL Slow Queries",
+          "title": "MySQL スロークエリ",
           "type": "timeseries"
         }
       ],
-      "title": "Sorts",
+      "title": "ソート",
       "type": "row"
     },
     {
@@ -1384,7 +1384,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**Aborted Connections**\n\nWhen a given host connects to MySQL and the connection is interrupted in the middle (for example due to bad credentials), MySQL keeps that info in a system table (since 5.6 this table is exposed in performance_schema).\n\nIf the amount of failed requests without a successful connection reaches the value of max_connect_errors, mysqld assumes that something is wrong and blocks the host from further connection.\n\nTo allow connections from that host again, you need to issue the ``FLUSH HOSTS`` statement.",
+          "description": "**アボートされた接続**\n\n特定ホストが MySQL に接続し、途中で接続が中断された場合（例: 認証失敗）、MySQL はその情報をシステムテーブルに保持します（5.6 以降は performance_schema で公開）。\n\n成功しないリクエストが max_connect_errors の値に達すると、mysqld は問題があると判断し、そのホストからの接続をブロックします。\n\n再度接続を許可するには ``FLUSH HOSTS`` ステートメントを実行してください。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1503,7 +1503,7 @@
               "target": ""
             }
           ],
-          "title": "MySQL Aborted Connections",
+          "title": "MySQL アボートされた接続",
           "type": "timeseries"
         },
         {
@@ -1511,7 +1511,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**Table Locks**\n\nMySQL takes a number of different locks for varying reasons. In this graph we see how many Table level locks MySQL has requested from the storage engine. In the case of InnoDB, many times the locks could actually be row locks as it only takes table level locks in a few specific cases.\n\nIt is most useful to compare Locks Immediate and Locks Waited. If Locks waited is rising, it means you have lock contention. Otherwise, Locks Immediate rising and falling is normal activity.",
+          "description": "**テーブルロック**\n\nMySQL は様々な理由で複数種類のロックを取得します。このグラフでは、MySQL がストレージエンジンから要求したテーブルレベルのロック数を示します。InnoDB の場合、多くは実際には行ロックですが、特定の場合のみテーブルロックを取得します。\n\nLocks Immediate と Locks Waited を比較するのが有用です。Locks Waited が増加していればロック競合が発生しています。Locks Immediate の増減は通常の動作です。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1629,11 +1629,11 @@
               "step": 20
             }
           ],
-          "title": "MySQL Table Locks",
+          "title": "MySQL テーブルロック",
           "type": "timeseries"
         }
       ],
-      "title": "Aborted",
+      "title": "アボート",
       "type": "row"
     },
     {
@@ -1651,7 +1651,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**MySQL Network Traffic**\n\nHere we can see how much network traffic is generated by MySQL. Outbound is network traffic sent from MySQL and Inbound is network traffic MySQL has received.",
+          "description": "**MySQL ネットワークトラフィック**\n\nここでは MySQL によって生成されたネットワークトラフィック量を確認できます。Outbound は MySQL から送信されたトラフィック、Inbound は MySQL が受信したトラフィックです。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1769,7 +1769,7 @@
               "step": 20
             }
           ],
-          "title": "MySQL Network Traffic",
+          "title": "MySQL ネットワークトラフィック",
           "type": "timeseries"
         },
         {
@@ -1777,7 +1777,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**MySQL Network Usage Hourly**\n\nHere we can see how much network traffic is generated by MySQL per hour. You can use the bar graph to compare data sent by MySQL and data received by MySQL.",
+          "description": "**MySQL ネットワーク使用量（毎時）**\n\nここでは MySQL によって 1 時間ごとに生成されたネットワークトラフィック量を確認できます。棒グラフで送信データと受信データを比較できます。",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1896,11 +1896,11 @@
             }
           ],
           "timeFrom": "24h",
-          "title": "MySQL Network Usage Hourly",
+          "title": "MySQL ネットワーク使用量（毎時）",
           "type": "timeseries"
         }
       ],
-      "title": "Network",
+      "title": "ネットワーク",
       "type": "row"
     },
     {
@@ -1913,7 +1913,7 @@
       },
       "id": 389,
       "panels": [],
-      "title": "Memory",
+      "title": "メモリ",
       "type": "row"
     },
     {
@@ -1921,7 +1921,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "***System Memory***: Total Memory for the system.\\\n***InnoDB Buffer Pool Data***: InnoDB maintains a storage area called the buffer pool for caching data and indexes in memory.\\\n***TokuDB Cache Size***: Similar in function to the InnoDB Buffer Pool,  TokuDB will allocate 50% of the installed RAM for its own cache.\\\n***Key Buffer Size***: Index blocks for MYISAM tables are buffered and are shared by all threads. key_buffer_size is the size of the buffer used for index blocks.\\\n***Adaptive Hash Index Size***: When InnoDB notices that some index values are being accessed very frequently, it builds a hash index for them in memory on top of B-Tree indexes.\\\n ***Query Cache Size***: The query cache stores the text of a SELECT statement together with the corresponding result that was sent to the client. The query cache has huge scalability problems in that only one thread can do an operation in the query cache at the same time.\\\n***InnoDB Dictionary Size***: The data dictionary is InnoDB ‘s internal catalog of tables. InnoDB stores the data dictionary on disk, and loads entries into memory while the server is running.\\\n***InnoDB Log Buffer Size***: The MySQL InnoDB log buffer allows transactions to run without having to write the log to disk before the transactions commit.",
+      "description": "***システムメモリ***: システム全体のメモリ。\\\n***InnoDB バッファプールデータ***: InnoDB はデータやインデックスをメモリにキャッシュするためのバッファプール領域を維持します。\\\n***TokuDB キャッシュサイズ***: InnoDB バッファプールと同様に、TokuDB はインストール済み RAM の 50% を自身のキャッシュに割り当てます。\\\n***キー バッファサイズ***: MYISAM テーブルのインデックスブロックがバッファされ、全スレッドで共有されます。key_buffer_size はインデックスブロック用バッファのサイズです。\\\n***アダプティブハッシュインデックスサイズ***: InnoDB が特定のインデックス値へのアクセス頻度が高いと判断した場合、B-Tree インデックス上にハッシュインデックスをメモリ上に構築します。\\\n***クエリキャッシュサイズ***: クエリキャッシュは SELECT 文のテキストとクライアントに送信された結果を保存します。クエリキャッシュはスケーラビリティに問題があり、同時に 1 スレッドしか操作できません。\\\n***InnoDB ディクショナリサイズ***: データディクショナリは InnoDB の内部カタログです。InnoDB はディクショナリをディスクに保存し、サーバー稼働中にメモリへロードします。\\\n***InnoDB ログバッファサイズ***: MySQL InnoDB ログバッファにより、トランザクションはコミット前にログをディスクへ書き込まずに実行できます。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2047,7 +2047,7 @@
       "id": 50,
       "links": [
         {
-          "title": "Detailed descriptions about metrics",
+          "title": "メトリクスの詳細説明",
           "url": "https://www.percona.com/doc/percona-monitoring-and-management/dashboard.mysql-overview.html#mysql-internal-memory-overview"
         }
       ],
@@ -2188,7 +2188,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Internal Memory Overview",
+      "title": "MySQL 内部メモリ概要",
       "type": "timeseries"
     },
     {
@@ -2201,7 +2201,7 @@
       },
       "id": 391,
       "panels": [],
-      "title": "Query Cache",
+      "title": "クエリキャッシュ",
       "type": "row"
     },
     {
@@ -2209,7 +2209,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Query Cache Memory**\n\nThe query cache has huge scalability problems in that only one thread can do an operation in the query cache at the same time. This serialization is true not only for SELECTs, but also for INSERT/UPDATE/DELETE.\n\nThis also means that the larger the `query_cache_size` is set to, the slower those operations become. In concurrent environments, the MySQL Query Cache quickly becomes a contention point, decreasing performance. MariaDB and AWS Aurora have done work to try and eliminate the query cache contention in their flavors of MySQL, while MySQL 8.0 has eliminated the query cache feature.\n\nThe recommended settings for most environments is to set:\n  ``query_cache_type=0``\n  ``query_cache_size=0``\n\nNote that while you can dynamically change these values, to completely remove the contention point you have to restart the database.",
+      "description": "**MySQL クエリキャッシュメモリ**\n\nクエリキャッシュはスケーラビリティに大きな問題があり、同時に 1 スレッドしか操作できません。これは SELECT だけでなく、INSERT/UPDATE/DELETE でも同様です。\n\nまた、`query_cache_size` を大きくすると操作が遅くなります。並列環境ではクエリキャッシュが競合ポイントとなり、パフォーマンスが低下します。MariaDB や AWS Aurora では競合解消のための改良が行われていますが、MySQL 8.0 ではクエリキャッシュ機能自体が廃止されています。\n\nほとんどの環境での推奨設定は以下です:\n  ``query_cache_type=0``\n  ``query_cache_size=0``\n\nこれらの値は動的に変更できますが、競合ポイントを完全に排除するにはデータベースの再起動が必要です。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2327,7 +2327,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Query Cache Memory",
+      "title": "MySQL クエリキャッシュメモリ",
       "type": "timeseries"
     },
     {
@@ -2335,7 +2335,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Query Cache Activity**\n\nThe query cache has huge scalability problems in that only one thread can do an operation in the query cache at the same time. This serialization is true not only for SELECTs, but also for INSERT/UPDATE/DELETE.\n\nThis also means that the larger the `query_cache_size` is set to, the slower those operations become. In concurrent environments, the MySQL Query Cache quickly becomes a contention point, decreasing performance. MariaDB and AWS Aurora have done work to try and eliminate the query cache contention in their flavors of MySQL, while MySQL 8.0 has eliminated the query cache feature.\n\nThe recommended settings for most environments is to set:\n``query_cache_type=0``\n``query_cache_size=0``\n\nNote that while you can dynamically change these values, to completely remove the contention point you have to restart the database.",
+      "description": "**MySQL クエリキャッシュアクティビティ**\n\nクエリキャッシュはスケーラビリティに大きな問題があり、同時に 1 スレッドしか操作できません。これは SELECT だけでなく、INSERT/UPDATE/DELETE でも同様です。\n\nまた、`query_cache_size` を大きくすると操作が遅くなります。並列環境ではクエリキャッシュが競合ポイントとなり、パフォーマンスが低下します。MariaDB や AWS Aurora では競合解消のための改良が行われていますが、MySQL 8.0 ではクエリキャッシュ機能自体が廃止されています。\n\nほとんどの環境での推奨設定は以下です:\n``query_cache_type=0``\n``query_cache_size=0``\n\nこれらの値は動的に変更できますが、競合ポイントを完全に排除するにはデータベースの再起動が必要です。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2504,7 +2504,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Query Cache Activity",
+      "title": "MySQL クエリキャッシュアクティビティ",
       "type": "timeseries"
     },
     {
@@ -2517,7 +2517,7 @@
       },
       "id": 392,
       "panels": [],
-      "title": "Files and Tables",
+      "title": "ファイルとテーブル",
       "type": "row"
     },
     {
@@ -2624,7 +2624,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL File Openings",
+      "title": "MySQL ファイルオープン数",
       "type": "timeseries"
     },
     {
@@ -2759,7 +2759,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Open Files",
+      "title": "MySQL オープンファイル数",
       "type": "timeseries"
     },
     {
@@ -2772,7 +2772,7 @@
       },
       "id": 393,
       "panels": [],
-      "title": "Table Openings",
+      "title": "テーブルオープン数",
       "type": "row"
     },
     {
@@ -2780,7 +2780,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Table Open Cache Status**\n\nThe recommendation is to set the `table_open_cache_instances` to a loose correlation to virtual CPUs, keeping in mind that more instances means the cache is split more times. If you have a cache set to 500 but it has 10 instances, each cache will only have 50 cached.\n\nThe `table_definition_cache` and `table_open_cache` can be left as default as they are auto-sized MySQL 5.6 and above (ie: do not set them to any value).",
+      "description": "**MySQL テーブルオープンキャッシュステータス**\n\n`table_open_cache_instances` は仮想 CPU 数に緩やかに合わせて設定することが推奨されます。インスタンス数が多いほどキャッシュが分割されます。例えばキャッシュが 500 でインスタンスが 10 の場合、各キャッシュは 50 ずつしか保持できません。\n\n`table_definition_cache` と `table_open_cache` は MySQL 5.6 以降自動サイズなので、デフォルトのままで問題ありません（値を設定しない）。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2863,7 +2863,7 @@
       "id": 44,
       "links": [
         {
-          "title": "Server Status Variables (table_open_cache)",
+          "title": "サーバーステータス変数 (table_open_cache)",
           "url": "http://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_table_open_cache"
         }
       ],
@@ -2956,7 +2956,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Table Open Cache Status",
+      "title": "MySQL テーブルオープンキャッシュステータス",
       "type": "timeseries"
     },
     {
@@ -2964,7 +2964,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Open Tables**\n\nThe recommendation is to set the `table_open_cache_instances` to a loose correlation to virtual CPUs, keeping in mind that more instances means the cache is split more times. If you have a cache set to 500 but it has 10 instances, each cache will only have 50 cached.\n\nThe `table_definition_cache` and `table_open_cache` can be left as default as they are auto-sized MySQL 5.6 and above (ie: do not set them to any value).",
+      "description": "**MySQL オープンテーブル数**\n\n`table_open_cache_instances` は仮想 CPU 数に緩やかに合わせて設定することが推奨されます。インスタンス数が多いほどキャッシュが分割されます。例えばキャッシュが 500 でインスタンスが 10 の場合、各キャッシュは 50 ずつしか保持できません。\n\n`table_definition_cache` と `table_open_cache` は MySQL 5.6 以降自動サイズなので、デフォルトのままで問題ありません（値を設定しない）。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3030,7 +3030,7 @@
       "id": 42,
       "links": [
         {
-          "title": "Server Status Variables (table_open_cache)",
+          "title": "サーバーステータス変数 (table_open_cache)",
           "url": "http://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_table_open_cache"
         }
       ],
@@ -3088,7 +3088,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Open Tables",
+      "title": "MySQL オープンテーブル数",
       "type": "timeseries"
     },
     {
@@ -3101,7 +3101,7 @@
       },
       "id": 394,
       "panels": [],
-      "title": "MySQL Table Definition Cache",
+      "title": "MySQL テーブル定義キャッシュ",
       "type": "row"
     },
     {
@@ -3109,7 +3109,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "**MySQL Table Definition Cache**\n\nThe recommendation is to set the `table_open_cache_instances` to a loose correlation to virtual CPUs, keeping in mind that more instances means the cache is split more times. If you have a cache set to 500 but it has 10 instances, each cache will only have 50 cached.\n\nThe `table_definition_cache` and `table_open_cache` can be left as default as they are auto-sized MySQL 5.6 and above (ie: do not set them to any value).",
+      "description": "**MySQL テーブル定義キャッシュ**\n\n`table_open_cache_instances` は仮想 CPU 数に緩やかに合わせて設定することが推奨されます。インスタンス数が多いほどキャッシュが分割されます。例えばキャッシュが 500 でインスタンスが 10 の場合、各キャッシュは 50 ずつしか保持できません。\n\n`table_definition_cache` と `table_open_cache` は MySQL 5.6 以降自動サイズなので、デフォルトのままで問題ありません（値を設定しない）。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3188,7 +3188,7 @@
       "id": 54,
       "links": [
         {
-          "title": "Server Status Variables (table_open_cache)",
+          "title": "サーバーステータス変数 (table_open_cache)",
           "url": "http://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_table_open_cache"
         }
       ],
@@ -3259,7 +3259,7 @@
           "step": 20
         }
       ],
-      "title": "MySQL Table Definition Cache",
+      "title": "MySQL テーブル定義キャッシュ",
       "type": "timeseries"
     }
   ],
@@ -3281,7 +3281,7 @@
           "text": "1s",
           "value": "1s"
         },
-        "label": "Interval",
+        "label": "間隔",
         "name": "interval",
         "options": [
           {
@@ -3331,7 +3331,7 @@
         },
         "datasource": "prometheus",
         "includeAll": false,
-        "label": "Host",
+        "label": "ホスト",
         "name": "host",
         "options": [],
         "query": "label_values(mysql_up, instance)",

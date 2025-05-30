@@ -11,7 +11,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
+        "name": "アノテーションとアラート",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -55,7 +55,7 @@
       },
       "id": 261,
       "panels": [],
-      "title": "Quick CPU / Mem / Disk",
+      "title": "クイック CPU / メモリ / ディスク",
       "type": "row"
     },
     {
@@ -63,7 +63,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Resource pressure via PSI",
+      "description": "PSI によるリソース圧力",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -196,7 +196,7 @@
           "step": 240
         }
       ],
-      "title": "Pressure",
+      "title": "圧力",
       "type": "bargauge"
     },
     {
@@ -204,7 +204,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Overall CPU busy percentage (averaged across all cores)",
+      "description": "全コア平均の CPU ビジー率",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -285,7 +285,7 @@
           "step": 240
         }
       ],
-      "title": "CPU Busy",
+      "title": "CPU ビジー",
       "type": "gauge"
     },
     {
@@ -293,7 +293,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "System load  over all CPU cores together",
+      "description": "全 CPU コアのシステムロード",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -374,7 +374,7 @@
           "step": 240
         }
       ],
-      "title": "Sys Load",
+      "title": "システムロード",
       "type": "gauge"
     },
     {
@@ -382,7 +382,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Real RAM usage excluding cache and reclaimable memory",
+      "description": "キャッシュや再利用可能メモリを除いた実際の RAM 使用率",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -453,7 +453,7 @@
           "step": 240
         }
       ],
-      "title": "RAM Used",
+      "title": "RAM 使用率",
       "type": "gauge"
     },
     {
@@ -461,7 +461,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Percentage of swap space currently used by the system",
+      "description": "システムが現在使用しているスワップ領域の割合",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -540,7 +540,7 @@
           "step": 240
         }
       ],
-      "title": "SWAP Used",
+      "title": "SWAP 使用率",
       "type": "gauge"
     },
     {
@@ -548,7 +548,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Used Root FS",
+      "description": "ルートファイルシステムの使用量",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -628,7 +628,7 @@
           "step": 240
         }
       ],
-      "title": "Root FS Used",
+      "title": "Root FS 使用量",
       "type": "gauge"
     },
     {
@@ -706,7 +706,7 @@
           "refId": "A"
         }
       ],
-      "title": "CPU Cores",
+      "title": "CPU コア数",
       "type": "stat"
     },
     {
@@ -786,7 +786,7 @@
           "step": 240
         }
       ],
-      "title": "Reboot Required",
+      "title": "再起動必要",
       "type": "stat"
     },
     {
@@ -870,7 +870,7 @@
           "step": 240
         }
       ],
-      "title": "Uptime",
+      "title": "稼働時間",
       "type": "stat"
     },
     {
@@ -960,7 +960,7 @@
           "step": 240
         }
       ],
-      "title": "RootFS Total",
+      "title": "RootFS 合計",
       "type": "stat"
     },
     {
@@ -1044,7 +1044,7 @@
           "step": 240
         }
       ],
-      "title": "RAM Total",
+      "title": "RAM 合計",
       "type": "stat"
     },
     {
@@ -1128,7 +1128,7 @@
           "step": 240
         }
       ],
-      "title": "SWAP Total",
+      "title": "SWAP 合計",
       "type": "stat"
     },
     {
@@ -1141,7 +1141,7 @@
       },
       "id": 263,
       "panels": [],
-      "title": "Basic CPU / Mem / Net / Disk",
+      "title": "基本 CPU / メモリ / ネット / ディスク",
       "type": "row"
     },
     {
@@ -1149,7 +1149,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "CPU time spent busy vs idle, split by activity type",
+      "description": "アクティビティタイプごとに分割した CPU のビジー/アイドル時間",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1391,7 +1391,7 @@
           "step": 240
         }
       ],
-      "title": "CPU Basic",
+      "title": "CPU 基本",
       "type": "timeseries"
     },
     {
@@ -1399,7 +1399,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "RAM and swap usage overview, including caches",
+      "description": "キャッシュを含む RAM とスワップの使用状況概要",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1621,7 +1621,7 @@
           "step": 240
         }
       ],
-      "title": "Memory Basic",
+      "title": "メモリ基本",
       "type": "timeseries"
     },
     {
@@ -1629,7 +1629,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Per-interface network traffic (receive and transmit) in bits per second",
+      "description": "インターフェースごとのネットワークトラフィック（受信・送信）bps",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1746,7 +1746,7 @@
           "step": 240
         }
       ],
-      "title": "Network Traffic Basic",
+      "title": "ネットワークトラフィック基本",
       "type": "timeseries"
     },
     {
@@ -1754,7 +1754,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Percentage of filesystem space used for each mounted device",
+      "description": "各マウントデバイスのファイルシステム使用率（％）",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1846,7 +1846,7 @@
           "step": 240
         }
       ],
-      "title": "Disk Space Used Basic",
+      "title": "ディスク使用率基本",
       "type": "timeseries"
     },
     {
@@ -1864,7 +1864,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "CPU time usage split by state, normalized across all CPU cores",
+          "description": "状態ごとに正規化した CPU 時間の使用状況",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2234,7 +2234,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Breakdown of physical memory and swap usage. Hardware-detected memory errors are also displayed",
+          "description": "物理メモリとスワップの内訳。ハードウェア検出メモリエラーも表示",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2752,7 +2752,7 @@
               "step": 240
             }
           ],
-          "title": "Memory",
+          "title": "メモリ",
           "type": "timeseries"
         },
         {
@@ -2760,7 +2760,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Incoming and outgoing network traffic per interface",
+          "description": "インターフェースごとの入出力ネットワークトラフィック",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2882,7 +2882,7 @@
               "step": 240
             }
           ],
-          "title": "Network Traffic",
+          "title": "ネットワークトラフィック",
           "type": "timeseries"
         },
         {
@@ -2890,7 +2890,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Network interface utilization as a percentage of its maximum capacity",
+          "description": "ネットワークインターフェースの最大容量に対する利用率（％）",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3013,7 +3013,7 @@
               "step": 240
             }
           ],
-          "title": "Network Saturation",
+          "title": "ネットワーク飽和度",
           "type": "timeseries"
         },
         {
@@ -3021,7 +3021,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Disk I/O operations per second for each device",
+          "description": "各デバイスのディスク I/O 回数/秒",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3141,7 +3141,7 @@
               "step": 240
             }
           ],
-          "title": "Disk IOps",
+          "title": "ディスク IOPS",
           "type": "timeseries"
         },
         {
@@ -3149,7 +3149,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Disk I/O throughput per device",
+          "description": "各デバイスのディスク I/O スループット",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3273,7 +3273,7 @@
               "step": 240
             }
           ],
-          "title": "Disk Throughput",
+          "title": "ディスクスループット",
           "type": "timeseries"
         },
         {
@@ -3281,7 +3281,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Amount of available disk space per mounted filesystem, excluding rootfs. Based on block availability to non-root users",
+          "description": "rootfs を除く各マウントファイルシステムの空きディスク容量",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3409,7 +3409,7 @@
               "step": 240
             }
           ],
-          "title": "Filesystem Space Available",
+          "title": "ファイルシステム空き容量",
           "type": "timeseries"
         },
         {
@@ -3417,7 +3417,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Disk usage (used = total - available) per mountpoint",
+          "description": "マウントポイントごとのディスク使用量（使用済み＝合計−空き）",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3513,7 +3513,7 @@
               "step": 240
             }
           ],
-          "title": "Filesystem Used",
+          "title": "ファイルシステム使用量",
           "type": "timeseries"
         },
         {
@@ -3521,7 +3521,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Percentage of time the disk was actively processing I/O operations",
+          "description": "ディスクが I/O 処理を実行していた時間の割合",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3619,7 +3619,7 @@
               "step": 240
             }
           ],
-          "title": "Disk I/O Utilization",
+          "title": "ディスク I/O 利用率",
           "type": "timeseries"
         },
         {
@@ -3627,7 +3627,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "How often tasks experience CPU, memory, or I/O delays. “Some” indicates partial slowdown; “Full” indicates all tasks are stalled. Based on Linux PSI metrics:\nhttps://docs.kernel.org/accounting/psi.html",
+          "description": "CPU・メモリ・I/O 遅延の発生頻度。Some は部分的な遅延、Full は全タスク停止。Linux PSI メトリクスに基づく:\nhttps://docs.kernel.org/accounting/psi.html",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3822,11 +3822,11 @@
               "step": 240
             }
           ],
-          "title": "Pressure Stall Information",
+          "title": "PSI（圧力スタール情報）",
           "type": "timeseries"
         }
       ],
-      "title": "CPU / Memory / Net / Disk",
+      "title": "CPU / メモリ / ネット / ディスク",
       "type": "row"
     },
     {
@@ -5804,7 +5804,7 @@
           "type": "timeseries"
         }
       ],
-      "title": "Memory Meminfo",
+      "title": "メモリ Meminfo",
       "type": "row"
     },
     {

@@ -11,12 +11,12 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
+        "name": "アノテーションとアラート",
         "type": "dashboard"
       }
     ]
   },
-  "description": "This dashboard works with postgres_exporter for prometheus",
+  "description": "このダッシュボードは prometheus 用 postgres_exporter で動作します",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -33,7 +33,7 @@
       },
       "id": 34,
       "panels": [],
-      "title": "General Counters, CPU, Memory and File Descriptor Stats",
+      "title": "全体カウンタ・CPU・メモリ・ファイルディスクリプタ統計",
       "type": "row"
     },
     {
@@ -110,7 +110,7 @@
           "refId": "A"
         }
       ],
-      "title": "Version",
+      "title": "バージョン",
       "type": "stat"
     },
     {
@@ -118,7 +118,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "start time of the process",
+      "description": "プロセスの開始時刻",
       "fieldConfig": {
         "defaults": {
           "mappings": [
@@ -187,7 +187,7 @@
           "refId": "A"
         }
       ],
-      "title": "Start Time",
+      "title": "開始時刻",
       "type": "stat"
     },
     {
@@ -263,7 +263,7 @@
           "step": 4
         }
       ],
-      "title": "Current fetch data",
+      "title": "現在のフェッチデータ",
       "type": "stat"
     },
     {
@@ -339,7 +339,7 @@
           "step": 4
         }
       ],
-      "title": "Current insert data",
+      "title": "現在のインサートデータ",
       "type": "stat"
     },
     {
@@ -415,7 +415,7 @@
           "step": 4
         }
       ],
-      "title": "Current update data",
+      "title": "現在のアップデートデータ",
       "type": "stat"
     },
     {
@@ -490,7 +490,7 @@
           "refId": "A"
         }
       ],
-      "title": "Max Connections",
+      "title": "最大接続数",
       "type": "stat"
     },
     {
@@ -498,7 +498,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Average user and system CPU time spent in seconds.",
+      "description": "ユーザー・システム CPU 時間の平均（秒単位）",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -594,7 +594,7 @@
           "refId": "A"
         }
       ],
-      "title": "Average CPU Usage",
+      "title": "平均 CPU 使用率",
       "type": "timeseries"
     },
     {
@@ -602,7 +602,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Virtual and Resident memory size in bytes, averages over 5 min interval",
+      "description": "仮想・常駐メモリサイズ（バイト単位、5分平均）",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -709,7 +709,7 @@
           "refId": "B"
         }
       ],
-      "title": "Average Memory Usage",
+      "title": "平均メモリ使用量",
       "type": "timeseries"
     },
     {
@@ -717,7 +717,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Number of open file descriptors",
+      "description": "オープンファイルディスクリプタ数",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -813,7 +813,7 @@
           "refId": "A"
         }
       ],
-      "title": "Open File Descriptors",
+      "title": "オープンファイルディスクリプタ",
       "type": "timeseries"
     },
     {
@@ -826,7 +826,7 @@
       },
       "id": 32,
       "panels": [],
-      "title": "Settings",
+      "title": "設定",
       "type": "row"
     },
     {
@@ -901,7 +901,7 @@
           "refId": "A"
         }
       ],
-      "title": "Shared Buffers",
+      "title": "共有バッファ",
       "type": "stat"
     },
     {
@@ -976,7 +976,7 @@
           "refId": "A"
         }
       ],
-      "title": "Effective Cache",
+      "title": "有効キャッシュ",
       "type": "stat"
     },
     {
@@ -1051,7 +1051,7 @@
           "refId": "A"
         }
       ],
-      "title": "Maintenance Work Mem",
+      "title": "メンテナンス作業メモリ",
       "type": "stat"
     },
     {
@@ -1127,7 +1127,7 @@
           "refId": "A"
         }
       ],
-      "title": "Work Mem",
+      "title": "作業メモリ",
       "type": "stat"
     },
     {
@@ -1203,7 +1203,7 @@
           "refId": "A"
         }
       ],
-      "title": "Max WAL Size",
+      "title": "最大 WAL サイズ",
       "type": "stat"
     },
     {
@@ -1278,7 +1278,7 @@
           "refId": "A"
         }
       ],
-      "title": "Random Page Cost",
+      "title": "ランダムページコスト",
       "type": "stat"
     },
     {
@@ -1353,7 +1353,7 @@
           "refId": "A"
         }
       ],
-      "title": "Seq Page Cost",
+      "title": "シーケンシャルページコスト",
       "type": "stat"
     },
     {
@@ -1428,7 +1428,7 @@
           "refId": "A"
         }
       ],
-      "title": "Max Worker Processes",
+      "title": "最大ワーカープロセス数",
       "type": "stat"
     },
     {
@@ -1503,7 +1503,7 @@
           "refId": "A"
         }
       ],
-      "title": "Max Parallel Workers",
+      "title": "最大並列ワーカー数",
       "type": "stat"
     },
     {
@@ -1516,7 +1516,7 @@
       },
       "id": 30,
       "panels": [],
-      "title": "Database Stats",
+      "title": "データベース統計",
       "type": "row"
     },
     {
@@ -1621,7 +1621,7 @@
           "step": 2
         }
       ],
-      "title": "Active sessions",
+      "title": "アクティブセッション",
       "type": "timeseries"
     },
     {
@@ -1734,7 +1734,7 @@
           "refId": "B"
         }
       ],
-      "title": "Transactions",
+      "title": "トランザクション",
       "type": "timeseries"
     },
     {
@@ -1837,7 +1837,7 @@
           "step": 2
         }
       ],
-      "title": "Update data",
+      "title": "アップデートデータ",
       "type": "timeseries"
     },
     {
@@ -1940,7 +1940,7 @@
           "step": 2
         }
       ],
-      "title": "Fetch data (SELECT)",
+      "title": "フェッチデータ（SELECT）",
       "type": "timeseries"
     },
     {
@@ -2043,7 +2043,7 @@
           "step": 2
         }
       ],
-      "title": "Insert data",
+      "title": "インサートデータ",
       "type": "timeseries"
     },
     {
@@ -2089,9 +2089,7 @@
               "mode": "off"
             }
           },
-          "decimals": 0,
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2111,7 +2109,7 @@
       "gridPos": {
         "h": 7,
         "w": 8,
-        "x": 16,
+        "x": 12,
         "y": 22
       },
       "id": 3,
@@ -2148,7 +2146,7 @@
           "step": 2
         }
       ],
-      "title": "Lock tables",
+      "title": "ロックテーブル",
       "type": "timeseries"
     },
     {
@@ -2184,7 +2182,7 @@
           "step": 2
         }
       ],
-      "title": "Return data",
+      "title": "リターンデータ",
       "type": "timeseries"
     },
     {
@@ -2220,7 +2218,7 @@
           "step": 2
         }
       ],
-      "title": "Idle sessions",
+      "title": "アイドルセッション",
       "type": "timeseries"
     },
     {
@@ -2256,7 +2254,7 @@
           "step": 2
         }
       ],
-      "title": "Delete data",
+      "title": "削除データ",
       "type": "timeseries"
     },
     {
@@ -2289,7 +2287,7 @@
           "refId": "A"
         }
       ],
-      "title": "Cache Hit Rate",
+      "title": "キャッシュヒット率",
       "type": "timeseries"
     },
     {
@@ -2366,7 +2364,7 @@
           "refId": "E"
         }
       ],
-      "title": "Buffers (bgwriter)",
+      "title": "バッファ（bgwriter）",
       "type": "timeseries"
     },
     {
@@ -2410,7 +2408,7 @@
           "refId": "A"
         }
       ],
-      "title": "Conflicts/Deadlocks",
+      "title": "競合/デッドロック",
       "type": "timeseries"
     },
     {
@@ -2418,7 +2416,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total amount of data written to temporary files by queries in this database. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting.",
+      "description": "このデータベースでクエリによって一時ファイルに書き込まれたデータの合計量。理由や log_temp_files 設定に関わらず全ての一時ファイルがカウントされます。",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -2444,7 +2442,7 @@
           "refId": "A"
         }
       ],
-      "title": "Temp File (Bytes)",
+      "title": "一時ファイル（バイト）",
       "type": "timeseries"
     },
     {
@@ -2488,7 +2486,7 @@
           "refId": "A"
         }
       ],
-      "title": "Checkpoint Stats",
+      "title": "チェックポイント統計",
       "type": "timeseries"
     }
   ],
@@ -2507,7 +2505,7 @@
           "text": "Prometheus",
           "value": "prometheus"
         },
-        "label": "datasource",
+        "label": "データソース",
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
@@ -2523,7 +2521,7 @@
           "text": "$__auto",
           "value": "$__auto"
         },
-        "label": "Interval",
+        "label": "間隔",
         "name": "interval",
         "options": [
           {
@@ -2574,7 +2572,7 @@
         "datasource": "prometheus",
         "definition": "",
         "includeAll": false,
-        "label": "Namespace",
+        "label": "ネームスペース",
         "name": "namespace",
         "options": [],
         "query": "query_result(pg_exporter_last_scrape_duration_seconds)",
@@ -2591,7 +2589,7 @@
         "datasource": "prometheus",
         "definition": "",
         "includeAll": false,
-        "label": "Release",
+        "label": "リリース",
         "name": "release",
         "options": [],
         "query": "query_result(pg_exporter_last_scrape_duration_seconds{kubernetes_namespace=\"$namespace\"})",
@@ -2608,7 +2606,7 @@
         "datasource": "prometheus",
         "definition": "",
         "includeAll": false,
-        "label": "Instance",
+        "label": "インスタンス",
         "name": "instance",
         "options": [],
         "query": "query_result(pg_up{release=\"$release\"})",
@@ -2627,7 +2625,7 @@
         "datasource": "prometheus",
         "definition": "",
         "includeAll": true,
-        "label": "Database",
+        "label": "データベース",
         "multi": true,
         "name": "datname",
         "options": [],
@@ -2647,7 +2645,7 @@
         "datasource": "prometheus",
         "definition": "",
         "includeAll": true,
-        "label": "Lock table",
+        "label": "ロックテーブル",
         "multi": true,
         "name": "mode",
         "options": [],
@@ -2664,6 +2662,6 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "PostgreSQL Database",
+  "title": "PostgreSQL データベース",
   "version": 4
 }
