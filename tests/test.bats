@@ -116,6 +116,37 @@ teardown() {
   assert_output --partial "<title>Grafana</title>"
 }
 
+@test "Grafana settings are persisted" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  ## Check organization does NOT exist
+  run ddev exec curl admin:admin@grafana:3000/api/orgs
+  refute_output --partial 'foobar'
+
+  ## Create organization
+  run ddev exec curl -d '{"name": "foobar"}' -H "Content-Type: application/json" -X POST admin:admin@grafana:3000/api/orgs
+  assert_success
+  assert_output --partial 'Organization created'
+
+  ## Check organization exists
+  run ddev exec curl admin:admin@grafana:3000/api/orgs
+  assert_success
+  assert_output --partial 'foobar'
+
+  ## Check organization exists after restart
+  ddev restart
+  run ddev exec curl admin:admin@grafana:3000/api/orgs
+  assert_success
+  assert_output --partial 'foobar'
+}
+
 @test "Grafana is pre-configured with datasources" {
   set -eu -o pipefail
 
