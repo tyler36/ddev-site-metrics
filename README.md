@@ -54,13 +54,13 @@ After installation, make sure to commit the .ddev directory to version control.
 
 This addon pre-configures Prometheus as a datasource.
 
-- To include customize, or include additional datasources, update `.ddev/grafana/datasources/grafana-datasources.yml`.
+- To include customize, or include additional datasources, update `.ddev/grafana/provisioning/datasources/grafana-datasources.yml`.
 
 See [Grafana data sources](https://grafana.com/docs/grafana/latest/datasources/#grafana-data-sources).
 
 #### Configure Dashboards
 
-This add-on pre-configures `.ddev/grafana/dashboards` as the provisioned dashboard folder.
+This add-on pre-configures `.ddev/grafana/provisioning/dashboards` as the provisioned dashboard folder.
 See [Dashboards](https://grafana.com/docs/grafana/latest/dashboards/).
 See [Dashboard JSON model](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/).
 
