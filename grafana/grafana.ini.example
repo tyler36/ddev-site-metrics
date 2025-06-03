@@ -1,0 +1,16 @@
+# ##ddev-generated
+
+# This file can be used to set default Grafana configuration.
+# @See https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/
+#
+# To use it:
+# - Rename this file to `grafana.ini`
+# - remove "##ddev-generated" from the top.
+
+# The example below enables email alerts which are caught be Mailpit.
+# Use `ddev mailpit` to view captured emails.
+# https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#smtp
+[smtp]
+enabled=true
+host=web:1025
+from_address=ddev@example.com
