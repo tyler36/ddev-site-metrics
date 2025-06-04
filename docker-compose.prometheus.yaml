@@ -16,4 +16,3 @@ services:
       command:
        - '--config.file=/etc/prometheus/prometheus.yml'
        - '--web.enable-remote-write-receiver'
-       - '--enable-feature=remote-write-receiver'
