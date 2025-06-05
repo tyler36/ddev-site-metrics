@@ -1,0 +1,16 @@
+# ##ddev-generated
+
+# This file is an example of a contact-point configuration.
+# It was generated via the Grafana UI and exported into a configuration file.
+
+apiVersion: 1
+contactPoints:
+    - orgId: 1
+      name: Administrator
+      receivers:
+        - uid: p80i15qtcbfeo0
+          type: email
+          settings:
+            addresses: admin@example.com
+            singleEmail: false
+          disableResolveMessage: false
