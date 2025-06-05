@@ -2,7 +2,7 @@
 services:
   grafana-loki:
     container_name: ddev-${DDEV_SITENAME}-grafana-loki
-    image: grafana/loki:latest
+    image: grafana/loki:3.5.1
     # These labels ensure this service is discoverable by ddev.
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
