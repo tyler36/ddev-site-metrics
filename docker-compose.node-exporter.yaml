@@ -17,5 +17,6 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--path.rootfs=/rootfs'
+      - '--path.udev.data=/rootfs/run/udev/data'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($|/)'
       - '--web.listen-address=:${NODE_EXPORTER_HTTP_PORT:-9100}'
