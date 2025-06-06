@@ -1,4 +1,4 @@
-##ddev-generated
+#ddev-generated
 
 # Node Exporter
 # This file configures Prometheus for Node Exporter. Metrics are prefixed with `node`.
