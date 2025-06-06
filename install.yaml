@@ -3,37 +3,31 @@ name: site-metrics
 project_files:
   - commands/host/prometheus
   - grafana
-  - prometheus/prometheus.yml
+  - prometheus
   - commands/host/grafana
   - docker-compose.prometheus.yaml
   - docker-compose.grafana.yaml
   # The following files belong to the loki/alloy feature
   - docker-compose.grafana-loki.yaml
   - loki/local-config.yaml
-  - prometheus/scrapers/grafana-loki.yml
   - docker-compose.grafana-alloy.yaml
   - alloy
   - commands/host/alloy
   - prometheus/scrapers/grafana-alloy.yml
   # The following files belong to the tempo feature
   - docker-compose.grafana-tempo.yaml
-  - prometheus/scrapers/grafana-tempo.yml
   - tempo/tempo-config.yaml
   # The following files belong to the nginx-prometheus-exporter feature.
   - docker-compose.nginx-exporter.yaml
   - nginx_full/stub_status.conf
-  - prometheus/scrapers/nginx-exporter.yml
   # The following files belong to the mysqld-exporter feature.
   - docker-compose.mysql-exporter.yaml
-  - prometheus/scrapers/mysql-exporter.yml
   - site-metrics/mysql-exporter/.my.cnf
   # The following files belong to the postgres-exporter feature.
   - docker-compose.postgres-exporter.yaml
   # - grafana/dashboards/postgres.json
-  - prometheus/scrapers/postgres-exporter.yml
   # The following files belong to the node-exporter feature.
   - docker-compose.node-exporter.yaml
-  - prometheus/scrapers/node-exporter.yml
 
 # Available with DDEV v1.23.4+, and works only for DDEV v1.23.4+ binaries
 ddev_version_constraint: '>= v1.24.3'
