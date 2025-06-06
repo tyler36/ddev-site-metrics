@@ -3,37 +3,31 @@ name: site-metrics
 project_files:
   - commands/host/prometheus
   - grafana
-  - prometheus/prometheus.yml
+  - prometheus
   - commands/host/grafana
   - docker-compose.prometheus.yaml
   - docker-compose.grafana.yaml
   # The following files belong to the loki/alloy feature
   - docker-compose.grafana-loki.yaml
   - loki/local-config.yaml
-  - prometheus/scrape-grafana-loki.yml
   - docker-compose.grafana-alloy.yaml
   - alloy
   - commands/host/alloy
-  - prometheus/scrape-grafana-alloy.yml
+  - prometheus/scrapers/grafana-alloy.yml
   # The following files belong to the tempo feature
   - docker-compose.grafana-tempo.yaml
-  - prometheus/scrape-grafana-tempo.yml
   - tempo/tempo-config.yaml
   # The following files belong to the nginx-prometheus-exporter feature.
   - docker-compose.nginx-exporter.yaml
   - nginx_full/stub_status.conf
-  - prometheus/scrape-nginx-exporter.yml
   # The following files belong to the mysqld-exporter feature.
   - docker-compose.mysql-exporter.yaml
-  - prometheus/scrape-mysql-exporter.yml
   - site-metrics/mysql-exporter/.my.cnf
   # The following files belong to the postgres-exporter feature.
   - docker-compose.postgres-exporter.yaml
   # - grafana/dashboards/postgres.json
-  - prometheus/scrape-postgres-exporter.yml
   # The following files belong to the node-exporter feature.
   - docker-compose.node-exporter.yaml
-  - prometheus/scrape-node-exporter.yml
 
 # Available with DDEV v1.23.4+, and works only for DDEV v1.23.4+ binaries
 ddev_version_constraint: '>= v1.24.3'
@@ -48,12 +42,12 @@ post_install_actions:
     if [ "$DDEV_DATABASE_FAMILY" == "postgres" ]; then
         grep -q '#ddev-generated' docker-compose.mysql-exporter.yaml && rm docker-compose.mysql-exporter.yaml
         grep -q '#ddev-generated' grafana/provisioning/dashboards/mysql.json && rm grafana/provisioning/dashboards/mysql.json
-        grep -q '#ddev-generated' prometheus/scrape-mysql-exporter.yml && rm prometheus/scrape-mysql-exporter.yml
+        grep -q '#ddev-generated' prometheus/scrapers/mysql-exporter.yml && rm prometheus/scrapers/mysql-exporter.yml
     fi
     if [ "$DDEV_DATABASE_FAMILY" == "mysql" ]; then
         grep -q '#ddev-generated' docker-compose.postgres-exporter.yaml && rm docker-compose.postgres-exporter.yaml
         grep -q '#ddev-generated' grafana/provisioning/dashboards/postgres.json && rm grafana/provisioning/dashboards/postgres.json
-        grep -q '#ddev-generated' prometheus/scrape-postgres-exporter.yml && rm prometheus/scrape-postgres-exporter.yml
+        grep -q '#ddev-generated' prometheus/scrapers/postgres-exporter.yml && rm prometheus/scrapers/postgres-exporter.yml
 
         if [[ "$DDEV_DATABASE" == *"mysql"* ]]; then
           ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'db'@'%';"

@@ -5,7 +5,8 @@
 # @See https://github.com/prometheus/mysqld_exporter
 
 scrape_configs:
-  - job_name: mysql
+  # Get exposed MySQL metrics
+  - job_name: mysql-exporter
     metrics_path: /probe
     params:
       # Not required. Will match value to child in config file. Default value is `client`.
