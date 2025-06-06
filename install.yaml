@@ -54,5 +54,12 @@ post_install_actions:
         grep -q '#ddev-generated' docker-compose.postgres-exporter.yaml && rm docker-compose.postgres-exporter.yaml
         grep -q '#ddev-generated' grafana/provisioning/dashboards/postgres.json && rm grafana/provisioning/dashboards/postgres.json
         grep -q '#ddev-generated' prometheus/scrape-postgres-exporter.yml && rm prometheus/scrape-postgres-exporter.yml
+
+        if [[ "$DDEV_DATABASE" == *"mysql"* ]]; then
+          ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'db'@'%';"
+        fi
+        if [[ "$DDEV_DATABASE" == *"mariadb"* ]]; then
+          ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, REPLICA MONITOR ON *.* TO 'db'@'%';"
+        fi
     fi
   - ddev dotenv set .ddev/.env --node-exporter-http-port=9100 > /dev/null 2>&1
