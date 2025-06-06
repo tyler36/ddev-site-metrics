@@ -1,0 +1,57 @@
+##ddev-generated
+
+# These rules are gathered from the following sources
+# @See https://samber.github.io/awesome-prometheus-alerts/rules#postgresql
+# @See https://exporterhub.io/exporter/postgresql-exporter/
+
+groups:
+
+- name: PostgresExporter
+
+  rules:
+
+  - alert: PostgresqlDown
+    expr: pg_up == 0
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Postgresql down (instance {{ $labels.instance }})
+      description: "Postgresql instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  - alert: PostgresqlReplicationLag
+    expr: pg_replication_lag > 30 and ON(instance) pg_replication_is_replica == 1
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Postgresql replication lag (instance {{ $labels.instance }})
+      description: "PostgreSQL replication lag is going up (> 30s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  - alert: PostgresqlTooManyConnections
+    expr: sum by (datname) (pg_stat_activity_count{datname!~"template.*|postgres"}) > pg_settings_max_connections * 0.8
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Postgresql too many connections (instance {{ $labels.instance }})
+      description: "PostgreSQL instance has too many connections (> 80%).\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  - alert: PostgresqlHighDbSize
+    expr: pg_database_size_bytes / (1024 * 1024 * 1024) > 100  # this value depends on available disk size
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Postgresql DB size is more than 100 GB (instance {{ $labels.instance }})
+      description: "Postgresql DB size is more than 100 GB\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+
+  - alert: PostgresqlTXDuration
+    expr: pg_stat_activity_max_tx_duration{state="active"} > 2
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Postgresql active transaction takes more than 2 seconds to complete (instance {{ $labels.instance }})
+      description: "PostgreSQL Postgresql active transaction takes more than 2 seconds\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

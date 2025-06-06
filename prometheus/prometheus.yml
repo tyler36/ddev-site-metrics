@@ -8,3 +8,9 @@ scrape_configs:
 # all matching files and appended to the list of scrape configs.
 scrape_config_files:
   - 'scrapers/*.yml'
+
+# Rules fire when metrics meet specified conditions.
+# Grafana 12 can import Prometheus rules so we'll define them here.
+# https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/#defining-recording-rules
+rule_files:
+  - 'alerts/*.yml'
