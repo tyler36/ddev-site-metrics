@@ -1,0 +1,19 @@
+##ddev-generated
+
+# These rules are from https://samber.github.io/awesome-prometheus-alerts
+# @See https://samber.github.io/awesome-prometheus-alerts/rules#grafana-alloy-1
+
+groups:
+
+- name: GrafanaAlloy
+
+  rules:
+
+    - alert: GrafanaAlloyServiceDown
+      expr: 'count by (instance) (alloy_build_info) unless count by (instance) (alloy_build_info offset 2m)'
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: Grafana Alloy service down (instance {{ $labels.instance }})
+        description: "Alloy on (instance {{ $labels.instance }}) is not responding or has stopped running.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
