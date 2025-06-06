@@ -241,7 +241,7 @@ teardown() {
   assert_output --partial "${TARGET_METRIC}"
 }
 
-@test "MySQL metrics are exposed" {
+@test "MySQL metrics are exposed for MariaDB" {
   set -eu -o pipefail
 
   echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
@@ -251,9 +251,53 @@ teardown() {
   run ddev restart -y
   assert_success
 
-  export TARGET_METRIC='mysql_up'
+  # Confirm MariaDb database
+  run ddev exec env
+  assert_success
+  assert_output --partial DDEV_DATABASE=mariadb
+
+  # Check DB user has privileges
+  run ddev mysql -e "SHOW GRANTS FOR db;"
+  assert_success
+  assert_output --partial "PROCESS"
+  assert_output --partial "SLAVE MONITOR"
 
   # Check it exposes endpoint with statistics
+  export TARGET_METRIC='mysql_up'
+  run ddev exec curl -vs mysql-exporter:9104/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
+}
+
+@test "MySQL metrics are exposed for MySQL" {
+  set -eu -o pipefail
+
+  echo "# Convert project to MySQL" >&3
+  ddev delete -Oy
+  ddev config --database=mysql:5.7
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Confirm MySQL database
+  run ddev exec env
+  assert_success
+  assert_output --partial DDEV_DATABASE=mysql
+
+  # Check DB user has privileges
+  run ddev mysql -e "SHOW GRANTS FOR db;"
+  assert_success
+  assert_output --partial "PROCESS"
+
+  # Check it exposes endpoint with statistics
+  export TARGET_METRIC='mysql_up'
   run ddev exec curl -vs mysql-exporter:9104/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
 
