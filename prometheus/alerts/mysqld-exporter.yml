@@ -38,7 +38,7 @@ groups:
         description: "MySQL server mysql has some new slow query.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: MysqlHighQps
-      expr: irate(mysql_global_status_questions[1m]) > 10000
+      expr: 'irate(mysql_global_status_questions[1m]) > 10000'
       for: 2m
       labels:
         severity: info
@@ -47,7 +47,7 @@ groups:
         description: "MySQL is being overload with unusual QPS (> 10k QPS).\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: MysqlTooManyOpenFiles
-      expr: mysql_global_status_innodb_num_open_files / mysql_global_variables_open_files_limit * 100 > 75
+      expr: 'mysql_global_status_innodb_num_open_files / mysql_global_variables_open_files_limit * 100 > 75'
       for: 2m
       labels:
         severity: warning
@@ -56,7 +56,7 @@ groups:
         description: "MySQL has too many open files, consider increase variables open_files_limit on {{ $labels.instance }}.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: MysqlInnodbLogWaits
-      expr: rate(mysql_global_status_innodb_log_waits[15m]) > 10
+      expr: 'rate(mysql_global_status_innodb_log_waits[15m]) > 10'
       for: 0m
       labels:
         severity: warning
