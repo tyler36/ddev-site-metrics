@@ -1,0 +1,10 @@
+#ddev-generated
+
+# Prometheus
+# This file adds additional Prometheus metrics; 68 (default) to  256). Metrics are prefixed with `prometheus`.
+
+scrape_configs:
+  # Expose additional metrics
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
