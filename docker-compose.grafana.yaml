@@ -21,8 +21,6 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
-    ports:
-      - ${GRAFANA_HTTPS_PORT:-3000}
 
 volumes:
   grafana-storage:
