@@ -10,15 +10,9 @@ services:
     volumes:
       - ".:/mnt/ddev_config"
       - "ddev-global-cache:/mnt/ddev-global-cache"
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
+      - "/:/host:ro"
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--path.rootfs=/rootfs'
-      - '--path.udev.data=/rootfs/run/udev/data'
+      - '--path.rootfs=/host'
+      - '--path.udev.data=/host/run/udev/data'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc|mnt/wsl|run/user)($|/)'
-      - '--no-collector.netstat'
-      - '--no-collector.softnet'
       - '--web.listen-address=:${NODE_EXPORTER_HTTP_PORT:-9100}'
