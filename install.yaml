@@ -59,4 +59,20 @@ post_install_actions:
           ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, REPLICA MONITOR ON *.* TO 'db'@'%';"
         fi
     fi
+  - |
+    #ddev-nodisplay
+    #ddev-description:Cleanup unused webserver exporters.
+    echo "$DDEV_WEBSERVER_TYPE ---------------------"
+    if [ "$DDEV_WEBSERVER_TYPE" == "nginx-fpm" ] || [ "$DDEV_WEBSERVER_TYPE" == "generic" ]; then
+        echo "cleaning .... $DDEV_WEBSERVER_TYPE"
+        grep -q '#ddev-generated' docker-compose.apache-exporter.yaml && rm docker-compose.apache-exporter.yaml
+        grep -q '#ddev-generated' grafana/provisioning/dashboards/apache.json && rm grafana/provisioning/dashboards/apache.json
+        grep -q '#ddev-generated' prometheus/scrapers/apache-exporter.yml && rm prometheus/scrapers/apache-exporter.yml
+    fi
+    if [ "$DDEV_WEBSERVER_TYPE" == "apache-fpm" ] || [ "$DDEV_WEBSERVER_TYPE" == "generic" ]; then
+        echo "cleaning .... $DDEV_WEBSERVER_TYPE"
+        grep -q '#ddev-generated' docker-compose.nginx-exporter.yaml && rm docker-compose.nginx-exporter.yaml
+        grep -q '#ddev-generated' grafana/provisioning/dashboards/nginx.json && rm grafana/provisioning/dashboards/nginx.json
+        grep -q '#ddev-generated' prometheus/scrapers/nginx-exporter.yml && rm prometheus/scrapers/nginx-exporter.yml
+    fi
   - ddev dotenv set .ddev/.env --node-exporter-http-port=9100 > /dev/null 2>&1
