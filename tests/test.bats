@@ -211,11 +211,24 @@ teardown() {
 
   prometheus_health_check
 
+  # Check config for `prometheus` scraper
+  run ddev exec curl -g 'prometheus:9090/api/v1/targets'
+  assert_success
+  assert_output --partial '"job":"prometheus"'
+
+  # Remove Prometheus scraper
+  rm '.ddev/prometheus/scrapers/prometheus.yml'
+
   # Confirm Prometheus command successfully reloads configuration
   run ddev prometheus -r
   assert_success
   refute_output --partial 'Lifecycle API is not enabled'
   assert_output --partial 'config reloaded'
+
+  # Check config for `prometheus` scraper
+  run ddev exec curl -g 'prometheus:9090/api/v1/targets'
+  assert_success
+  refute_output --partial '"job":"prometheus"'
 }
 
 @test "Prometheus port is configurable" {
