@@ -1,0 +1,12 @@
+##ddev-generated
+
+# Apache Exporter
+# This file configures Prometheus for Apache Exporter. Metrics are prefixed with `apache`.
+# @See https://github.com/Lusitaniae/apache_exporter
+
+scrape_configs:
+  # Get exposed Apache metrics
+  - job_name: 'apache-exporter'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['apache-exporter:9117']

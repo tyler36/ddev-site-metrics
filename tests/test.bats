@@ -83,7 +83,7 @@ grafana_tempo_health_check() {
 teardown() {
   set -eu -o pipefail
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
-  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  # [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
 @test "install from directory" {
@@ -219,6 +219,29 @@ teardown() {
   # Test Prometheus exposes metrics
   run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/metrics"
   assert_output --partial 'TYPE prometheus_build_info'
+}
+
+@test "Apache metrics are exposed" {
+  set -eu -o pipefail
+
+  echo "# Update the webserver_type to Apache; requires a restart to take effect" >&3
+  ddev config --webserver-type 'apache-fpm'
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
+
+  export TARGET_METRIC='apache_exporter_build_info'
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs apache-exporter:9117/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
 }
 
 @test "Nginx metrics are exposed" {

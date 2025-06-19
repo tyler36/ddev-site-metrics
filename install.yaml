@@ -17,6 +17,9 @@ project_files:
   # The following files belong to the tempo feature
   - docker-compose.grafana-tempo.yaml
   - tempo/tempo-config.yaml
+  # The following files belong to apache-exporter feature.
+  - docker-compose.apache-exporter.yaml
+  - apache/server-status.conf
   # The following files belong to the nginx-prometheus-exporter feature.
   - docker-compose.nginx-exporter.yaml
   - nginx_full/stub_status.conf
