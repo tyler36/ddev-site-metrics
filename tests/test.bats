@@ -199,6 +199,38 @@ teardown() {
   assert_output --partial '"user":"db"'
 }
 
+@test "Prometheus command reloads configuration" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  prometheus_health_check
+
+  # Check config for `prometheus` scraper
+  run ddev exec curl -g 'prometheus:9090/api/v1/targets'
+  assert_success
+  assert_output --partial '"job":"prometheus"'
+
+  # Remove Prometheus scraper
+  rm '.ddev/prometheus/scrapers/prometheus.yml'
+
+  # Confirm Prometheus command successfully reloads configuration
+  run ddev prometheus -r
+  assert_success
+  refute_output --partial 'Lifecycle API is not enabled'
+  assert_output --partial 'config reloaded'
+
+  # Check config for `prometheus` scraper
+  run ddev exec curl -g 'prometheus:9090/api/v1/targets'
+  assert_success
+  refute_output --partial '"job":"prometheus"'
+}
+
 @test "Prometheus port is configurable" {
   set -eu -o pipefail
 
