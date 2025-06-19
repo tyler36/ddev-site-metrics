@@ -202,12 +202,12 @@ Key files include:
 To expose the status page:
 
 ```yml
-# docker-compose.webserver-status.yaml
-services:
-  web:
-    environment:
-      - HTTP_EXPOSE=8079:8080
-      - HTTPS_EXPOSE=8080:8080
+# .ddev/config.webserver.yaml
+web_extra_exposed_ports:
+  - name: webserver
+    container_port: 8080
+    http_port: 8081
+    https_port: 8080
 ```
 
 The included dashboard is extended from [apache-http-mixin](https://github.com/grafana/jsonnet-libs/tree/master/apache-http-mixin).
