@@ -199,6 +199,25 @@ teardown() {
   assert_output --partial '"user":"db"'
 }
 
+@test "Prometheus command reloads configuration" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  prometheus_health_check
+
+  # Confirm Prometheus command successfully reloads configuration
+  run ddev prometheus -r
+  assert_success
+  refute_output --partial 'Lifecycle API is not enabled'
+  assert_output --partial 'config reloaded'
+}
+
 @test "Prometheus port is configurable" {
   set -eu -o pipefail
 

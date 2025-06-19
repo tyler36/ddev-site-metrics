@@ -3,8 +3,31 @@
 #ddev-generated
 ## Description: Launch the prometheus website
 ## Usage: prometheus
-## Example: "ddev prometheus"
+## Example: "ddev prometheus", "ddev prometheus -r", "ddev prometheus --reload"
 
 source .ddev/.env
 
-ddev launch :"${PROMETHEUS_HTTPS_PORT:-9090}"
+# Open Prometheus in preferred browser.
+launch () {
+  ddev launch :"${PROMETHEUS_HTTPS_PORT:-9090}"
+}
+
+# Send a request to reload configuration.
+# Assumes `--web.enable-lifecycle` flag is enabled
+# @See https://prometheus.io/docs/prometheus/latest/configuration/configuration/
+reloadConfig() {
+  curl -X POST "${DDEV_PRIMARY_URL}:${PROMETHEUS_HTTPS_PORT:-9090}/-/reload"
+  echo 'config reloaded'
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -r | --reload)
+    reloadConfig
+    exit 0;
+    ;;
+  esac
+  shift
+done
+
+launch
