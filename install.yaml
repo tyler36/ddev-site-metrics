@@ -39,6 +39,7 @@ post_install_actions:
   - docker volume create grafana-storage
   - ddev dotenv set .ddev/.env --prometheus-https-port=9090 > /dev/null 2>&1
   - ddev dotenv set .ddev/.env --grafana-https-port=3000 > /dev/null 2>&1
+  - ddev dotenv set .ddev/.env --node-exporter-http-port=9100 > /dev/null 2>&1
   - |
     #ddev-nodisplay
     #ddev-description:Cleanup unused database exporters.
@@ -75,4 +76,3 @@ post_install_actions:
         grep -q '#ddev-generated' grafana/provisioning/dashboards/nginx.json && rm grafana/provisioning/dashboards/nginx.json
         grep -q '#ddev-generated' prometheus/scrapers/nginx-exporter.yml && rm prometheus/scrapers/nginx-exporter.yml
     fi
-  - ddev dotenv set .ddev/.env --node-exporter-http-port=9100 > /dev/null 2>&1
