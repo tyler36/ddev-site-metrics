@@ -210,6 +210,8 @@ services:
       - HTTPS_EXPOSE=8080:8080
 ```
 
+The included dashboard is extended from [apache-http-mixin](https://github.com/grafana/jsonnet-libs/tree/master/apache-http-mixin).
+
 #### Addon: Nginx Exporter
 
 The Nginx Exporter uses [NGINX Prometheus exporter](https://hub.docker.com/r/nginx/nginx-prometheus-exporter) to monitor NGINX or NGINX Plus using Prometheus.
