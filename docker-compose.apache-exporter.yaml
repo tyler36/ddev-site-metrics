@@ -1,0 +1,13 @@
+##ddev-generated
+services:
+  apache-exporter:
+    container_name: ddev-${DDEV_SITENAME}-apache-exporter
+    image: lusotycoon/apache-exporter
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+    - ".:/mnt/ddev_config"
+    - "ddev-global-cache:/mnt/ddev-global-cache"
+    command: "--scrape_uri http://web:8080/server-status/?auto"

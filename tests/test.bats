@@ -253,6 +253,29 @@ teardown() {
   assert_output --partial 'TYPE prometheus_build_info'
 }
 
+@test "Apache metrics are exposed" {
+  set -eu -o pipefail
+
+  echo "# Convert project to Apache" >&3
+  ddev config --webserver-type 'apache-fpm'
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
+
+  export TARGET_METRIC='apache_exporter_build_info'
+
+  # Check it exposes endpoint with statistics
+  run ddev exec curl -vs apache-exporter:9117/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
+}
+
 @test "Nginx metrics are exposed" {
   set -eu -o pipefail
 
@@ -271,6 +294,42 @@ teardown() {
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
+}
+
+
+@test "It only installs one webserver type" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  # Assert 'nginx-exporter' files exist.
+  assert_file_exists .ddev/docker-compose.nginx-exporter.yaml
+  assert_file_exists .ddev/grafana/provisioning/dashboards/nginx.json
+  assert_file_exists .ddev/prometheus/scrapers/nginx-exporter.yml
+
+  # Assert 'apache-exporter' files do NOT exist.
+  assert_file_not_exist .ddev/docker-compose.apache-exporter.yaml
+  assert_file_not_exist .ddev/grafana/provisioning/dashboards/apache.json
+  assert_file_not_exist .ddev/prometheus/scrapers/apache-exporter.yml
+
+  echo "# Convert project to Apache" >&3
+  ddev config --webserver-type='apache-fpm'
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  # Assert 'nginx-exporter' files do NOT exist.
+  assert_file_not_exist .ddev/docker-compose.nginx-exporter.yaml
+  assert_file_not_exist .ddev/grafana/provisioning/dashboards/nginx.json
+  assert_file_not_exist .ddev/prometheus/scrapers/nginx-exporter.yml
+
+  # Assert 'apache-exporter' files exist.
+  assert_file_exists .ddev/docker-compose.apache-exporter.yaml
+  assert_file_exists .ddev/grafana/provisioning/dashboards/apache.json
+  assert_file_exists .ddev/prometheus/scrapers/apache-exporter.yml
 }
 
 @test "MySQL metrics are exposed for MariaDB" {

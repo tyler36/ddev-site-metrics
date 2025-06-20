@@ -18,6 +18,7 @@
   - [Grafana Tempo](#grafana-tempo)
   - [Prometheus](#prometheus)
     - [Customize Prometheus](#customize-prometheus)
+    - [Addon: Apache Exporter](#addon-apache-exporter)
     - [Addon: Nginx Exporter](#addon-nginx-exporter)
     - [Addon: MySql Exporter](#addon-mysql-exporter)
     - [Addon: Postgres Exporter](#addon-postgres-exporter)
@@ -186,6 +187,30 @@ However, this Prometheus will try to load `.ddev/prometheus/scrape-*.yml` files.
 ```config
 PROMETHEUS_HTTPS_PORT=9090
 ```
+
+#### Addon: Apache Exporter
+
+The Apache Exporter uses [lusotycoon/apache-exporter](https://hub.docker.com/r/lusotycoon/apache-exporter) to monitor the apache webs service.
+
+This addon pre-configures the Apache exporter for a DDEV environment.
+
+Key files include:
+
+- `docker-compose.apache-exporter.yaml`: loads Apache exporter image
+- `apache/server-status.conf`: Add '/server-status' endpoint for Apache status page.
+
+To expose the status page:
+
+```yml
+# .ddev/config.webserver.yaml
+web_extra_exposed_ports:
+  - name: webserver
+    container_port: 8080
+    http_port: 8081
+    https_port: 8080
+```
+
+The included dashboard is extended from [apache-http-mixin](https://github.com/grafana/jsonnet-libs/tree/master/apache-http-mixin).
 
 #### Addon: Nginx Exporter
 
