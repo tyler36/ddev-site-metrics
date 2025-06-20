@@ -34,8 +34,6 @@ setup() {
   cd "${TESTDIR}"
   run ddev config --project-name="${PROJNAME}" --project-tld=ddev.site
   assert_success
-  run ddev start -y
-  assert_success
 }
 
 health_checks() {
