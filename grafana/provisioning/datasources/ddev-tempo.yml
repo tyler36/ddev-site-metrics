@@ -11,6 +11,9 @@ datasources:
   jsonData:
     httpMethod: GET
     tracesToMetrics:
-      datasourceUid: 'Prometheus'
+      datasourceUid: 'prometheus'
     serviceMap:
         datasourceUid: 'Prometheus'
+      datasourceUid: 'prometheus'
+    tracesToLogsV2:
+      datasourceUid: 'loki'
