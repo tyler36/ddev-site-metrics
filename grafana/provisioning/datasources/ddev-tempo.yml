@@ -9,7 +9,18 @@ datasources:
   url: http://grafana-tempo:3200
   basicAuth: false
   jsonData:
+    httpMethod: GET
     tracesToMetrics:
-      datasourceUid: 'Prometheus'
+      datasourceUid: 'prometheus'
     serviceMap:
-        datasourceUid: 'Prometheus'
+      enabled: true
+      datasourceUid: 'prometheus'
+    tracesToLogsV2:
+      datasourceUid: 'loki'
+    nodeGraph:
+      enabled: true
+    traceQuery:
+      timeShiftEnabled: true
+    spanBar:
+      type: 'Tag'
+      tag: 'http.path'
