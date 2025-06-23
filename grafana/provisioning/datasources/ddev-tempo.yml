@@ -9,6 +9,7 @@ datasources:
   url: http://grafana-tempo:3200
   basicAuth: false
   jsonData:
+    httpMethod: GET
     tracesToMetrics:
       datasourceUid: 'Prometheus'
     serviceMap:
