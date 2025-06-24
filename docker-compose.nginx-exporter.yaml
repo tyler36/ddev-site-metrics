@@ -11,8 +11,7 @@ services:
     - ".:/mnt/ddev_config"
     - "ddev-global-cache:/mnt/ddev-global-cache"
     environment:
-      - HTTP_EXPOSE=9113:9113
-      - HTTPS_EXPOSE=9112:9113
+      - HTTPS_EXPOSE=9113:9113
     command: --nginx.scrape-uri=http://web:8080/stub_status
 
   web:
