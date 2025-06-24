@@ -7,6 +7,7 @@
 
 - [Overview](#overview)
 - [Installation](#installation)
+  - [Ports](#ports)
 - [Tools](#tools)
   - [Grafana](#grafana)
     - [Configure Datasources](#configure-datasources)
@@ -44,6 +45,21 @@ ddev restart
 ```
 
 After installation, make sure to commit the .ddev directory to version control.
+
+### Ports
+
+| Port                         | Service           | UI          | Environment variable      |
+| ---------------------------- | ----------------- | ----------- | ------------------------- |
+| `3000`                       | Grafana           | ✅           | `GRAFANA_HTTPS_PORT`      |
+| `3100`                       | Grafana Loki      | ❌           |                           |
+| `3200`, `3300`,`4317` `4318` | Grafana Tempo     | ❌           |                           |
+| `9090`                       | Prometheus        | ✅           | `PROMETHEUS_HTTPS_PORT`   |
+| `9100`                       | Node Exporter     | ❌           | `NODE_EXPORTER_HTTP_PORT` |
+| `9104`                       | MySQL Exporter    | ❌           |                           |
+| `9113`                       | Nginx Exporter    | ❌           |                           |
+| `9117`                       | Apache Exporter   | ❌           |                           |
+| `9187`                       | Postgres Exporter | ❌           |                           |
+| `4317` `4318`, `12345`       | Grafana Alloy     | ✅ (`12345`) |                           |
 
 ## Tools
 
