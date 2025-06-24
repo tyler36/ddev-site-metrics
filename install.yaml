@@ -56,8 +56,15 @@ post_install_actions:
         if [[ "$DDEV_DATABASE" == *"mysql"* ]]; then
           ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'db'@'%';"
         fi
-        if [[ "$DDEV_DATABASE" == *"mariadb"* ]]; then
-          ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, REPLICA MONITOR ON *.* TO 'db'@'%';"
+        if [[  $DDEV_DATABASE =~ mariadb:([0-9]+)\.([0-9]+) ]]; then
+          major="${BASH_REMATCH[1]}"
+          minor="${BASH_REMATCH[2]}"
+
+          if (( major > 10 )) || (( major == 10 && minor >= 5 )); then
+            ddev mysql -e "GRANT PROCESS, REPLICATION CLIENT, REPLICA MONITOR ON *.* TO 'db'@'%';"
+          else
+            ddev mysql -e "GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'db'@'%';"
+          fi
         fi
     fi
   - |
