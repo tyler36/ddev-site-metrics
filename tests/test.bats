@@ -361,6 +361,40 @@ teardown() {
   assert_output --partial "${TARGET_METRIC}"
 }
 
+@test "MySQL metrics are exposed for older MariaDB" {
+  set -eu -o pipefail
+
+  # Set older version of MariaDB
+  ddev config --database=mariadb:10.4
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  # Confirm MariaDb database
+  run ddev exec env
+  assert_success
+  assert_output --partial DDEV_DATABASE=mariadb
+
+  # Check DB user has privileges
+  run ddev mysql -e "SHOW GRANTS FOR db;"
+  assert_success
+  assert_output --partial "REPLICATION SLAVE"
+  assert_output --partial "REPLICATION CLIENT"
+
+  # Check it exposes endpoint with statistics
+  export TARGET_METRIC='mysql_up'
+  run ddev exec curl -vs mysql-exporter:9104/metrics
+  assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Prometheus receives metrics
+  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  assert_output --partial "${TARGET_METRIC}"
+}
+
 @test "MySQL metrics are exposed for MySQL" {
   set -eu -o pipefail
 
