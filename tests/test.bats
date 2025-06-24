@@ -552,6 +552,23 @@ teardown() {
   assert_output --partial "url\":\"http://${TEMPO_SERVER}\""
 }
 
+@test "Grafana Alloy port is configurable" {
+  set -eu -o pipefail
+
+  export ALLOY_HTTPS_PORT=3043
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  ddev dotenv set .ddev/.env --alloy-https-port="${ALLOY_HTTPS_PORT}"
+  run ddev restart -y
+  assert_success
+
+  run curl -sf "https://${PROJNAME}.ddev.site:${ALLOY_HTTPS_PORT}"
+  assert_output --partial "<title>Grafana Alloy</title>"
+}
+
 @test "Grafana Alloy workflow is configured" {
   set -eu -o pipefail
 
