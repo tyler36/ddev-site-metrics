@@ -57,6 +57,7 @@ After installation, make sure to commit the .ddev directory to version control.
 | `9100`                       | Node Exporter     | ❌           | `NODE_EXPORTER_HTTP_PORT` |
 | `9104`                       | MySQL Exporter    | ❌           |                           |
 | `9113`                       | Nginx Exporter    | ❌           |                           |
+| `9117`                       | Apache Exporter   | ❌           |                           |
 | `9187`                       | Postgres Exporter | ❌           |                           |
 | `4317` `4318`, `12345`       | Grafana Alloy     | ✅ (`12345`) |                           |
 
