@@ -7,5 +7,6 @@
 scrape_configs:
   # Get exposed Node metrics
   - job_name: 'node-exporter'
+    metrics_path: '/metrics'
     static_configs:
       - targets: ['node-exporter:9100']
