@@ -1,0 +1,17 @@
+##ddev-generated
+services:
+  blackbox:
+    container_name: ddev-${DDEV_SITENAME}-blackbox
+    image: quay.io/prometheus/blackbox-exporter:latest
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+      - "./site-metrics/blackbox.yml:/config/blackbox.yml"
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTPS_EXPOSE=${BLACKBOX_HTTPS_PORT:-9115}:9115
+    command:
+    - "--config.file=/config/blackbox.yml"
