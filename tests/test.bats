@@ -114,6 +114,27 @@ teardown() {
   assert_output --partial "<title>Grafana</title>"
 }
 
+@test "Grafana command reloads configuration" {
+  set -eu -o pipefail
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+
+  run ddev restart -y
+  assert_success
+
+  grafana_health_check
+
+  # Confirm Grafana command successfully reloads configuration
+  run ddev grafana -r
+  assert_success
+  assert_output --partial 'Dashboards config reloaded'
+  assert_output --partial 'Datasources config reloaded'
+  assert_output --partial 'Plugins config reloaded'
+  assert_output --partial 'Alerting config reloaded'
+}
+
 @test "Grafana settings are persisted" {
   set -eu -o pipefail
 

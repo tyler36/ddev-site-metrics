@@ -7,4 +7,27 @@
 
 source .ddev/.env
 
-ddev launch :"${GRAFANA_HTTPS_PORT:-3000}"
+# Open Grafana in preferred browser.
+launch () {
+  ddev launch :"${GRAFANA_HTTPS_PORT:-3000}"
+}
+
+# Send a request to reload configuration.
+reloadConfig() {
+  ddev exec curl  -X POST "admin:admin@grafana:${GRAFANA_HTTPS_PORT:-3000}/api/admin/provisioning/dashboards/reload"
+  ddev exec curl  -X POST "admin:admin@grafana:${GRAFANA_HTTPS_PORT:-3000}/api/admin/provisioning/datasources/reload"
+  ddev exec curl  -X POST "admin:admin@grafana:${GRAFANA_HTTPS_PORT:-3000}/api/admin/provisioning/plugins/reload"
+  ddev exec curl  -X POST "admin:admin@grafana:${GRAFANA_HTTPS_PORT:-3000}/api/admin/provisioning/alerting/reload"
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -r | --reload)
+    reloadConfig
+    exit 0;
+    ;;
+  esac
+  shift
+done
+
+launch
