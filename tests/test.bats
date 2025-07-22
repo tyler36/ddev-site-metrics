@@ -34,6 +34,10 @@ setup() {
   cd "${TESTDIR}"
   run ddev config --project-name="${PROJNAME}" --project-tld=ddev.site
   assert_success
+
+  # We need to make sure Prometheus gets a change to scrape endpoints, so this should be longer than "scrape_interval"
+  # set in `prometheus/prometheus.yml`
+  ARBITRARY_WAIT_TIME=35
 }
 
 health_checks() {
@@ -290,6 +294,9 @@ teardown() {
   run ddev exec curl -vs apache-exporter:9117/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
 
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
+
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
@@ -309,6 +316,9 @@ teardown() {
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs nginx-exporter:9113/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
 
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
@@ -377,6 +387,9 @@ teardown() {
   run ddev exec curl -vs mysql-exporter:9104/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
 
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
+
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
@@ -410,6 +423,9 @@ teardown() {
   export TARGET_METRIC='mysql_up'
   run ddev exec curl -vs mysql-exporter:9104/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
 
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
@@ -445,6 +461,9 @@ teardown() {
   run ddev exec curl -vs mysql-exporter:9104/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
 
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
+
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
@@ -468,6 +487,9 @@ teardown() {
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs postgres-exporter:9187/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
 
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
@@ -525,6 +547,9 @@ teardown() {
   run ddev exec curl -vs node-exporter:9100/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
 
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
+
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
@@ -563,6 +588,9 @@ teardown() {
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs grafana-loki:3100/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
 
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
@@ -622,6 +650,9 @@ teardown() {
   # Check it exposes endpoint with statistics
   run ddev exec curl -vs grafana-alloy:12345/metrics
   assert_output --partial "HELP ${TARGET_METRIC}"
+
+  # Wait for an arbitrary amount of time for the trace to propagate.
+  sleep $ARBITRARY_WAIT_TIME
 
   # Prometheus receives metrics
   run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
