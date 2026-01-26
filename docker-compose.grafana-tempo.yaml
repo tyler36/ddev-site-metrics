@@ -2,7 +2,7 @@
 services:
   grafana-tempo:
     container_name: ddev-${DDEV_SITENAME}-grafana-tempo
-    image: grafana/tempo:latest
+    image: grafana/tempo:main-298b900
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: ${DDEV_APPROOT}
