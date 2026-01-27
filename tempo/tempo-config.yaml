@@ -12,10 +12,6 @@ distributor:
         grpc:
           endpoint: "grafana-tempo:4317"
 
-compactor:
-  compaction:
-    block_retention: 48h                # configure total trace retention here
-
 ingester:
   trace_idle_period: 10s
   max_block_duration: 1m  # Reduce from 5m to 1m
