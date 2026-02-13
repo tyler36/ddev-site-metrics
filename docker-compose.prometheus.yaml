@@ -17,3 +17,9 @@ services:
        - '--config.file=/etc/prometheus/prometheus.yml'
        - '--web.enable-remote-write-receiver'
        - '--web.enable-lifecycle' # This enables reloading config.
+      healthcheck:
+        test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/healthy"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+        start_period: 10s

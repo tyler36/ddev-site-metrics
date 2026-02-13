@@ -11,3 +11,9 @@ services:
     - ".:/mnt/ddev_config"
     - "ddev-global-cache:/mnt/ddev-global-cache"
     command: "--scrape_uri http://web:8080/server-status/?auto"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9117/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
