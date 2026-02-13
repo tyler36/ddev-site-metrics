@@ -46,35 +46,35 @@ health_checks() {
 
 grafana_health_check() {
   # Test the Grafana main page is accessible
-  run curl -sf "https://${PROJNAME}.ddev.site:3000"
+  run curl -sfk "https://${PROJNAME}.ddev.site:3000"
   assert_output --partial "<title>Grafana</title>"
 }
 
 prometheus_health_check() {
   # Test the Prometheus API is available
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/status/config"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/status/config"
   assert_output --partial '"status":"success"'
 
   # Test Prometheus exposes metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/metrics"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/metrics"
   assert_output --partial 'TYPE prometheus_build_info'
 }
 
 grafana_alloy_health_check() {
   # Test Grafana Alloy reports as healthy.
-  run curl -sf "https://${PROJNAME}.ddev.site:12345/-/healthy"
+  run curl -sfk "https://${PROJNAME}.ddev.site:12345/-/healthy"
   assert_output --partial 'All Alloy components are healthy'
 }
 
 grafana_loki_health_check() {
   # Test Grafana Loki exposes metrics
-  run ddev exec curl -sf "grafana-loki:3100/metrics"
+  run ddev exec curl -sfk "grafana-loki:3100/metrics"
   assert_output --partial "HELP loki_build_info"
 }
 
 grafana_tempo_health_check() {
   # Test Grafana Tempo exposes metrics
-  run ddev exec curl -sf "grafana-tempo:3200/metrics"
+  run ddev exec curl -sfk "grafana-tempo:3200/metrics"
   assert_output --partial "HELP tempo_build_info"
 }
 
@@ -110,7 +110,7 @@ teardown() {
   run ddev restart -y
   assert_success
 
-  run curl -sf "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
+  run curl -sfk "https://${PROJNAME}.ddev.site:${GRAFANA_HTTPS_PORT}"
   assert_output --partial "<title>Grafana</title>"
 }
 
@@ -177,7 +177,7 @@ teardown() {
   assert_success
 
   # Query Grafana API for Prometheus datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
+  run curl -sfk "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/prometheus"
   assert_output --partial '"name":"Prometheus"'
   assert_output --partial '"url":"http://prometheus:9090"'
 }
@@ -193,7 +193,7 @@ teardown() {
   assert_success
 
   # Query Grafana API for MySQL datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/mysql"
+  run curl -sfk "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/mysql"
   assert_output --partial '"name":"MySQL"'
   assert_output --partial '"url":"db:3306"'
   assert_output --partial '"database":"db"'
@@ -211,7 +211,7 @@ teardown() {
   assert_success
 
   # Query Grafana API for Postgres datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/postgres"
+  run curl -sfk "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/postgres"
   assert_output --partial '"name":"Postgres"'
   assert_output --partial '"url":"db:5432"'
   assert_output --partial '"database":"db"'
@@ -264,11 +264,11 @@ teardown() {
   assert_success
 
   # Test the Prometheus API is available
-  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/api/v1/status/config"
+  run curl -sfk "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/api/v1/status/config"
   assert_output --partial '"status":"success"'
 
   # Test Prometheus exposes metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/metrics"
+  run curl -sfk "https://${PROJNAME}.ddev.site:${PROMETHEUS_HTTPS_PORT}/metrics"
   assert_output --partial 'TYPE prometheus_build_info'
 }
 
@@ -291,7 +291,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -311,7 +311,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -378,7 +378,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -412,7 +412,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -446,7 +446,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -470,7 +470,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -526,7 +526,7 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 }
 
@@ -565,11 +565,11 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 
   # Query Grafana API for Loki datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
+  run curl -sfk "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/loki"
   assert_output --partial '"name":"Loki"'
   assert_output --partial '"url":"http://grafana-loki:3100"'
 }
@@ -598,11 +598,11 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 
   # Query Grafana API for Tempo datasource
-  run curl -sf "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
+  run curl -sfk "https://${PROJNAME}.ddev.site:3000/api/datasources/uid/tempo"
   assert_output --partial '"name":"Tempo"'
   assert_output --partial "url\":\"http://${TEMPO_SERVER}\""
 }
@@ -624,11 +624,11 @@ teardown() {
   assert_output --partial "HELP ${TARGET_METRIC}"
 
   # Prometheus receives metrics
-  run curl -sf "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
+  run curl -sfk "https://${PROJNAME}.ddev.site:9090/api/v1/metadata"
   assert_output --partial "${TARGET_METRIC}"
 
   # Query Grafana Loki ingests Grafana Alloy Logs
-  run ddev exec curl -sf "grafana-loki:3100/loki/api/v1/series"
+  run ddev exec curl -sfk "grafana-loki:3100/loki/api/v1/series"
   assert_output --partial '"component":"alloy"'
   assert_output --partial '"service_name":"alloy"'
 }
