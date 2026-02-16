@@ -12,7 +12,7 @@ launch () {
 
 # Send a request to reload configuration.
 reloadConfig() {
-  curl -X POST "${DDEV_PRIMARY_URL}:12345/-/reload"
+  curl -k -X POST "${DDEV_PRIMARY_URL}:12345/-/reload"
 }
 
 while [ $# -gt 0 ]; do

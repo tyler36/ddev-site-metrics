@@ -14,3 +14,9 @@ services:
       - DATA_SOURCE_URI=db:5432/postgres?sslmode=disable
       - DATA_SOURCE_USER=db
       - DATA_SOURCE_PASS=db
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9187/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

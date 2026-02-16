@@ -15,5 +15,9 @@ services:
       - ./alloy:/etc/alloy
       - /var/run/docker.sock:/var/run/docker.sock
     command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy
-    depends_on:
-      - grafana-loki
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f alloy || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
